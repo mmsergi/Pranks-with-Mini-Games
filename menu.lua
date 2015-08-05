@@ -1,4 +1,3 @@
-local composer = require( "composer" )
 local scene = composer.newScene()
 
 local t = loadTable( "settings.json" )
@@ -7,28 +6,28 @@ local tvCall
 local tvLaser
 local tvLie
 
-    local tvLieData = { width=209, height=219, numFrames=4,}
-    local tvLieSheet = graphics.newImageSheet( "assets/iconLie.png", tvLieData )    
-    local tvLieSequence = {
-        { name = "unlocked", start=1, count=3, time=900, loopDirection="bounce"},
-        { name = "locked", start=4, count=1, time=125,},}
+local tvLieData = { width=209, height=219, numFrames=4,}
+local tvLieSheet = graphics.newImageSheet( "assets/iconLie.png", tvLieData )    
+local tvLieSequence = {
+    { name = "unlocked", start=1, count=3, time=900, loopDirection="bounce"},
+    { name = "locked", start=4, count=1, time=125,},}
 
-    local tvCallData = { width=209, height=219, numFrames=4,}
-    local tvCallSheet = graphics.newImageSheet( "assets/iconCall.png", tvCallData )    
-    local tvCallSequence = {
-        { name = "unlocked", start=1, count=3, time=2500,},
-        { name = "locked", start=4, count=1, time=125,},}
+local tvCallData = { width=209, height=219, numFrames=4,}
+local tvCallSheet = graphics.newImageSheet( "assets/iconCall.png", tvCallData )    
+local tvCallSequence = {
+    { name = "unlocked", start=1, count=3, time=2500,},
+    { name = "locked", start=4, count=1, time=125,},}
 
 local tvLaserData = { width=209, height=219, numFrames=4,}
-    local tvLaserSheet = graphics.newImageSheet( "assets/iconLaser.png", tvLaserData )    
-    local tvLaserSequence = {
-        { name = "unlocked", frames={4,3,2}, time=1500},
-        { name = "locked", start=1, count=1, time=125,},}
+local tvLaserSheet = graphics.newImageSheet( "assets/iconLaser.png", tvLaserData )    
+local tvLaserSequence = {
+    { name = "unlocked", frames={4,3,2}, time=1500},
+    { name = "locked", start=1, count=1, time=125,},}
 
- 	iconPlayData = { width=231, height=354, numFrames=4,}
-    iconPlaySheet = graphics.newImageSheet( "assets/lab.png", iconPlayData )    
-    iconPlaySequence = {
-        { name = "normal", start=1, count=4, time=2500,},}        
+	iconPlayData = { width=231, height=354, numFrames=4,}
+iconPlaySheet = graphics.newImageSheet( "assets/lab.png", iconPlayData )    
+iconPlaySequence = {
+    { name = "normal", start=1, count=4, time=2500,},}        
 
 function soundBtnlistener(event)
     local phase = event.phase 
@@ -66,20 +65,20 @@ function soundBtnlistener(event)
     end
 end
 
- function tvLieTouch(event)
-	    if ( event.phase == "ended") then
-		    if t.unlocked>0 then
-		    	composer.removeScene( "menu" )
-		    	composer.gotoScene( "lieDetector")
-				analytics.logEvent( "LieDetector-Session" )
-			else 
-				flag1 = true
-				composer.showOverlay( "popup", {isModal = true})
-				
-			end
+function tvLieTouch(event)
+    if ( event.phase == "ended") then
+	    if t.unlocked>0 then
+	    	composer.removeScene( "menu" )
+	    	composer.gotoScene( "lieDetector")
+			analytics.logEvent( "LieDetector-Session" )
+		else 
+			flag1 = true
+			composer.showOverlay( "popup", {isModal = true, effect="zoomOutIn", time=200})
+			
 		end
-    	return true
 	end
+	return true
+end
 
 local function tvCallTouch(event)
 	    if ( event.phase == "ended") then
@@ -89,36 +88,36 @@ local function tvCallTouch(event)
 	    	analytics.logEvent( "FakeCall-Session" )
 	    	else 
 				flag2 = true
-				composer.showOverlay( "popup", {isModal = true})
+				composer.showOverlay( "popup", {isModal = true, effect="zoomOutIn", time=200})
 			end
 		end
     	return true
 	end
 
 local function tvLaserTouch(event)
-	    if ( event.phase == "ended") then
-	    	if t.unlocked>2 then
-	    	composer.removeScene( "menu" )
-	    	composer.gotoScene( "LaserSword")
-			analytics.logEvent( "LaserSword-Session" )
-			else 
-				flag3 = true
-				composer.showOverlay( "popup", {isModal = true})
-			end
+    if ( event.phase == "ended") then
+    	if t.unlocked>2 then
+    	composer.removeScene( "menu" )
+    	composer.gotoScene( "LaserSword")
+		analytics.logEvent( "LaserSword-Session" )
+		else 
+			flag3 = true
+			composer.showOverlay( "popup", {isModal = true, effect="zoomOutIn", time=200})
 		end
-    	return true
 	end
+	return true
+end
 
- function lieUnlocked()
-		tvLie:setSequence( "unlocked" )
-		tvLie:play()
-		
+function lieUnlocked()
+	tvLie:setSequence( "unlocked" )
+	tvLie:play()
+	
 end
 
 local function callUnlocked()
-		tvCall:setSequence( "unlocked" )
-		tvCall:play()
-		
+	tvCall:setSequence( "unlocked" )
+	tvCall:play()
+	
 end
 
 local function laserUnlocked()
@@ -154,30 +153,28 @@ function scene:create( event )
 		audio.setVolume(0)
 	end
 
+	local background = display.newImage( group, "assets/background.png", cx, cy )
+	local sombra = display.newImage( group, "assets/sombra.png", cx, bottomMarg-40)
+	tvCall = display.newSprite( tvCallSheet, tvCallSequence )
+	tvLaser = display.newSprite( tvLaserSheet, tvLaserSequence )
+	tvLie = display.newSprite( tvLieSheet, tvLieSequence )
 
-local background = display.newImage( group, "assets/background.png", cx, cy )
-local sombra = display.newImage( group, "assets/sombra.png", cx, bottomMarg-40)
-tvCall = display.newSprite( tvCallSheet, tvCallSequence )
-tvLaser = display.newSprite( tvLaserSheet, tvLaserSequence )
-tvLie = display.newSprite( tvLieSheet, tvLieSequence )
+	tvLie:addEventListener("touch",tvLieTouch)
+	tvCall:addEventListener("touch",tvCallTouch)
+	tvLaser:addEventListener("touch",tvLaserTouch)
 
-tvLie:addEventListener("touch",tvLieTouch)
-tvCall:addEventListener("touch",tvCallTouch)
-tvLaser:addEventListener("touch",tvLaserTouch)
+	tvCall.x, tvCall.y = cx-105, cy+260
+	tvCall:play()
 
-tvCall.x, tvCall.y = cx-105, cy+260
-tvCall:play()
+	tvLaser.x, tvLaser.y = cx+105, cy+260
+	tvLaser:play()
 
-tvLaser.x, tvLaser.y = cx+105, cy+260
-tvLaser:play()
+	tvLie.x, tvLie.y = cx, cy+115
+	tvLie:play()
 
-tvLie.x, tvLie.y = cx, cy+115
-tvLie:play()
-
-local iconPlay = display.newSprite( iconPlaySheet, iconPlaySequence )
-iconPlay.x, iconPlay.y = cx, cy-140
-iconPlay:play()
-
+	local iconPlay = display.newSprite( iconPlaySheet, iconPlaySequence )
+	iconPlay.x, iconPlay.y = cx, cy-140
+	iconPlay:play()
 
 
 	local intro = audio.loadSound("assets/intro.ogg")
@@ -215,7 +212,6 @@ end
 function scene:show( event )
 	group = self.view
 
-
 end
 
 
@@ -223,28 +219,23 @@ function scene:hide( event )
 	group = self.view
 	
 	audio.pause(intro)
-
-
-
 end
 
 
 function scene:destroy( event )
 	group = self.view
-display.remove( soundBtn )
-display.remove( tvCall )
-display.remove( tvLaser )
-display.remove( tvLie )
-display.remove(background )
-display.remove( sombra )
-display.remove( iconPlay )
-
+	display.remove( soundBtn )
+	display.remove( tvCall )
+	display.remove( tvLaser )
+	display.remove( tvLie )
+	display.remove(background )
+	display.remove( sombra )
+	display.remove( iconPlay )
 end
 
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
-
 
 return scene

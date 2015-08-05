@@ -4,9 +4,7 @@ local t = loadTable( "settings.json" )
 
 local group
 
-
-
- function chooseScreenshot()
+function chooseScreenshot()
  	
 	if flag1 then 
 		display.remove( screenshot )
@@ -19,7 +17,7 @@ local group
 		display.remove( screenshot )
 		local screenshot=display.newImage( group, "assets/s_Laser.png",cx, cy )
 	end
-backgroundFront()
+	backgroundFront()
 end
 
 local function balls()
@@ -46,7 +44,7 @@ local function balls()
 end
 local function iconExitTouch(event)
 	    if ( event.phase == "ended") then
-	    	composer.hideOverlay( "popup" )
+	    	composer.hideOverlay( "zoomOutIn", 100 )
 		end
     	return true
 	end
@@ -118,38 +116,38 @@ end
 function scene:create( event )
 	group = self.view
 
-local marco = display.newImage( group, "assets/marco.png", cx, cy )
-local iconExit = display.newImage( group, "assets/iconExit.png", rightMarg-51, topMarg+40 )
-local iconPlay2 = display.newSprite( iconPlaySheet, iconPlaySequence )
-iconPlay2.x, iconPlay2.y = rightMarg-160, cy+230
-iconPlay2:scale(0.56,0.56)
+	local marco = display.newImage( group, "assets/marco.png", cx, cy )
+	local iconExit = display.newImage( group, "assets/iconExit.png", rightMarg-51, topMarg+40 )
+	local iconPlay2 = display.newSprite( iconPlaySheet, iconPlaySequence )
+	iconPlay2.x, iconPlay2.y = rightMarg-160, cy+230
+	iconPlay2:scale(0.56,0.56)
 
-local iconTienda = display.newImage( group,"assets/iconTienda.png", leftMarg+155, cy+248 )
+	local iconTienda = display.newImage( group,"assets/iconTienda.png", leftMarg+155, cy+248 )
 
-local flechaI = display.newImage( group,"assets/flecha.png", leftMarg+50, cy)
-flechaI:scale(-1,1)
-local flechaD = display.newImage( group,"assets/flecha.png", rightMarg-50, cy)
+	local flechaI = display.newImage( group,"assets/flecha.png", leftMarg+50, cy)
+	flechaI:scale(-1,1)
+	local flechaD = display.newImage( group,"assets/flecha.png", rightMarg-50, cy)
 
 
-iconExit:addEventListener("touch",iconExitTouch)
-iconTienda:addEventListener("touch",iconTiendaTouch)
-iconPlay2:addEventListener("touch",iconPlayTouch)
-flechaI:addEventListener("touch",flechaITouch)
-flechaD:addEventListener("touch",flechaDTouch)
+	iconExit:addEventListener("touch",iconExitTouch)
+	iconTienda:addEventListener("touch",iconTiendaTouch)
+	iconPlay2:addEventListener("touch",iconPlayTouch)
+	flechaI:addEventListener("touch",flechaITouch)
+	flechaD:addEventListener("touch",flechaDTouch)
 
-group:insert(iconPlay2)
-balls()
-
-function backgroundFront()
-	marco:toFront( )
-	iconExit:toFront( )
-	iconPlay2:toFront( )
-	iconTienda:toFront( )
-	flechaI:toFront( )
-	flechaD:toFront( )
+	group:insert(iconPlay2)
 	balls()
-end
-chooseScreenshot()
+
+	function backgroundFront()
+		marco:toFront( )
+		iconExit:toFront( )
+		iconPlay2:toFront( )
+		iconTienda:toFront( )
+		flechaI:toFront( )
+		flechaD:toFront( )
+		balls()
+	end
+	chooseScreenshot()
 
 end
 
