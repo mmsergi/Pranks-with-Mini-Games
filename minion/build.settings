@@ -1,0 +1,69 @@
+settings =
+{
+	orientation =
+	{
+		default = "portrait",
+		supported = { "portrait" }
+	},
+	android =
+	{
+
+		googlePlayGamesAppId = "281078176676" ,
+		usesPermissions =
+		{
+			"android.permission.INTERNET",
+			"android.permission.ACCESS_NETWORK_STATE",
+			"android.permission.READ_PHONE_STATE",
+		},
+	},
+	iphone =
+	{
+		plist =
+		{
+			CFBundleIconFile = "Icon.png",
+            CFBundleIconFiles = {
+                "Icon.png", 
+                "Icon@2x.png", 
+                "Icon-60.png",
+                "Icon-60@2x.png",
+                "Icon-72.png", 
+                "Icon-72@2x.png",
+                "Icon-76.png",
+                "Icon-76@2x.png", 
+                "Icon-Small.png", 
+                "Icon-Small@2x.png",
+                "Icon-Small-40.png",
+                "Icon-Small-40@2x.png",
+                "Icon-Small-50.png", 
+                "Icon-Small-50@2x.png",
+            },
+		},
+	},
+
+	 plugins =
+    {
+       
+
+        ["plugin.google.play.services"] =
+        {
+            publisherId = "com.coronalabs"
+        },
+
+		["CoronaProvider.gameNetwork.google"] =
+		{
+		    publisherId = "com.coronalabs"
+		},
+
+ 		["CoronaProvider.analytics.flurry"] =
+        {
+        publisherId = "com.coronalabs",
+        },
+
+ 		["plugin.adbuddiz"] =
+        {
+		publisherId = "com.adbuddiz",
+        },
+ 
+
+    },	
+}
