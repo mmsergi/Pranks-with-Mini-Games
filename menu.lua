@@ -74,7 +74,7 @@ end
 				analytics.logEvent( "LieDetector-Session" )
 			else 
 				flag1 = true
-				composer.showOverlay( "popup", {isModal = true})
+				composer.showOverlay( "popup", {effect="zoomOutIn", isModal = true})
 				
 			end
 		end
@@ -89,7 +89,7 @@ local function tvCallTouch(event)
 	    	analytics.logEvent( "FakeCall-Session" )
 	    	else 
 				flag2 = true
-				composer.showOverlay( "popup", {isModal = true})
+				composer.showOverlay( "popup", {effect="zoomOutIn", isModal = true})
 			end
 		end
     	return true
@@ -103,7 +103,7 @@ local function tvLaserTouch(event)
 			analytics.logEvent( "LaserSword-Session" )
 			else 
 				flag3 = true
-				composer.showOverlay( "popup", {isModal = true})
+				composer.showOverlay( "popup", {effect="zoomOutIn", isModal = true})
 			end
 		end
     	return true

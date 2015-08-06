@@ -9,7 +9,6 @@ local titulo
 local textoBloqueo
 local FStextoBloqueo=42
 local optionsTextoBloqueo = {
-	parent= group,
 	text= translations["to unlock"][language],
 	x= cx+100,
 	y= cy+113,
@@ -85,7 +84,7 @@ end
 
 local function iconExitTouch(event)
 	    if ( event.phase == "ended") then
-	    	composer.hideOverlay( "popup" )
+	    	composer.hideOverlay( "popup", {effect="fade"})
 		end
     	return true
 	end
@@ -173,58 +172,59 @@ end
 function scene:create( event )
 	group = self.view
 
-local marco = display.newImage( group, "assets/marco.png", cx, cy )
+	local marco = display.newImage( group, "assets/marco.png", cx, cy )
 
-local iconExit = display.newImage( group, "assets/iconExit.png", rightMarg-51, topMarg+40 )
+	local iconExit = display.newImage( group, "assets/iconExit.png", rightMarg-51, topMarg+40 )
 
-titulo=display.newText(group, translations["Lie Detector"][language], cx, topMarg+77, "BebasNeue", 42)
-textoBloqueo=display.newText(optionsTextoBloqueo)
-textoBloqueo:rotate(-3)
+	titulo=display.newText(group, translations["Lie Detector"][language], cx, topMarg+77, "BebasNeue", 42)
+	textoBloqueo=display.newText(optionsTextoBloqueo)
+	textoBloqueo:rotate(-3)
 
-local iconPlay2 = display.newSprite( iconPlaySheet, iconPlaySequence )
-iconPlay2.x, iconPlay2.y = leftMarg+155, cy+240
-iconPlay2:scale(0.56,0.56)
+	local iconPlay2 = display.newSprite( iconPlaySheet, iconPlaySequence )
+	iconPlay2.x, iconPlay2.y = leftMarg+155, cy+240
+	iconPlay2:scale(0.56,0.56)
 
-local iconTienda = display.newImage( group,"assets/iconTienda.png",rightMarg-160, cy+245 )
+	local iconTienda = display.newImage( group,"assets/iconTienda.png",rightMarg-160, cy+245 )
 
-flechaI = widget.newButton{
-			defaultFile="assets/flecha_on.png",
-			overFile="assets/flecha_off.png",
-			onEvent = flechaIHandle
-		}
-flechaD = widget.newButton{
-			defaultFile="assets/flecha_on.png",
-			overFile="assets/flecha_off.png",
-			onEvent = flechaDHandle
-		}
+	flechaI = widget.newButton{
+				defaultFile="assets/flecha_on.png",
+				overFile="assets/flecha_off.png",
+				onEvent = flechaIHandle
+			}
+	flechaD = widget.newButton{
+				defaultFile="assets/flecha_on.png",
+				overFile="assets/flecha_off.png",
+				onEvent = flechaDHandle
+			}
 
-flechaI.x, flechaI.y = leftMarg+50, cy
-flechaD.x, flechaD.y = rightMarg-50, cy
-flechaI:scale(-1,1)
+	flechaI.x, flechaI.y = leftMarg+50, cy
+	flechaD.x, flechaD.y = rightMarg-50, cy
+	flechaI:scale(-1,1)
 
-iconExit:addEventListener("touch",iconExitTouch)
-iconTienda:addEventListener("touch",iconTiendaTouch)
-iconPlay2:addEventListener("touch",iconPlayTouch)
+	iconExit:addEventListener("touch",iconExitTouch)
+	iconTienda:addEventListener("touch",iconTiendaTouch)
+	iconPlay2:addEventListener("touch",iconPlayTouch)
 
 
-group:insert(iconPlay2)
-group:insert(flechaI)
-group:insert(flechaD)
+	group:insert(iconPlay2)
+	group:insert(flechaI)
+	group:insert(flechaD)
+	group:insert(textoBloqueo)
 
-balls()
-
-function backgroundFront()
-	marco:toFront( )
-	iconExit:toFront( )
-	iconPlay2:toFront( )
-	iconTienda:toFront( )
-	flechaI:toFront( )
-	flechaD:toFront( )
 	balls()
-	titulo:toFront( )
-	textoBloqueo:toFront( )
-end
-chooseScreenshot()
+
+	function backgroundFront()
+		marco:toFront( )
+		iconExit:toFront( )
+		iconPlay2:toFront( )
+		iconTienda:toFront( )
+		flechaI:toFront( )
+		flechaD:toFront( )
+		balls()
+		titulo:toFront( )
+		textoBloqueo:toFront( )
+	end
+	chooseScreenshot()
 
 end
 
