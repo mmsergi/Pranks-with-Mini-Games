@@ -3,8 +3,23 @@ local scene = composer.newScene()
 local t = loadTable( "settings.json" )
 
 local group
+local flechaD
+local flechaI
+local titulo
+local textoBloqueo
+local FStextoBloqueo=42
+local optionsTextoBloqueo = {
+	parent= group,
+	text= translations["to unlock"][language],
+	x= cx+100,
+	y= cy+113,
+	font= "LobsterTwo-Regular",
+	fontSize= FStextoBloqueo,
+	width= 220,
+	align= "left"
+}
 
-function chooseScreenshot()
+ function chooseScreenshot()
  	
 	if flag1 then 
 		display.remove( screenshot )
@@ -17,34 +32,60 @@ function chooseScreenshot()
 		display.remove( screenshot )
 		local screenshot=display.newImage( group, "assets/s_Laser.png",cx, cy )
 	end
-	backgroundFront()
+backgroundFront()
 end
 
 local function balls()
-	if flag1 then 
-		local titulo=display.newText(group, translations["Lie Detector"][language], cx, topMarg+79, "BebasNeue", 42)
-		C1 = display.newCircle( group, cx-40, bottomMarg-51, 15 )
-		C1:setFillColor(.60, .671, .988)
-		C2 = display.newCircle( group, cx, bottomMarg-51, 10 )
-		C3 = display.newCircle( group, cx+40, bottomMarg-51, 10 )
-	elseif flag2 then
-		local titulo=display.newText(group, translations["Fake Call"][language], cx, topMarg+79, "BebasNeue", 42)
-		C1 = display.newCircle( group, cx-40, bottomMarg-51, 10 )
+	if t.unlocked==0 then
+		if flag1 then 
+			titulo.text=translations["Lie Detector"][language]
+			textoBloqueo.text=translations["to unlock"][language]
+			C1 = display.newCircle( group, cx-40, bottomMarg-51, 15 )
+			C1:setFillColor(.60, .671, .988)
+			C2 = display.newCircle( group, cx, bottomMarg-51, 10 )
+			C3 = display.newCircle( group, cx+40, bottomMarg-51, 10 )
+		elseif flag2 then
+			titulo.text=translations["Fake Call"][language]
+			textoBloqueo.text=translations["to unlock"][language]
+			C1 = display.newCircle( group, cx-40, bottomMarg-51, 10 )
+			C2 = display.newCircle( group, cx, bottomMarg-51, 15 )
+			C2:setFillColor(.60, .671, .988)
+			C3 = display.newCircle( group, cx+40, bottomMarg-51, 10 )
+		elseif flag3 then
+			titulo.text=translations["Laser Sword"][language]
+			textoBloqueo.text=translations["to unlock"][language]
+			C1 = display.newCircle( group, cx-40, bottomMarg-51, 10 )
+			C2 = display.newCircle( group, cx, bottomMarg-51, 10 )
+			C3 = display.newCircle( group, cx+40, bottomMarg-51, 15 )
+			C3:setFillColor(.60, .671, .988)
+		end
+	elseif t.unlocked==1 then
+		if flag2 then
+			titulo.text=translations["Fake Call"][language]
+			textoBloqueo.text=translations["to unlock"][language]
+			C2 = display.newCircle( group, cx-20, bottomMarg-51, 15 )
+			C2:setFillColor(.60, .671, .988)
+			C3 = display.newCircle( group, cx+20, bottomMarg-51, 10 )
+		elseif flag3 then
+			titulo.text=translations["Laser Sword"][language]
+			textoBloqueo.text=translations["to unlock"][language]
+			C2 = display.newCircle( group, cx-20, bottomMarg-51, 10 )
+			C3 = display.newCircle( group, cx+20, bottomMarg-51, 15 )
+			C3:setFillColor(.60, .671, .988)
+		end
+
+	elseif t.unlocked==2 then	
+		titulo.text=translations["Laser Sword"][language]
 		C2 = display.newCircle( group, cx, bottomMarg-51, 15 )
 		C2:setFillColor(.60, .671, .988)
-		C3 = display.newCircle( group, cx+40, bottomMarg-51, 10 )
-	elseif flag3 then
-		local titulo=display.newText(group, translations["Laser Sword"][language], cx, topMarg+79, "BebasNeue", 42)
-		C1 = display.newCircle( group, cx-40, bottomMarg-51, 10 )
-		C2 = display.newCircle( group, cx, bottomMarg-51, 10 )
-		C3 = display.newCircle( group, cx+40, bottomMarg-51, 15 )
-		C3:setFillColor(.60, .671, .988)
+		flechaD.isVisible=false
+		flechaI.isVisible=false
 	end
-	
 end
+
 local function iconExitTouch(event)
 	    if ( event.phase == "ended") then
-	    	composer.hideOverlay( "zoomOutIn", 100 )
+	    	composer.hideOverlay( "popup" )
 		end
     	return true
 	end
@@ -67,10 +108,14 @@ local function iconPlayTouch(event)
     	return true
 	end
 
-local function flechaITouch(event)
+local function flechaIHandle(event)
 	if ( event.phase == "ended") then
 	    if t.unlocked==0 then
-	    	if flag2 then
+	    	if flag1 then 
+				flag1=false
+	    		flag3=true
+	    		chooseScreenshot()
+	    	elseif flag2 then
 	    		flag2=false
 	    		flag1=true
 	    		chooseScreenshot()
@@ -80,7 +125,11 @@ local function flechaITouch(event)
 	    		chooseScreenshot()
 	    	end
 	    elseif t.unlocked==1 then
-	    	if flag3 then
+	    	if flag2 then
+	    		flag2=false
+	    		flag3=true
+	    		chooseScreenshot()
+	    	elseif flag3 then
 	    		flag3=false
 	    		flag2=true
 	    		chooseScreenshot()
@@ -90,7 +139,7 @@ local function flechaITouch(event)
     	return true
 end
 
-local function flechaDTouch(event)
+local function flechaDHandle(event)
 	if ( event.phase == "ended") then
 	    if t.unlocked==0 then
 	    	if flag1 then
@@ -101,11 +150,19 @@ local function flechaDTouch(event)
 	    		flag2=false
 	    		flag3=true
 	    		chooseScreenshot()
+	    	elseif flag3 then
+	    		flag3=false
+	    		flag1=true
+	    		chooseScreenshot()
 	    	end
 	    elseif t.unlocked==1 then
 	    	if flag2 then
 	    		flag2=false
 	    		flag3=true
+	    		chooseScreenshot()
+	    	elseif flag3 then
+	    		flag3=false
+	    		flag2=true
 	    		chooseScreenshot()
 	    	end
 		end
@@ -116,38 +173,58 @@ end
 function scene:create( event )
 	group = self.view
 
-	local marco = display.newImage( group, "assets/marco.png", cx, cy )
-	local iconExit = display.newImage( group, "assets/iconExit.png", rightMarg-51, topMarg+40 )
-	local iconPlay2 = display.newSprite( iconPlaySheet, iconPlaySequence )
-	iconPlay2.x, iconPlay2.y = rightMarg-160, cy+230
-	iconPlay2:scale(0.56,0.56)
+local marco = display.newImage( group, "assets/marco.png", cx, cy )
 
-	local iconTienda = display.newImage( group,"assets/iconTienda.png", leftMarg+155, cy+248 )
+local iconExit = display.newImage( group, "assets/iconExit.png", rightMarg-51, topMarg+40 )
 
-	local flechaI = display.newImage( group,"assets/flecha.png", leftMarg+50, cy)
-	flechaI:scale(-1,1)
-	local flechaD = display.newImage( group,"assets/flecha.png", rightMarg-50, cy)
+titulo=display.newText(group, translations["Lie Detector"][language], cx, topMarg+77, "BebasNeue", 42)
+textoBloqueo=display.newText(optionsTextoBloqueo)
+textoBloqueo:rotate(-3)
+
+local iconPlay2 = display.newSprite( iconPlaySheet, iconPlaySequence )
+iconPlay2.x, iconPlay2.y = leftMarg+155, cy+240
+iconPlay2:scale(0.56,0.56)
+
+local iconTienda = display.newImage( group,"assets/iconTienda.png",rightMarg-160, cy+245 )
+
+flechaI = widget.newButton{
+			defaultFile="assets/flecha_on.png",
+			overFile="assets/flecha_off.png",
+			onEvent = flechaIHandle
+		}
+flechaD = widget.newButton{
+			defaultFile="assets/flecha_on.png",
+			overFile="assets/flecha_off.png",
+			onEvent = flechaDHandle
+		}
+
+flechaI.x, flechaI.y = leftMarg+50, cy
+flechaD.x, flechaD.y = rightMarg-50, cy
+flechaI:scale(-1,1)
+
+iconExit:addEventListener("touch",iconExitTouch)
+iconTienda:addEventListener("touch",iconTiendaTouch)
+iconPlay2:addEventListener("touch",iconPlayTouch)
 
 
-	iconExit:addEventListener("touch",iconExitTouch)
-	iconTienda:addEventListener("touch",iconTiendaTouch)
-	iconPlay2:addEventListener("touch",iconPlayTouch)
-	flechaI:addEventListener("touch",flechaITouch)
-	flechaD:addEventListener("touch",flechaDTouch)
+group:insert(iconPlay2)
+group:insert(flechaI)
+group:insert(flechaD)
 
-	group:insert(iconPlay2)
+balls()
+
+function backgroundFront()
+	marco:toFront( )
+	iconExit:toFront( )
+	iconPlay2:toFront( )
+	iconTienda:toFront( )
+	flechaI:toFront( )
+	flechaD:toFront( )
 	balls()
-
-	function backgroundFront()
-		marco:toFront( )
-		iconExit:toFront( )
-		iconPlay2:toFront( )
-		iconTienda:toFront( )
-		flechaI:toFront( )
-		flechaD:toFront( )
-		balls()
-	end
-	chooseScreenshot()
+	titulo:toFront( )
+	textoBloqueo:toFront( )
+end
+chooseScreenshot()
 
 end
 

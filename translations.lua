@@ -61,7 +61,7 @@ end
 -- Activar/Desactivar idiomas:
 espanol = 1
 portugues = 1
-ruso = 1
+ruso = 0
 frances = 1
 aleman = 1
 italiano = 1
@@ -178,6 +178,17 @@ translations =
 		["frances"] = "Sabre-laser",
 		["aleman"] = "Laser-Schwert",
 		["italiano"] = "Spada laser",
+	},
+
+	["to unlock"] = 
+	{
+		["ingles"] = "to unlock",
+		["espanol"] = "para desbloquear",
+		["portugues"] = "para desbloquear",
+		["ruso"] = "чтобы разблокировать",
+		["frances"] = "pour déverrouiller",
+		["aleman"] = "zum Entsperren",
+		["italiano"] = "per sbloccare",
 	},
 }
  
