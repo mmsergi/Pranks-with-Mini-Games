@@ -56,7 +56,7 @@ function scene:create( event )
 	local ncoins = display.newText(group, "+ "..currentCoins.." coins", display.contentWidth/2, 500, native.systemFontBold, 32)
 	ncoins:setFillColor( 0, 0, 0 )
 
-	local totalcoins = display.newText(group, t.coins.." C", display.contentWidth - 75, 25, native.systemFontBold, 28)
+	local totalcoins = display.newText(group, t.coins.." C", display.contentWidth - 40, 25, native.systemFontBold, 28)
 	totalcoins:setFillColor( 0, 0, 0 )
 
 	adBtn = widget.newButton{
