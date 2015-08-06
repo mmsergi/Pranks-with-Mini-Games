@@ -5,9 +5,10 @@ local vy = -20
 local seconds = 0
 local frame = 0
 local cat
-local star
+local coin
 local group
 local e = 0
+local ncoins = 0
 
 local gameend = false
 
@@ -18,6 +19,15 @@ local sound = audio.loadSound("assets1/game.mp3")
 local function tempo()
 	seconds = seconds + 1
 	tim.text = "SCORE: "..seconds
+
+	if coin.alpha==1 then
+		e = e + 1
+	end
+
+	if e>3 then
+		coin.alpha=0
+		e=0
+	end
 end
 
 local function startDrag( event )
@@ -45,7 +55,6 @@ local function startDrag( event )
 
 	return true
 end
-
 
 local function move()
 
@@ -81,6 +90,13 @@ local function move()
 			vy = vy*-1
 		end
 
+	if math.abs(point.x-coin.x)<=30 and math.abs(point.y-coin.y)<=30 and coin.alpha==1 then
+		coin.alpha = 0
+		e=0
+		ncoins = ncoins + 1
+		cointext.text = ncoins.." C"
+	end
+
 		if math.abs(point.x-cat.x)<=40 and math.abs(point.y-cat.y)<=40 then
 			gameend = true
 			
@@ -92,13 +108,16 @@ local function move()
 			audio.pause(intro)
 
 			local t = loadTable( "settings.json" )
-			t.lastscore = seconds
-			if t.highscore < seconds then
-				t.highscore = seconds
+
+			t.coins = t.coins + ncoins
+			if t.highscoreLaser < seconds then
+				t.highscoreLaser = seconds
 			end
 			saveTable(t, "settings.json")
 
-			composer.gotoScene( "scorelose")
+			local transitionOptions = { effect = "crossFade", time = 300, params = { currentCoins = ncoin, lastscore = seconds} }
+
+			composer.gotoScene( "scorelose", transitionOptions)
 			composer.removeScene( "gamein" )
 		end
 
@@ -108,6 +127,7 @@ end
 
 local function inc ()
 	text.alpha=0
+	ccoin()
 	if vx > 0 then
 		vx = vx+2
 	else 
@@ -121,40 +141,44 @@ local function inc ()
 	end
 end
 
+function ccoin()
+	coin.x = math.random(480)
+	coin.y = math.random(800)
+	coin.alpha = 1
+end
 
 function scene:create( event )
 	group = self.view
 	
-	background=display.newImage("assets1/floor.png")
+	background=display.newImage(group, "assets1/floor.png")
 	background.x=display.contentWidth/2
 	background.y=display.contentHeight/2
  
-
-	point = display.newImage( "assets1/point.png" )
+	point = display.newImage(group, "assets1/point.png" )
 	point.x=display.contentWidth/2
 	point.y=display.contentHeight/2
 
-
-	cat = display.newImage("assets1/cat.png")
+	cat = display.newImage(group, "assets1/cat.png")
 	cat.x=0
 	cat.y=60 +math.random(400)
 
-	
-	tim=display.newText("SCORE: 0", 0, 0, "muro", 24 )
+	tim=display.newText(group, "SCORE: 0", 0, 0, "muro", 24 )
 	tim:setFillColor( black )
 	tim.x=display.contentWidth/2
 	tim.y=20
 
-	text = display.newText( "DRAG LASER TO AVOID THE CAT!", 0, 0, "muro", 24)
+	text = display.newText(group, "DRAG LASER TO AVOID THE CAT!", 0, 0, "muro", 24)
 	text:setFillColor( black )
 	text.x=display.contentWidth/2
 	text.y=display.contentHeight - display.contentHeight/4
 
-	group:insert(background)
-	group:insert(text)
-	group:insert(tim)
-	group:insert(point)
-	group:insert(cat)
+	coin = display.newImage(group, "assets1/snow.png")
+	coin.alpha=0
+
+	cointext = display.newText(group, "0 C", 0, 0, "muro", 24)
+	cointext:setFillColor( black )
+	cointext.x=display.contentWidth - 40
+	cointext.y=20
 
 end
 

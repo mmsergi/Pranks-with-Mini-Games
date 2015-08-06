@@ -2,14 +2,11 @@ local scene = composer.newScene()
 
 local t = loadTable( "settings.json" )
 
-local group
-
 function soundBtnlistener(event)
     local phase = event.phase 
     
     if "ended" == phase then   
 
-      display.remove(soundBtn) 
       soundBtn = nil
       
       if t.music == true then
@@ -52,15 +49,11 @@ local function goHome()
 end
 
 function scene:create( event )
-	group = self.view
+	local group = self.view
 
-	if math.random( 0, 100 ) > 75 then
-		ads.show( "interstitial", { x=display.screenOriginX, y=display.screenOriginY, appId=interstitialretry} )
-	end
+	local background = display.newImage(group, "assets1/sky2.png", cx, cy )
 
-	local background = display.newImage( "assets1/sky2.png", cx, cy )
-
-	local bobt = display.newImage( "assets1/cat.png" )
+	local bobt = display.newImage(group, "assets1/cat.png" )
 	bobt.x, bobt.y = display.contentWidth/2, display.contentHeight/2 -50
 	
 	local retryBtn = widget.newButton
@@ -83,15 +76,20 @@ function scene:create( event )
 	homeBtn.x = display.contentWidth/2
 	homeBtn.y = display.contentHeight - 50
 
-	local lastscore = display.newText("LAST SCORE: " .. t.lastscore, 0, 0, "muro", 32 )
+	local lastscore = display.newText(group, "LAST SCORE: " .. event.params.lastscore, 0, 0, "muro", 32 )
 	lastscore:setFillColor( 1,1,1 )
 	lastscore.x = display.contentWidth/2
 	lastscore.y = 200
 
-	local highscore = display.newText("HIGH SCORE: " .. t.highscore, 0, 0, "muro", 32 )
+	local highscore = display.newText(group, "HIGH SCORE: " .. t.highscoreLaser, 0, 0, "muro", 32 )
 	highscore:setFillColor( 1,1,1 )
 	highscore.x = display.contentWidth/2
 	highscore.y = 250
+
+	cointext = display.newText(group, "0 C", 0, 0, "muro", 24)
+	cointext:setFillColor( black )
+	cointext.x=display.contentWidth - 40
+	cointext.y=20
 
 	if t.lastscore == t.highscore then
 		highscore:setFillColor( 1,0,0 )
@@ -125,23 +123,19 @@ function scene:create( event )
 	gamesBtn.x = display.contentWidth/2
 	gamesBtn.y = display.contentHeight/2 + 200
 
+	local cointext = display.newText(group, t.coins.." C", 0, 0, "muro", 24)
+	cointext.x=display.contentWidth - 40
+	cointext.y=20 
 
-	group:insert(background)
 	group:insert(retryBtn)
 	group:insert(homeBtn)
 	group:insert(gamesBtn)
-	group:insert(highscore)
-	group:insert(lastscore)
-	group:insert(bobt)
-
 	group:insert(soundBtn)
 
 end
 
 function scene:show( event )
 	group = self.view
-
-	ads.show( "banner", { x=0, y=0, appId=bannerretry} )
 	
 	if t.music==false then
 		audio.setVolume(0)
@@ -152,23 +146,18 @@ function scene:show( event )
 	
 end
 
-
 function scene:hide( event )
 	group = self.view
 
-	ads.hide()
 end
-
 
 function scene:destroy( event )
 	group = self.view
 end
 
-
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
-
 
 return scene

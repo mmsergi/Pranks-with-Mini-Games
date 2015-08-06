@@ -55,7 +55,6 @@ function loose()
     timer.pause(timer3)
     timer.pause(timer4)
 	
-	t.lastscoreCopter = meters
 	if t.highscoreCopter < meters then
 		t.highscoreCopter = meters
 	end
@@ -74,7 +73,7 @@ function ves ()
 		end
 	end]]
 	clean()
-	local transitionOptions = { effect = "crossFade", time = 300, params = { currentCoins = ncoin} }
+	local transitionOptions = { effect = "crossFade", time = 300, params = { currentCoins = ncoin, lastscore = meters} }
 	composer.gotoScene( "stats", transitionOptions)
 end
 

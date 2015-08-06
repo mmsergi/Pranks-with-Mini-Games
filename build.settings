@@ -7,8 +7,6 @@ settings =
   },
   android =
   {
-
-    googlePlayGamesAppId = "405922172940" ,
     usesPermissions =
     {
       "android.permission.INTERNET",
@@ -17,38 +15,14 @@ settings =
       "android.permission.VIBRATE",
     },
   },
-  iphone =
-  {
-    plist =
-    {
-      CFBundleIconFile = "Icon.png",
-            CFBundleIconFiles = {
-                "Icon.png", 
-                "Icon@2x.png", 
-                "Icon-60.png",
-                "Icon-60@2x.png",
-                "Icon-72.png", 
-                "Icon-72@2x.png",
-                "Icon-76.png",
-                "Icon-76@2x.png", 
-                "Icon-Small.png", 
-                "Icon-Small@2x.png",
-                "Icon-Small-40.png",
-                "Icon-Small-40@2x.png",
-                "Icon-Small-50.png", 
-                "Icon-Small-50@2x.png",
-            },
-    },
-  },
 
    plugins =
     {
        
-
-        ["plugin.google.play.services"] =
-        {
-            publisherId = "com.coronalabs"
-        },
+    ["plugin.google.play.services"] =
+    {
+        publisherId = "com.coronalabs"
+    },
 
     ["CoronaProvider.gameNetwork.google"] =
     {
@@ -56,14 +30,14 @@ settings =
     },
 
     ["CoronaProvider.analytics.flurry"] =
-        {
+    {	
         publisherId = "com.coronalabs",
-        },
+    },
 
     ["plugin.adbuddiz"] =
-        {
-    publisherId = "com.adbuddiz",
-        },
+    {
+		publisherId = "com.adbuddiz",
+    },
  
 
     },  

@@ -6,8 +6,6 @@ ads = require "ads"
 widget = require "widget" 
 analytics = require "analytics" 
 AdBuddiz = require "plugin.adbuddiz"
-gameNetwork = require "gameNetwork"
-GPGS = require "GPGS"
 translations = require "translations"
 
 bannerretry = "ca-app-pub-1709584335667681/2761590251"
@@ -56,19 +54,6 @@ local function adListener( event )
         print("Anuncio visto Admob")
     end
 
-end
-
-function IAPlistener(event)
-
-    local transaction = event.transaction
-
-    if ( transaction.state == "purchased" ) then
-        local t = loadTable( "settings.json" )
-        t.ads = false
-        saveTable(t, "settings.json")
-    end
-
-     store.finishTransaction( event.transaction )
 end
 
 function showGameAd()
@@ -159,11 +144,8 @@ local t = loadTable( "settings.json" )
 	
 	if t == nil then 
 	    local settings = {}
-        settings.user = "player01"
-	     settings.highscore = 0
-        settings.lastscore = 0
+	    settings.highscoreLaser = 0
         settings.highscoreCopter = 0
-        settings.lastscoreCopter = 0
         settings.coins = 0
         settings.unlocked = 0
         settings.music = true
@@ -180,9 +162,6 @@ local function ad()
     ads.show( "interstitial", { x=display.screenOriginX, y=display.screenOriginY, appId=interstitialstart} )
 end
 
-
-
---timer.performWithDelay(900, splashView)
 timer.performWithDelay(900, splashView)
 timer.performWithDelay(1800, ad)
 
