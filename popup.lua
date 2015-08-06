@@ -7,15 +7,24 @@ local flechaD
 local flechaI
 local titulo
 local textoBloqueo
-local FStextoBloqueo=42
+local valorDesbloqueo="5"
 local optionsTextoBloqueo = {
 	text= translations["to unlock"][language],
 	x= cx+100,
 	y= cy+113,
 	font= "LobsterTwo-Regular",
-	fontSize= FStextoBloqueo,
+	fontSize= 42,
 	width= 220,
 	align= "left"
+}
+local optionsValorDesbloqueo = {
+	text= valorDesbloqueo,
+	x= cx-150,
+	y= cy+120,
+	font= "LobsterTwo-Regular",
+	fontSize= 60,
+	width= 150,
+	align= "right"
 }
 
  function chooseScreenshot()
@@ -23,13 +32,18 @@ local optionsTextoBloqueo = {
 	if flag1 then 
 		display.remove( screenshot )
 		local screenshot=display.newImage( group, "assets/s_Lie.png",cx, cy )
-
+		valorDesbloqueo = 15-(t.coins)
+		textoValorDesbloqueo.text=valorDesbloqueo
 	elseif flag2 then
 		display.remove( screenshot )
 		local screenshot=display.newImage( group, "assets/s_Call.png",cx, cy )
+		valorDesbloqueo = 50-(t.coins)
+		textoValorDesbloqueo.text=valorDesbloqueo
 	elseif flag3 then
 		display.remove( screenshot )
 		local screenshot=display.newImage( group, "assets/s_Laser.png",cx, cy )
+		valorDesbloqueo = 100-(t.coins)
+		textoValorDesbloqueo.text=valorDesbloqueo
 	end
 backgroundFront()
 end
@@ -39,6 +53,7 @@ local function balls()
 		if flag1 then 
 			titulo.text=translations["Lie Detector"][language]
 			textoBloqueo.text=translations["to unlock"][language]
+
 			C1 = display.newCircle( group, cx-40, bottomMarg-51, 15 )
 			C1:setFillColor(.60, .671, .988)
 			C2 = display.newCircle( group, cx, bottomMarg-51, 10 )
@@ -84,7 +99,7 @@ end
 
 local function iconExitTouch(event)
 	    if ( event.phase == "ended") then
-	    	composer.hideOverlay( "popup", {effect="fade"})
+	    	composer.hideOverlay("zoomOutInFade")
 		end
     	return true
 	end
@@ -177,9 +192,12 @@ function scene:create( event )
 	local iconExit = display.newImage( group, "assets/iconExit.png", rightMarg-51, topMarg+40 )
 
 	titulo=display.newText(group, translations["Lie Detector"][language], cx, topMarg+77, "BebasNeue", 42)
+
 	textoBloqueo=display.newText(optionsTextoBloqueo)
 	textoBloqueo:rotate(-3)
 
+	textoValorDesbloqueo=display.newText(optionsValorDesbloqueo)
+	textoValorDesbloqueo:rotate(-3)
 	local iconPlay2 = display.newSprite( iconPlaySheet, iconPlaySequence )
 	iconPlay2.x, iconPlay2.y = leftMarg+155, cy+240
 	iconPlay2:scale(0.56,0.56)
@@ -210,7 +228,7 @@ function scene:create( event )
 	group:insert(flechaI)
 	group:insert(flechaD)
 	group:insert(textoBloqueo)
-
+	group:insert(textoValorDesbloqueo)
 	balls()
 
 	function backgroundFront()
@@ -223,6 +241,7 @@ function scene:create( event )
 		balls()
 		titulo:toFront( )
 		textoBloqueo:toFront( )
+		textoValorDesbloqueo:toFront( )
 	end
 	chooseScreenshot()
 
