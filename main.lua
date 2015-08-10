@@ -147,7 +147,7 @@ local t = loadTable( "settings.json" )
 	    settings.highscoreLaser = 0
         settings.highscoreCopter = 0
         settings.coins = 0
-        settings.unlocked = 0
+        settings.unlocked = 3
         settings.music = true
 	    saveTable(settings, "settings.json")
 	end
