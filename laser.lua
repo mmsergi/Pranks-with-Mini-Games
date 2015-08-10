@@ -2,7 +2,11 @@ local scene = composer.newScene()
 
 local t = loadTable( "settings.json" )
 
-local sound = audio.loadSound("assets/on.ogg")
+local on = audio.loadSound("assets1/on.wav")
+local off = audio.loadSound("assets1/off.wav")
+local swing1 = audio.loadSound("assets1/swing1.wav")
+local swing2 = audio.loadSound("assets1/swing2.wav")
+local hit = audio.loadSound("assets1/hit.wav")
 
 local group
 
@@ -36,24 +40,28 @@ function soundBtnlistener(event)
       
     saveTable(t, "settings.json")
     soundBtn.anchorX , soundBtn.anchorY = 1, 1 
-	soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 90
+	soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 50
+
     group:insert(soundBtn)
 
     end
 end
 
 local function onPointer()
-	audio.play( sound )
-	if laser.alpha==0 then
-		laser.alpha=1
+	if laser.alfa==0 then
+		audio.play( on )
+		laser.alfa=1
+		transition.to( laser, { time=200, y=display.contentHeight/2, transition=easing.outQuad} )
 	else
-		laser.alpha=0
+		audio.play( off )
+		laser.alfa=0
+		transition.to( laser, { time=200, y=display.contentHeight*2, transition=easing.outQuad} )
 	end
 end
 
 local function changeColor(event)
-	audio.play( sound )
 	
+	audio.play( on )
 	laser:removeSelf( )
 	laser = nil
 	grip:removeSelf( )
@@ -63,7 +71,6 @@ local function changeColor(event)
 	laser.x, laser.y = display.contentWidth/2, display.contentHeight/2
 	group:insert(laser)
 
-
 	grip = widget.newButton
 	{
 	    defaultFile="assets1/grip.png",
@@ -71,12 +78,33 @@ local function changeColor(event)
 	}
 	grip.x, grip.y = display.contentWidth/2, display.contentHeight/2 + 300
 	group:insert(grip)
+
+	transition.to( laser, { time=200, y=display.contentHeight/2, transition=easing.outQuad} )
+
+
 end
 
 local function retorn()
 	
 	composer.gotoScene( "menu" )
 
+end
+
+local function shake( event )
+	if laser.alfa==1 then
+
+	    if event.isShake == true then
+	    	rand = math.random(0, 10)
+	    	if (rand>6) then
+	    		audio.play( swing1 )
+	    	elseif (rand<4) then
+	    		audio.play( swing2 )
+	    	elseif (rand>4 and rand<6) then
+	    		audio.play( hit )
+	    	end
+	    end
+
+	end
 end
 
 function scene:create( event )
@@ -87,7 +115,7 @@ function scene:create( event )
 		background = display.newImage(group, "assets1/sky2.png", cx, cy )
 
 		laser = display.newImage(group, "assets1/red.png" )
-		laser.x, laser.y = display.contentWidth/2, display.contentHeight/2
+		laser.x, laser.y = display.contentWidth/2, display.contentHeight*2
 
 		redbtn = widget.newButton
 		{
@@ -151,12 +179,14 @@ function scene:create( event )
 		
 		button = widget.newButton
 		{
-		    defaultFile="assets1/back.png",
+		    defaultFile="assets/home_2.png",
+		    width=70,
+		    height=70,
 		    onRelease = retorn
 		}
 
-		button.x = 50
-		button.y = display.contentHeight - 120
+		button.x = 70
+		button.y = display.contentHeight - 70
 
 		grip = widget.newButton
         {
@@ -169,14 +199,14 @@ function scene:create( event )
 
 	if t.music==true then
 		soundBtn = widget.newButton{
-			defaultFile="assets1/sound_on.png",
+			defaultFile="assets/sound_on.png",
             height = 50,
             width = 50,
 			onEvent = soundBtnlistener
 		}
 	else 
 		soundBtn = widget.newButton{
-			defaultFile="assets1/sound_off.png",
+			defaultFile="assets/sound_off.png",
             height = 50,
             width = 50,
 			onEvent = soundBtnlistener
@@ -184,9 +214,11 @@ function scene:create( event )
 	end
 
 	soundBtn.anchorX , soundBtn.anchorY = 1, 1 
-	soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 90
+	soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 50
 
-	laser.alpha=0
+	laser.alfa=0
+
+	Runtime:addEventListener( "accelerometer", shake )
 
 	group:insert(button)
 	
@@ -202,21 +234,22 @@ end
 
 function scene:show( event )
 	group = self.view
+
+	if ( event.phase == "will" ) then
 	
-	if t.music==false then
-		audio.setVolume(0)
+		if t.music==false then
+			audio.setVolume(0)
+		end
+
+		composer.removeScene( "gamein" )
+
 	end
-
-	composer.removeScene( "gamein" )
-
-	ads.show( "banner", { x=0, y=bottomMarg-70, appId=bannersimulator} )
 end
 
 
 function scene:hide( event )
 	group = self.view
 
-	ads.hide()
 end
 
 

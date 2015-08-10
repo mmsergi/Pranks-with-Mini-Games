@@ -2,6 +2,8 @@ local scene = composer.newScene()
 
 local t = loadTable( "settings.json" )
 
+local losem = audio.loadSound("assets1/gameover.mp3")
+
 function soundBtnlistener(event)
     local phase = event.phase 
     
@@ -136,14 +138,17 @@ end
 
 function scene:show( event )
 	group = self.view
+
+	local phase = event.phase
 	
 	if t.music==false then
 		audio.setVolume(0)
 	end
 
-	local losem = audio.loadSound("assets1/gameover.mp3")
-	audio.play( losem)
-	
+	if ( phase == "will" ) then
+		audio.play(losem)
+	end
+
 end
 
 function scene:hide( event )

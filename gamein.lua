@@ -196,15 +196,13 @@ function scene:show( event )
 		point:addEventListener( "touch", startDrag )
 		Runtime:addEventListener( "enterFrame", move)
 
-		--local intro = audio.loadSound("assets/intro.mp3")
-		--audio.play( intro, { loops=3 })
-		audio.setVolume(0.3)
-
-		audio.play( sound, {loops=-1})
-
 		if t.music == false then
 			audio.setVolume(0)
 		end
+
+		audio.play( sound, {loops=-1})
+
+
     end
 end
 
