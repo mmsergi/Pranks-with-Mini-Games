@@ -189,9 +189,9 @@ function scene:create( event )
 
 	local marco = display.newImage( group, "assets/marco.png", cx, cy )
 
-	local iconExit = display.newImage( group, "assets/iconExit.png", rightMarg-51, topMarg+40 )
+	local iconExit = display.newImage( group, "assets/iconExit.png", leftMarg+45, topMarg+45 )
 
-	titulo=display.newText(group, translations["Lie Detector"][language], cx, topMarg+77, "BebasNeue", 42)
+	titulo=display.newText(group, translations["Lie Detector"][language], cx, topMarg+85, "BebasNeue", 40)
 
 	textoBloqueo=display.newText(optionsTextoBloqueo)
 	textoBloqueo:rotate(-3)

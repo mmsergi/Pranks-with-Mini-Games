@@ -18,7 +18,7 @@ function scene:create( event )
 		local options = {
     		effect = "fade",
     		time = 500,
-    		params = { name="SpongeBob", image="phoneprankassets/bob.png" }
+    		params = { name="Sponge Bob", image="phoneprankassets/bob.png" }
 		}
 		composer.gotoScene( "phoneprank", options )
 	end
@@ -36,7 +36,7 @@ function scene:create( event )
 	end
 	char2:addEventListener( "tap", char2 )
 
-	char3 = display.newImage(group, "ironphoneprankassets/.png", cx/2, cy)
+	char3 = display.newImage(group, "phoneprankassets/iron.png", cx/2, cy)
 	char3.width, char3.height = 150, 150
 	function char3:tap()
 		local options = {

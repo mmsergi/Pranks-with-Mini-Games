@@ -6,12 +6,13 @@ local group
 local tvCall
 local tvLaser
 local tvLie
-
+local coinsAnimationFlag=false
     local tvLieData = { width=209, height=219, numFrames=4,}
     local tvLieSheet = graphics.newImageSheet( "assets/iconLie.png", tvLieData )    
     local tvLieSequence = {
         { name = "unlocked", start=1, count=3, time=900, loopDirection="bounce"},
         { name = "locked", start=4, count=1, time=125,},}
+
 
     local tvCallData = { width=209, height=219, numFrames=4,}
     local tvCallSheet = graphics.newImageSheet( "assets/iconCall.png", tvCallData )    
@@ -19,7 +20,7 @@ local tvLie
         { name = "unlocked", start=1, count=3, time=2500,},
         { name = "locked", start=4, count=1, time=125,},}
 
-local tvLaserData = { width=209, height=219, numFrames=4,}
+	local tvLaserData = { width=209, height=219, numFrames=4,}
     local tvLaserSheet = graphics.newImageSheet( "assets/iconLaser.png", tvLaserData )    
     local tvLaserSequence = {
         { name = "unlocked", frames={4,3,2}, time=1500},
@@ -28,8 +29,36 @@ local tvLaserData = { width=209, height=219, numFrames=4,}
  	iconPlayData = { width=231, height=354, numFrames=4,}
     iconPlaySheet = graphics.newImageSheet( "assets/lab.png", iconPlayData )    
     iconPlaySequence = {
-        { name = "normal", start=1, count=4, time=2500,},}        
+        { name = "normal", start=1, count=4, time=2500,},}  
 
+    local coinsData = { width=68, height=63, numFrames=10,}
+    local coinsSheet = graphics.newImageSheet( "assets/coins.png", coinsData )    
+    coinsSequence = {
+        { name = "estatica", start=1, count=1, time=8500,},
+        { name = "dinamica", start=1, count=10, time=2500,},}  
+
+        function coinsSpriteListener( event )
+     		if coinsAnimationFlag==false then
+		        coins:setSequence( "dinamica" )  
+		        coins:play()
+		        coinsAnimationFlag=true
+		        timer.performWithDelay( 2500, coinsSpriteListener )
+	        elseif coinsAnimationFlag==true then
+		        coins:setSequence( "estatica" )  
+		        coins:play()
+		        coinsAnimationFlag=false
+	        end
+         return true
+        end
+    
+
+        local function iconPlayTouch(event)
+	    if ( event.phase == "ended") then
+	    	composer.removeScene( "menu" )
+	    	composer.gotoScene( "menu2" )
+		end
+    	return true
+	end
 function soundBtnlistener(event)
     local phase = event.phase 
     
@@ -57,7 +86,7 @@ function soundBtnlistener(event)
             onEvent = soundBtnlistener
         }
       end
-      
+
     saveTable(t, "settings.json")
     
 	soundBtn.x , soundBtn.y = leftMarg+35, topMarg+35
@@ -85,7 +114,7 @@ local function tvCallTouch(event)
 	    if ( event.phase == "ended") then
 	     	if t.unlocked>1 then
 	    	composer.removeScene( "menu" )
-	    	composer.gotoScene( "fakeCall")
+	    	composer.gotoScene( "menuphone")
 	    	analytics.logEvent( "FakeCall-Session" )
 	    	else 
 				flag2 = true
@@ -178,8 +207,6 @@ local iconPlay = display.newSprite( iconPlaySheet, iconPlaySequence )
 iconPlay.x, iconPlay.y = cx, cy-140
 iconPlay:play()
 
-
-
 	local intro = audio.loadSound("assets/intro.ogg")
 	audio.play( intro )
 	
@@ -199,17 +226,22 @@ iconPlay:play()
 			onEvent = soundBtnlistener
 		}
 	end
-
-	
 	soundBtn.x , soundBtn.y = leftMarg+35, topMarg+35
+
+	coins = display.newSprite( coinsSheet, coinsSequence )
+	coins.x, coins.y = rightMarg-40, topMarg+30
+	timer.performWithDelay( 10000, coinsSpriteListener )
+	coinsText=display.newText(group, t.coins, rightMarg-80, topMarg+30, "LobsterTwo-Regular", 40)
+	
 
 	group:insert( iconPlay )
 	group:insert( soundBtn )
 	group:insert( tvCall )
 	group:insert( tvLaser )
 	group:insert( tvLie )
+	group:insert(coins)
 	desbloquea()
-
+	iconPlay:addEventListener("touch",iconPlayTouch)
 end
 
 function scene:show( event )

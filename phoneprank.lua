@@ -61,7 +61,7 @@ function scene:create( event )
 	accept:addEventListener( "tap", accept )
 
 
-	decline = display.newImage(group, "decline.png", cx + cx/2, cy + 300 )
+	decline = display.newImage(group, "phoneprankassets/decline.png", cx + cx/2, cy + 300 )
 	function decline:tap()
 		audio.stop(channel)
 		transition.cancel( transi1 )
