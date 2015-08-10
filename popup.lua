@@ -11,7 +11,7 @@ local valorDesbloqueo="5"
 local optionsTextoBloqueo = {
 	text= translations["to unlock"][language],
 	x= cx+100,
-	y= cy+113,
+	y= cy+123,
 	font= "LobsterTwo-Regular",
 	fontSize= 42,
 	width= 220,
@@ -20,7 +20,7 @@ local optionsTextoBloqueo = {
 local optionsValorDesbloqueo = {
 	text= valorDesbloqueo,
 	x= cx-150,
-	y= cy+120,
+	y= cy+135,
 	font= "LobsterTwo-Regular",
 	fontSize= 60,
 	width= 150,
@@ -31,17 +31,17 @@ local optionsValorDesbloqueo = {
  	
 	if flag1 then 
 		display.remove( screenshot )
-		local screenshot=display.newImage( group, "assets/s_Lie.png",cx, cy )
+		local screenshot=display.newImage( group, "assets/s_Lie.png",cx, cy+10 )
 		valorDesbloqueo = 15-(t.coins)
 		textoValorDesbloqueo.text=valorDesbloqueo
 	elseif flag2 then
 		display.remove( screenshot )
-		local screenshot=display.newImage( group, "assets/s_Call.png",cx, cy )
+		local screenshot=display.newImage( group, "assets/s_Call.png",cx, cy+10 )
 		valorDesbloqueo = 50-(t.coins)
 		textoValorDesbloqueo.text=valorDesbloqueo
 	elseif flag3 then
 		display.remove( screenshot )
-		local screenshot=display.newImage( group, "assets/s_Laser.png",cx, cy )
+		local screenshot=display.newImage( group, "assets/s_Laser.png",cx, cy+10 )
 		valorDesbloqueo = 100-(t.coins)
 		textoValorDesbloqueo.text=valorDesbloqueo
 	end
@@ -54,43 +54,43 @@ local function balls()
 			titulo.text=translations["Lie Detector"][language]
 			textoBloqueo.text=translations["to unlock"][language]
 
-			C1 = display.newCircle( group, cx-40, bottomMarg-51, 15 )
+			C1 = display.newCircle( group, cx-40, bottomMarg-41, 15 )
 			C1:setFillColor(.60, .671, .988)
-			C2 = display.newCircle( group, cx, bottomMarg-51, 10 )
-			C3 = display.newCircle( group, cx+40, bottomMarg-51, 10 )
+			C2 = display.newCircle( group, cx, bottomMarg-41, 10 )
+			C3 = display.newCircle( group, cx+40, bottomMarg-41, 10 )
 		elseif flag2 then
 			titulo.text=translations["Fake Call"][language]
 			textoBloqueo.text=translations["to unlock"][language]
-			C1 = display.newCircle( group, cx-40, bottomMarg-51, 10 )
-			C2 = display.newCircle( group, cx, bottomMarg-51, 15 )
+			C1 = display.newCircle( group, cx-40, bottomMarg-41, 10 )
+			C2 = display.newCircle( group, cx, bottomMarg-41, 15 )
 			C2:setFillColor(.60, .671, .988)
-			C3 = display.newCircle( group, cx+40, bottomMarg-51, 10 )
+			C3 = display.newCircle( group, cx+40, bottomMarg-41, 10 )
 		elseif flag3 then
 			titulo.text=translations["Laser Sword"][language]
 			textoBloqueo.text=translations["to unlock"][language]
-			C1 = display.newCircle( group, cx-40, bottomMarg-51, 10 )
-			C2 = display.newCircle( group, cx, bottomMarg-51, 10 )
-			C3 = display.newCircle( group, cx+40, bottomMarg-51, 15 )
+			C1 = display.newCircle( group, cx-40, bottomMarg-41, 10 )
+			C2 = display.newCircle( group, cx, bottomMarg-41, 10 )
+			C3 = display.newCircle( group, cx+40, bottomMarg-41, 15 )
 			C3:setFillColor(.60, .671, .988)
 		end
 	elseif t.unlocked==1 then
 		if flag2 then
 			titulo.text=translations["Fake Call"][language]
 			textoBloqueo.text=translations["to unlock"][language]
-			C2 = display.newCircle( group, cx-20, bottomMarg-51, 15 )
+			C2 = display.newCircle( group, cx-20, bottomMarg-41, 15 )
 			C2:setFillColor(.60, .671, .988)
-			C3 = display.newCircle( group, cx+20, bottomMarg-51, 10 )
+			C3 = display.newCircle( group, cx+20, bottomMarg-41, 10 )
 		elseif flag3 then
 			titulo.text=translations["Laser Sword"][language]
 			textoBloqueo.text=translations["to unlock"][language]
-			C2 = display.newCircle( group, cx-20, bottomMarg-51, 10 )
-			C3 = display.newCircle( group, cx+20, bottomMarg-51, 15 )
+			C2 = display.newCircle( group, cx-20, bottomMarg-41, 10 )
+			C3 = display.newCircle( group, cx+20, bottomMarg-41, 15 )
 			C3:setFillColor(.60, .671, .988)
 		end
 
 	elseif t.unlocked==2 then	
 		titulo.text=translations["Laser Sword"][language]
-		C2 = display.newCircle( group, cx, bottomMarg-51, 15 )
+		C2 = display.newCircle( group, cx, bottomMarg-41, 15 )
 		C2:setFillColor(.60, .671, .988)
 		flechaD.isVisible=false
 		flechaI.isVisible=false
@@ -187,11 +187,11 @@ end
 function scene:create( event )
 	group = self.view
 
-	local marco = display.newImage( group, "assets/marco.png", cx, cy )
+	local marco = display.newImage( group, "assets/marco.png", cx, cy+10 )
 
-	local iconExit = display.newImage( group, "assets/iconExit.png", leftMarg+45, topMarg+45 )
+	local iconExit = display.newImage( group, "assets/iconExit.png", leftMarg+45, topMarg+55 )
 
-	titulo=display.newText(group, translations["Lie Detector"][language], cx, topMarg+85, "BebasNeue", 40)
+	titulo=display.newText(group, translations["Lie Detector"][language], cx, topMarg+95, "BebasNeue", 40)
 
 	textoBloqueo=display.newText(optionsTextoBloqueo)
 	textoBloqueo:rotate(-3)
@@ -199,10 +199,10 @@ function scene:create( event )
 	textoValorDesbloqueo=display.newText(optionsValorDesbloqueo)
 	textoValorDesbloqueo:rotate(-3)
 	local iconPlay2 = display.newSprite( iconPlaySheet, iconPlaySequence )
-	iconPlay2.x, iconPlay2.y = leftMarg+155, cy+240
+	iconPlay2.x, iconPlay2.y = leftMarg+155, cy+250
 	iconPlay2:scale(0.56,0.56)
 
-	local iconTienda = display.newImage( group,"assets/iconTienda.png",rightMarg-160, cy+245 )
+	local iconTienda = display.newImage( group,"assets/iconTienda.png",rightMarg-160, cy+255 )
 
 	flechaI = widget.newButton{
 				defaultFile="assets/flecha_on.png",
@@ -215,8 +215,8 @@ function scene:create( event )
 				onEvent = flechaDHandle
 			}
 
-	flechaI.x, flechaI.y = leftMarg+50, cy
-	flechaD.x, flechaD.y = rightMarg-50, cy
+	flechaI.x, flechaI.y = leftMarg+50, cy+10
+	flechaD.x, flechaD.y = rightMarg-50, cy+10
 	flechaI:scale(-1,1)
 
 	iconExit:addEventListener("touch",iconExitTouch)

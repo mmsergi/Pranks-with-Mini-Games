@@ -7,6 +7,17 @@ local tvCall
 local tvLaser
 local tvLie
 local coinsAnimationFlag=false
+
+local optionsCoinsText = {
+	text= t.coins,
+	x= rightMarg-85, 
+	y= topMarg+36,
+	font= "BebasNeue",
+	fontSize=34,
+	width= 100,
+	align= "center"
+}
+
     local tvLieData = { width=209, height=219, numFrames=4,}
     local tvLieSheet = graphics.newImageSheet( "assets/iconLie.png", tvLieData )    
     local tvLieSequence = {
@@ -50,7 +61,13 @@ local coinsAnimationFlag=false
 	        end
          return true
         end
-    
+   local function hudCoinsTouch(event)
+	if ( event.phase == "ended") then
+	    	composer.removeScene( "menu" )
+	    	composer.gotoScene( "tienda" )
+		end
+    	return true
+	end
 
         local function iconPlayTouch(event)
 	    if ( event.phase == "ended") then
@@ -128,7 +145,7 @@ local function tvLaserTouch(event)
 	    if ( event.phase == "ended") then
 	    	if t.unlocked>2 then
 	    	composer.removeScene( "menu" )
-	    	composer.gotoScene( "LaserSword")
+	    	composer.gotoScene( "laser")
 			analytics.logEvent( "LaserSword-Session" )
 			else 
 				flag3 = true
@@ -227,21 +244,31 @@ iconPlay:play()
 		}
 	end
 	soundBtn.x , soundBtn.y = leftMarg+35, topMarg+35
-
-	coins = display.newSprite( coinsSheet, coinsSequence )
-	coins.x, coins.y = rightMarg-40, topMarg+30
-	timer.performWithDelay( 10000, coinsSpriteListener )
-	coinsText=display.newText(group, t.coins, rightMarg-80, topMarg+30, "LobsterTwo-Regular", 40)
 	
+	coins = display.newSprite( coinsSheet, coinsSequence )
+	coins.x, coins.y = rightMarg-37, topMarg+31
+	coins:scale( 0.8,0.8)
+	timer.performWithDelay( 10000, coinsSpriteListener )
+	coinsText=display.newText(optionsCoinsText)
+	
+	hudCoins = widget.newButton{
+				defaultFile="assets/hudCoins.png",
+				onEvent = hudCoinsTouch,
+			}
+	hudCoins.x, hudCoins.y = rightMarg-85, topMarg+36
+	hudCoins:scale(0.8,0.8)
 
 	group:insert( iconPlay )
 	group:insert( soundBtn )
 	group:insert( tvCall )
 	group:insert( tvLaser )
 	group:insert( tvLie )
+	group:insert( hudCoins)
 	group:insert(coins)
+	group:insert(coinsText)
 	desbloquea()
 	iconPlay:addEventListener("touch",iconPlayTouch)
+
 end
 
 function scene:show( event )
