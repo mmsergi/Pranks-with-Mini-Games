@@ -15,7 +15,7 @@ function soundBtnlistener(event)
         t.music = false
         audio.setVolume(0)
         soundBtn = widget.newButton{
-            defaultFile="assets1/sound_off.png",
+            defaultFile="assets/sound_off.png",
             height = 50,
             width = 50,
             onEvent = soundBtnlistener
@@ -24,7 +24,7 @@ function soundBtnlistener(event)
         t.music = true
         audio.setVolume(1)
         soundBtn = widget.newButton{
-            defaultFile="assets1/sound_on.png",
+            defaultFile="assets/sound_on.png",
             height = 50,
             width = 50,
             onEvent = soundBtnlistener
@@ -71,7 +71,7 @@ function scene:create( event )
 	{
 	    height = 50,
 	    width = 50,
-	    defaultFile="assets1/home.png",
+	    defaultFile="assets/home.png",
 	    onRelease = goHome
 	}
 
@@ -99,14 +99,14 @@ function scene:create( event )
 
 	if t.music==true then
 		soundBtn = widget.newButton{
-			defaultFile="assets1/sound_on.png",
+			defaultFile="assets/sound_on.png",
             height = 50,
             width = 50,
 			onEvent = soundBtnlistener
 		}
 	else 
 		soundBtn = widget.newButton{
-			defaultFile="assets1/sound_off.png",
+			defaultFile="assets/sound_off.png",
             height = 50,
             width = 50,
 			onEvent = soundBtnlistener
