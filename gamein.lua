@@ -183,7 +183,7 @@ function scene:create( event )
 	tim=display.newText(group, "SCORE 0", 0, 0, "muro", 35 )
 	tim:setFillColor( black )
 	tim.x=display.contentWidth/2
-	tim.y=20
+	tim.y=topMarg+18
 
 	text = display.newText(group, "DRAG LASER TO AVOID THE CAT!", 0, 0, "muro", 35)
 	text:setFillColor( black )
@@ -198,12 +198,12 @@ function scene:create( event )
 
 	cointext = display.newText(group, "0", 0, 0, "muro", 35)
 	cointext:setFillColor( black )
-	cointext.x, cointext.y=rightMarg-80,topMarg+20
+	cointext.x, cointext.y=rightMarg-80,topMarg+18
 
 	coinHud = display.newSprite( coinsSheet, coinsSequence )
 	coinHud:scale(0.8,0.8)
 	group:insert(coinHud)
-	coinHud.x, coinHud.y = rightMarg-35,topMarg+25
+	coinHud.x, coinHud.y = rightMarg-35,topMarg+22
 
 end
 

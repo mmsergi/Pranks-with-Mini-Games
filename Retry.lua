@@ -1,17 +1,6 @@
-local composer = require( "composer" )
 local scene = composer.newScene()
-local widget = require( "widget" )
-display.setStatusBar( display.HiddenStatusBar )
-local ads = require( "ads" )
-local AdBuddiz = require "plugin.adbuddiz"
-local gameNetwork = require( "gameNetwork" )
 local t = loadTable( "settings.json" )
 
--- -----------------------------------------------------------------------------------------------------------------
--- All code outside of the listener functions will only be executed ONCE unless "composer.removeScene()" is called.
--- -----------------------------------------------------------------------------------------------------------------
---local GA = require ( "plugin.gameanalytics" )
--- local forward references should go here
 local background
 local Gameover
 local notas
@@ -38,13 +27,6 @@ function scene:create( event )
     local sceneGroup = self.view
 
 FondoMusica2= audio.loadSound( "assets4/rithm.ogg")
-function showInter()
- if math.random(100)<=25 then
-
-ads.show( "interstitial", { appId=interstitialretry } )
-
- end
-end
 
 fondoRetry=display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY, display.actualContentWidth, 800 )
 fondoRetry:setFillColor( 0.533, 0.933, 0.996 )
@@ -90,93 +72,13 @@ moregames=display.newSprite(sceneGroup,moregamesSheet,moregamesSequence)
 moregames:play()
 
 moregames.x= cx
-moregames.y=cy+165
+moregames.y=cy+195
 moregames:scale(1,1)
 
 function moregames:tap()
 AdBuddiz.showAd() 
 end
 moregames:addEventListener("tap",moregames)
-
-function soundBtnlistener(event)
-    local phase = event.phase 
-    
-    if "ended" == phase then   
-
-      display.remove(soundBtn) 
-      soundBtn = nil
-      
-      if t.music == true then
-        t.music = false
-        audio.setVolume(0)
-        soundBtn = widget.newButton{
-            defaultFile="assets/sound_off.png",
-            height = 50,
-            width = 50,
-            onEvent = soundBtnlistener
-        }
-      else
-        t.music = true
-        audio.setVolume(1)
-        soundBtn = widget.newButton{
-            defaultFile="assets/sound_on.png",
-            height = 50,
-            width = 50,
-            onEvent = soundBtnlistener
-        }
-      end
-      
-    saveTable(t, "settings.json")
-    soundBtn.x , soundBtn.y = rightMarg-50, bottomMarg-140
-
-    end
-end
-
-if t.music==true then
-        soundBtn = widget.newButton{
-            defaultFile="assets/sound_on.png",
-            height = 50,
-            width = 50,
-            onEvent = soundBtnlistener
-        }
-    else 
-        soundBtn = widget.newButton{
-            defaultFile="assets/sound_off.png",
-            height = 50,
-            width = 50,
-            onEvent = soundBtnlistener
-        }
-    end
-
-     
-    soundBtn.x , soundBtn.y = rightMarg-50, bottomMarg-140
-
-
-sceneGroup:insert(soundBtn)
-
-local function goHome()
-       
-   composer.removeScene( "EndlessH")
-   composer.removeScene( "Retry")
-       composer.gotoScene( "menu2" )
-      
-end
-
-local homeBtn = widget.newButton
-        {
-            defaultFile="assets/back.png",
-            overFile="assets/back_2.png",
-            onRelease = goHome,
-            parent = group,
-        }
-
-        homeBtn.x = leftMarg+32
-        homeBtn.y = topMarg+32
-        
-        
-        sceneGroup:insert( homeBtn )
-
-
 
 
 end
@@ -189,13 +91,8 @@ function scene:show( event )
 
 if ( phase == "will" ) then 
 
-
-
-   --Publi
-    ads.show( "banner", { x=0, y=1000, appId=bannerretry } )--cargar anuncio admob
-
 retryNube=display.newImage(sceneGroup,"assets4/retryNube.png", display.contentCenterX, bottomMarg-33)
-retryNube:scale(1.38,1.38)
+retryNube:scale(1.65,1.65)
 
 retryNubeD=display.newImage(sceneGroup,"assets4/retryNube.png", cx, cy-70)
 retryNubeD:scale(0.75,1.2)
@@ -232,6 +129,85 @@ end
 reducirnube()
 
 
+function soundBtnlistener(event)
+    local phase = event.phase 
+    
+    if "ended" == phase then   
+
+      display.remove(soundBtn) 
+      soundBtn = nil
+      
+      if t.music == true then
+        t.music = false
+        audio.setVolume(0)
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_off.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+      else
+        t.music = true
+        audio.setVolume(1)
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_on.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+      end
+      
+    saveTable(t, "settings.json")
+    soundBtn.anchorX , soundBtn.anchorY = 1, 1 
+    soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 25
+
+    end
+end
+
+if t.music==true then
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_on.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+    else 
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_off.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+    end
+
+     
+    soundBtn.anchorX , soundBtn.anchorY = 1, 1 
+    soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 25
+
+
+sceneGroup:insert(soundBtn)
+
+local function goHome()
+       
+   composer.removeScene( "EndlessH")
+   composer.removeScene( "Retry")
+       composer.gotoScene( "menu2" )
+      
+end
+
+local homeBtn = widget.newButton
+        {
+            defaultFile="assets/back.png",
+            overFile="assets/back_2.png",
+            onRelease = goHome,
+            parent = group,
+        }
+
+        homeBtn.x = leftMarg+50
+        homeBtn.y = bottomMarg-50
+        
+        
+        sceneGroup:insert( homeBtn )
 
 
 
@@ -248,7 +224,7 @@ FondoMusica2Channel= audio.play(FondoMusica2, {loops=(-1)})
 
         if ( "ended" == event.phase )and (minusButtonPressed == false)  then
                     
-                    analytics.logEvent( "RetrySession" )
+                   
                     composer.removeScene("EndlessH")
                     audio.stop(FondoMusica2Channel)
                    audio.rewind(FondoMusicaChannel)
@@ -258,8 +234,7 @@ FondoMusica2Channel= audio.play(FondoMusica2, {loops=(-1)})
                         time = 800,}
 
                         composer.gotoScene( "EndlessH",options)
-                        ads.hide("banner")
-                        showInter()
+                        
                     
                     minusButtonPressed = true
                      audio.play( CheersAudio )
@@ -290,7 +265,7 @@ FondoMusica2Channel= audio.play(FondoMusica2, {loops=(-1)})
 
 sceneGroup:insert(Retry)
 Retry.x = display.contentCenterX
-Retry.y = cy+50
+Retry.y = cy+80
 Retry:scale(1.38,1.38)      
     local hud = require( "hud" )
     sceneGroup:insert( hudCoins)

@@ -14,17 +14,11 @@
 
 
 --Requerimientos iniciales
-
-local composer = require( "composer" )
 local scene = composer.newScene()
-local ads = require( "ads" )
-local AdBuddiz = require "plugin.adbuddiz"
-local gameNetwork = require( "gameNetwork" )
-local widget = require( "widget" )
+
 local t = loadTable( "settings.json" )
 json = require('json')
 
-display.setStatusBar( display.HiddenStatusBar )
 local flamaSequence
 local flamaTable = {}
 local MonedaTable = {}
@@ -157,7 +151,14 @@ sceneGroup:insert(der)
 der.isVisible=false
 der.isHitTestable=true
 
+    cointext = display.newText(sceneGroup, "0", 0, 0, "telo", 40)
+    cointext:setFillColor( black )
+    cointext.x, cointext.y=rightMarg-80,topMarg+24
 
+    coinHud = display.newSprite( coinsSheet, coinsSequence )
+    coinHud:scale(0.8,0.8)
+    sceneGroup:insert(coinHud)
+    coinHud.x, coinHud.y = rightMarg-35,topMarg+22
 
 
 
@@ -1111,7 +1112,7 @@ if (event.other.name) == "personaje" then
                 basket:setSequence( "explosion" )
                 basket:play()
                 
-                audio.play( BasketAudio )
+                --audio.play( BasketAudio )
                 
                 timer.performWithDelay(800, function()event.target.isVisible=false end)
                 elseif ( event.phase == "ended" ) then
@@ -1173,7 +1174,7 @@ end
 function sumaactualgalletas()
     user.actualgalletas = user.actualgalletas + 1
     user.galletas = user.galletas + 1
-
+    cointext.text=user.actualgalletas
     -- guarda datos
     saveValue('user.txt', json.encode(user))
     -- recarga datos
@@ -1320,7 +1321,7 @@ function scene:destroy( event )
     -- Insert code here to clean up the scene.
     -- Example: remove display objects, save state, etc.
 
-
+display.remove( cointext )
 display.remove( personaje )
 display.remove( fondo )
 display.remove( flechaR )
