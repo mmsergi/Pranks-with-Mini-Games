@@ -87,12 +87,8 @@ function scene:create( event )
 	highscore.x = display.contentWidth/2
 	highscore.y = 250
 
-	cointext = display.newText(group, "0 C", 0, 0, "muro", 24)
-	cointext:setFillColor( black )
-	cointext.x=display.contentWidth - 40
-	cointext.y=20
 
-	if event.params.lastscore == t.highscore then
+	if event.params.lastscore == t.highscoreLaser then
 		highscore:setFillColor( 1,0,0 )
 	end
 
@@ -117,16 +113,12 @@ function scene:create( event )
 
 	local gamesBtn = widget.newButton{
 		defaultFile="assets1/games.png",
-		width=240, height=60,
 		onRelease = showGameAd
 	}
-
+	gamesBtn:scale(0.6,0.6)
 	gamesBtn.x = display.contentWidth/2
 	gamesBtn.y = display.contentHeight/2 + 200
 
-	local cointext = display.newText(group, t.coins.." C", 0, 0, "muro", 24)
-	cointext.x=display.contentWidth - 40
-	cointext.y=20 
 
 	group:insert(retryBtn)
 	group:insert(homeBtn)
@@ -146,7 +138,16 @@ function scene:show( event )
 
 	if ( phase == "will" ) then
 		audio.play(losem)
-	end
+	
+elseif ( phase == "did" ) then  
+
+local hud = require( "hud" )
+    group:insert( hudCoins)
+    group:insert( coins)
+    group:insert( coinsText)
+    showNumCoins(coinsText, numCoins, duration)
+
+end
 
 end
 
@@ -157,6 +158,7 @@ end
 
 function scene:destroy( event )
 	group = self.view
+	package.loaded["hud"] = nil
 end
 
 scene:addEventListener( "create", scene )

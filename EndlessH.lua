@@ -135,7 +135,7 @@ physics.setGravity( 0, 4 )
 FondoMusica2= audio.loadSound( "assets4/Theme8.ogg")
 
 Fail= audio.loadSound( "assets4/GameFail.ogg")
-Bite= audio.loadSound( "assets4/Bite.ogg")
+Bite= audio.loadSound( "assets/coin.ogg")
 CheersAudio= audio.loadSound( "assets4/assets4/Cheers.ogg")
 snowball= audio.loadSound( "assets4/snowball.ogg")
 BasketAudio= audio.loadSound( "assets4/basket.ogg")
@@ -486,7 +486,7 @@ elseif (event.other.name) == "PuertaA" then
 
                     timer.cancel(flechaIndicatoriaTmr)
                     flechaIndicatoria.isVisible=false
-                    flechaIndicatoriaTmr=timer.performWithDelay(5000, function() flechaIndicatoria.isVisible=true end)
+
                     audio.play( door)
                     inicioFlag=true--se hace para llamar inicio solo una vez, aqui permitimos que se vuelva a llamar, en Inicio() lo cerramos 
                     matarInicio=false--desactivamos para que no se le pueda matar con la flama que hay para que se vaya de la puerta al Inicio
@@ -1265,8 +1265,8 @@ function Inicio()
 display.remove( Monedas )
 display.remove( basket )
 funcionremoveMonedasTmr()
-moverFlechasTuto()
 
+flechaIndicatoriaTmr=timer.performWithDelay(5000, function() flechaIndicatoria.isVisible=true end)
 timer.performWithDelay(1000, function() PuertaA.isVisible=true end)
 timerMuchoRatoPuerta=timer.performWithDelay(6000, function() muchoRatoPuerta=true matarInicio=true end)
 muchoRatoPuertaSolo1flama=true

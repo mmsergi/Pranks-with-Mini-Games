@@ -296,7 +296,7 @@ Retry:scale(1.38,1.38)
     sceneGroup:insert( hudCoins)
     sceneGroup:insert( coins)
     sceneGroup:insert( coinsText)
-showNumCoins(coinsText, numCoins, duration) 
+    showNumCoins(coinsText, numCoins, duration) 
 end
 end
 -- "scene:hide()"
