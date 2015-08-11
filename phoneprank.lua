@@ -73,6 +73,7 @@ function scene:create( event )
 	decline:addEventListener( "tap", decline )
 
 
+	audio.setVolume(1)
 	channel = audio.play( ring, {loops=-1})
 
 end

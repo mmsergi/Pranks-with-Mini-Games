@@ -85,7 +85,7 @@ local function changeColor(event)
 end
 
 local function retorn()
-	
+	composer.removeScene( "laser" )
 	composer.gotoScene( "menu" )
 
 end
@@ -240,8 +240,6 @@ function scene:show( event )
 		if t.music==false then
 			audio.setVolume(0)
 		end
-
-		composer.removeScene( "gamein" )
 
 	end
 end

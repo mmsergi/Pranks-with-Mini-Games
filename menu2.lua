@@ -85,6 +85,7 @@ function scene:create( event )
 
     function btn1:tap()
         btn1:scale(0.75,0.75)
+        analytics.logEvent( "LaserCatSession" )
         composer.gotoScene( "gamein" )
     end
     
@@ -95,6 +96,7 @@ function scene:create( event )
 
     function btn2:tap()
         btn2:scale(0.75,0.75)
+        analytics.logEvent( "ToASession" )
         composer.gotoScene( "EndlessH" )
     end
     
@@ -105,6 +107,7 @@ function scene:create( event )
 
     function btn3:tap()
         btn3:scale(0.75,0.75)
+        analytics.logEvent( "CopterSession" )
         composer.gotoScene( "game" )
     end
     
@@ -135,10 +138,12 @@ function scene:create( event )
 		    overFile="assets/home_2.png",
 		    onRelease = goHome,
 		    parent = group,
+		    height = 70,
+		    width = 70,
 		}
 
-		homeBtn.x = cx
-		homeBtn.y = bottomMarg-50
+		homeBtn.x = 60
+		homeBtn.y = bottomMarg-60
 
 		group:insert( homeBtn )
 	group:insert( soundBtn )

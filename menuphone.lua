@@ -84,13 +84,12 @@ function scene:create( event )
 	end
 	char6:addEventListener( "tap", char6 )
 
-	home = display.newImage(group, "phoneprankassets/accept.png", cx, cy + 400 )
+	home = display.newImage(group, "assets/home.png", cx, cy + 330 )
+	home.width=70
+    home.height=70
+
 	function home:tap()
-		local options = {
-    		effect = "fade",
-    		time = 500
-		}
-		composer.gotoScene( "menu", options )
+		composer.gotoScene( "menu" )
 	end
 
 	home:addEventListener( "tap", home )

@@ -46,12 +46,17 @@ function coinsSpriteListener( event )
   return true
 end
 
-function showGameAd()
+function showMoreGamesAd()
+    analytics.logEvent( "MoreGamesClick" )
     if (AdBuddiz.isReadyToShowAd()) then
         AdBuddiz.showAd()
     else
         ads.show( "interstitial", {appId=interstitial} )
     end
+end
+
+function showAd()
+    ads.show( "interstitial", {appId=interstitial} )
 end
 
 -- Save specified value to specified encrypted file
@@ -146,10 +151,6 @@ local t = loadTable( "settings.json" )
 local function splashView()
     splash:removeSelf( )
     composer.gotoScene( "menu" )
-end
-
-function ad()
-    ads.show( "interstitial", {appId=interstitial} )
 end
 
 timer.performWithDelay(1, splashView)

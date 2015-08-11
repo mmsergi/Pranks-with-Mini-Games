@@ -228,15 +228,15 @@ end
 	
 local homeBtn = widget.newButton
 		{
-		    height = 50,
-		    width = 50,
+		    height = 70,
+		    width = 70,
 		    defaultFile="assets/home.png",
 		    onRelease = goHome,
 		    parent = group,
 		}
 
-		homeBtn.x = display.contentWidth/2
-		homeBtn.y = display.contentHeight - 50
+		homeBtn.x = 60
+		homeBtn.y = display.contentHeight - 60
 		
 		group:insert( soundBtn )
 		group:insert( homeBtn )
