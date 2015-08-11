@@ -1,3 +1,5 @@
+local group
+
 local scene = composer.newScene()
 
 local t = loadTable( "settings.json" )
@@ -14,7 +16,8 @@ function vungleAdListener( event )
   end
   if ( event.type == "adView" ) then
     t.coins = t.coins + 10
-    totalcoins.text = t.coins.." C"
+    coinsText.text = t.coins
+    saveTable(t, "settings.json")
   end
   if ( event.type == "adEnd" ) then
     -- The ad experience has been closed- this
@@ -22,34 +25,22 @@ function vungleAdListener( event )
   end
 end
 
-local postOptions = {
-    service = "facebook",
-    message = "Check out this photo!",
-    listener = eventListener,
-    image = {
-        { filename = "assets/fondoMenu.png", baseDir = system.ResourceDirectory },
-        { filename = "assets/btnDef.png", baseDir = system.ResourceDirectory }
-    },
-    url = "http://coronalabs.com"
-}
-
-ads.init( "vungle", vungleID, vungleAdListener) -- Vungle
-
-function playVideoAd()
+local function playVideoAd()
 	ads.show( "incentivized" )
 end
 
-function postFB()
-	native.showPopup( "social", options )
+local function goBack()
+	composer.gotoScene( "menu" )
+	composer.removeScene( "tienda" )
 end
 
 function scene:create( event )
 	group = self.view
+
+	ads.init( "vungle", "com.seja.liedetector", vungleAdListener) -- Vungle
+	ads:setCurrentProvider("vungle")
 	
 	background = display.newImage( group, "assets/fondoMenu.png", cx, cy )
-
-	totalcoins = display.newText(group, t.coins.." C", display.contentWidth - 75, 25, native.systemFontBold, 28)
-	totalcoins:setFillColor( 0, 0, 0 )
 
 	videoBtn = widget.newButton{
 	    width = 300,
@@ -59,7 +50,7 @@ function scene:create( event )
 	    onRelease = playVideoAd
 	}
 	videoBtn.x = display.contentWidth/2 
-	videoBtn.y = 400
+	videoBtn.y = 200
 
 	postBtn = widget.newButton{
 	    width = 300,
@@ -69,7 +60,27 @@ function scene:create( event )
 	    onRelease = postFB
 	}
 	postBtn.x = display.contentWidth/2 
-	postBtn.y = 600
+	postBtn.y = 400
+
+	backBtn = widget.newButton
+	{
+	    defaultFile="assets/back.png",
+	    overFile="assets/back_2.png",
+	    onRelease = goBack
+	}
+
+	backBtn.x = leftMarg+50
+	backBtn.y = bottomMarg-50
+
+	local hud = require( "hud" )
+    group:insert(hudCoins)
+    group:insert(coins)
+    group:insert(coinsText)
+	showNumCoins(coinsText, numCoins, 1)
+
+	group:insert(videoBtn)
+	group:insert(postBtn)
+	group:insert(backBtn)
 
 end
 
@@ -78,17 +89,15 @@ function scene:show( event )
 
 end
 
-
 function scene:hide( event )
 	group = self.view
 	
-
 end
-
 
 function scene:destroy( event )
 	group = self.view
-
+	ads:setCurrentProvider("admob")
+	package.loaded["hud"] = nil
 end
 
 scene:addEventListener( "create", scene )

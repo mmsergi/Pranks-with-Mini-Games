@@ -8,12 +8,9 @@ analytics = require "analytics"
 AdBuddiz = require "plugin.adbuddiz"
 translations = require "translations"
 
-bannerretry = "ca-app-pub-1709584335667681/2761590251"
-bannersimulator = "ca-app-pub-1709584335667681/4238323453"
-interstitialstart = "ca-app-pub-1709584335667681/5715056650"
-interstitialretry = "ca-app-pub-1709584335667681/8668523059"
+interstitial= "ca-app-pub-1709584335667681/5715056650"
 
-ads.init( "admob", interstitialstart, adListener ) --Admob
+ads.init( "admob", interstitial ) --Admob
 
 AdBuddiz.setAndroidPublisherKey( "260ddaa0-671b-4d8f-bf0c-769cb0b6ad9e" ) --Adbuddiz
 AdBuddiz.cacheAds()  
@@ -36,51 +33,24 @@ coinsSequence = {
   { name = "dinamica", start=1, count=10, time=2500,},} 
 
 function coinsSpriteListener( event )
-        if coinsAnimationFlag==false then
-            coins:setSequence( "dinamica" )  
-            coins:play()
-            coinsAnimationFlag=true
-            tmrCoins=timer.performWithDelay( 2500, coinsSpriteListener )
-          elseif coinsAnimationFlag==true then
-            coins:setSequence( "estatica" )  
-            coins:play()
-            coinsAnimationFlag=false
-          end
-         return true
-        end
-
-local function adListener( event )
-    -- The 'event' table includes:
-    -- event.name: string value of "adsRequest"
-    -- event.response: message from the ad provider about the status of this request
-    -- event.phase: string value of "loaded", "shown", or "refresh"
-    -- event.type: string value of "banner" or "interstitial"
-    -- event.isError: boolean true or false
-
-    if (event.isError) then
-
-        local msg = event.response
-        print("Error, no se puede cargar el anuncio", msg)
-
-        if (AdBuddiz.isReadyToShowAd()) then --si esta preparado el anuncio
-             AdBuddiz.showAd()
-        else  
-            --mostrar un anuncio propio 
-        end   
-
-    elseif (event.phase == "loaded") then
-        print("Anuncio cargado Admob")
-    elseif (event.phase == "shown") then
-        print("Anuncio visto Admob")
-    end
-
+  if coinsAnimationFlag==false then
+    coins:setSequence( "dinamica" )  
+    coins:play()
+    coinsAnimationFlag=true
+    tmrCoins=timer.performWithDelay( 2500, coinsSpriteListener )
+  elseif coinsAnimationFlag==true then
+    coins:setSequence( "estatica" )  
+    coins:play()
+    coinsAnimationFlag=false
+  end
+  return true
 end
 
 function showGameAd()
     if (AdBuddiz.isReadyToShowAd()) then
         AdBuddiz.showAd()
     else
-        ads.show( "interstitial", { x=display.screenOriginX, y=display.screenOriginY, appId=interstitialstart} )
+        ads.show( "interstitial", {appId=interstitial} )
     end
 end
 
@@ -175,17 +145,14 @@ local t = loadTable( "settings.json" )
 
 local function splashView()
     splash:removeSelf( )
-    composer.gotoScene( "EndlessH" )
+    composer.gotoScene( "menu" )
 end
 
-local function ad()
-    ads.show( "interstitial", { x=display.screenOriginX, y=display.screenOriginY, appId=interstitialstart} )
+function ad()
+    ads.show( "interstitial", {appId=interstitial} )
 end
 
---timer.performWithDelay(900, splashView)
 timer.performWithDelay(1, splashView)
-
-timer.performWithDelay(1800, ad)
 
 options = {
    width = 50,

@@ -8,16 +8,6 @@ local tvLaser
 local tvLie
 local coinsAnimationFlag=false
 
-local optionsCoinsText = {
-	text= t.coins,
-	x= rightMarg-85, 
-	y= topMarg+36,
-	font= "BebasNeue",
-	fontSize=34,
-	width= 100,
-	align= "center"
-}
-
     local tvLieData = { width=209, height=219, numFrames=4,}
     local tvLieSheet = graphics.newImageSheet( "assets/iconLie.png", tvLieData )    
     local tvLieSequence = {
@@ -45,6 +35,7 @@ local optionsCoinsText = {
    local function hudCoinsTouch(event)
 	if ( event.phase == "ended") then
 	    	composer.removeScene( "menu" )
+	    	ads:setCurrentProvider("vungle")
 	    	composer.gotoScene( "tienda" )
 		end
     	return true
@@ -182,28 +173,28 @@ function scene:create( event )
 	end
 
 
-local background = display.newImage( group, "assets/background.png", cx, cy )
-local sombra = display.newImage( group, "assets/sombra.png", cx, bottomMarg-40)
-tvCall = display.newSprite( tvCallSheet, tvCallSequence )
-tvLaser = display.newSprite( tvLaserSheet, tvLaserSequence )
-tvLie = display.newSprite( tvLieSheet, tvLieSequence )
+	local background = display.newImage( group, "assets/background.png", cx, cy )
+	local sombra = display.newImage( group, "assets/sombra.png", cx, bottomMarg-40)
+	tvCall = display.newSprite( tvCallSheet, tvCallSequence )
+	tvLaser = display.newSprite( tvLaserSheet, tvLaserSequence )
+	tvLie = display.newSprite( tvLieSheet, tvLieSequence )
 
-tvLie:addEventListener("touch",tvLieTouch)
-tvCall:addEventListener("touch",tvCallTouch)
-tvLaser:addEventListener("touch",tvLaserTouch)
+	tvLie:addEventListener("touch",tvLieTouch)
+	tvCall:addEventListener("touch",tvCallTouch)
+	tvLaser:addEventListener("touch",tvLaserTouch)
 
-tvCall.x, tvCall.y = cx-105, cy+260
-tvCall:play()
+	tvCall.x, tvCall.y = cx-105, cy+260
+	tvCall:play()
 
-tvLaser.x, tvLaser.y = cx+105, cy+260
-tvLaser:play()
+	tvLaser.x, tvLaser.y = cx+105, cy+260
+	tvLaser:play()
 
-tvLie.x, tvLie.y = cx, cy+115
-tvLie:play()
+	tvLie.x, tvLie.y = cx, cy+115
+	tvLie:play()
 
-local iconPlay = display.newSprite( iconPlaySheet, iconPlaySequence )
-iconPlay.x, iconPlay.y = cx, cy-140
-iconPlay:play()
+	local iconPlay = display.newSprite( iconPlaySheet, iconPlaySequence )
+	iconPlay.x, iconPlay.y = cx, cy-140
+	iconPlay:play()
 
 	local intro = audio.loadSound("assets/intro.ogg")
 	audio.play( intro )

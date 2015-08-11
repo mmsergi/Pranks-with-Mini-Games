@@ -108,6 +108,7 @@ local function iconTiendaTouch(event)
 	    if ( event.phase == "ended") then
 	    	composer.hideOverlay( "popup" )
 	    	composer.removeScene( "menu" )
+	    	ads:setCurrentProvider("vungle")
 	    	composer.gotoScene( "tienda" )
 		end
     	return true
