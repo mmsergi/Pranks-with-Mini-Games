@@ -29,6 +29,26 @@ bottomMarg = display.contentHeight - display.screenOriginY
 
 splash = display.newImage("assets/splash.png", cx, cy)
 
+coinsData = { width=68, height=63, numFrames=10,}
+coinsSheet = graphics.newImageSheet( "assets/coins.png", coinsData )    
+coinsSequence = {
+  { name = "estatica", start=1, count=1, time=8500,},
+  { name = "dinamica", start=1, count=10, time=2500,},} 
+
+function coinsSpriteListener( event )
+        if coinsAnimationFlag==false then
+            coins:setSequence( "dinamica" )  
+            coins:play()
+            coinsAnimationFlag=true
+            tmrCoins=timer.performWithDelay( 2500, coinsSpriteListener )
+          elseif coinsAnimationFlag==true then
+            coins:setSequence( "estatica" )  
+            coins:play()
+            coinsAnimationFlag=false
+          end
+         return true
+        end
+
 local function adListener( event )
     -- The 'event' table includes:
     -- event.name: string value of "adsRequest"
@@ -155,14 +175,16 @@ local t = loadTable( "settings.json" )
 
 local function splashView()
     splash:removeSelf( )
-    composer.gotoScene( "menu" )
+    composer.gotoScene( "EndlessH" )
 end
 
 local function ad()
     ads.show( "interstitial", { x=display.screenOriginX, y=display.screenOriginY, appId=interstitialstart} )
 end
 
-timer.performWithDelay(900, splashView)
+--timer.performWithDelay(900, splashView)
+timer.performWithDelay(1, splashView)
+
 timer.performWithDelay(1800, ad)
 
 options = {

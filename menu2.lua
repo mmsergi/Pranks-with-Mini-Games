@@ -131,15 +131,14 @@ function scene:create( event )
 
 	local homeBtn = widget.newButton
 		{
-		    height = 50,
-		    width = 50,
 		    defaultFile="assets/home.png",
+		    overFile="assets/home_2.png",
 		    onRelease = goHome,
 		    parent = group,
 		}
 
-		homeBtn.x = display.contentWidth/2
-		homeBtn.y = display.contentHeight - 50
+		homeBtn.x = cx
+		homeBtn.y = bottomMarg-50
 
 		group:insert( homeBtn )
 	group:insert( soundBtn )

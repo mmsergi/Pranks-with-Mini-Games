@@ -42,25 +42,6 @@ local optionsCoinsText = {
     iconPlaySequence = {
         { name = "normal", start=1, count=4, time=2500,},}  
 
-    local coinsData = { width=68, height=63, numFrames=10,}
-    local coinsSheet = graphics.newImageSheet( "assets/coins.png", coinsData )    
-    coinsSequence = {
-        { name = "estatica", start=1, count=1, time=8500,},
-        { name = "dinamica", start=1, count=10, time=2500,},}  
-
-        function coinsSpriteListener( event )
-     		if coinsAnimationFlag==false then
-		        coins:setSequence( "dinamica" )  
-		        coins:play()
-		        coinsAnimationFlag=true
-		        timer.performWithDelay( 2500, coinsSpriteListener )
-	        elseif coinsAnimationFlag==true then
-		        coins:setSequence( "estatica" )  
-		        coins:play()
-		        coinsAnimationFlag=false
-	        end
-         return true
-        end
    local function hudCoinsTouch(event)
 	if ( event.phase == "ended") then
 	    	composer.removeScene( "menu" )
@@ -244,30 +225,19 @@ iconPlay:play()
 		}
 	end
 	soundBtn.x , soundBtn.y = leftMarg+35, topMarg+35
-	
-	coins = display.newSprite( coinsSheet, coinsSequence )
-	coins.x, coins.y = rightMarg-37, topMarg+31
-	coins:scale( 0.8,0.8)
-	timer.performWithDelay( 10000, coinsSpriteListener )
-	coinsText=display.newText(optionsCoinsText)
-	
-	hudCoins = widget.newButton{
-				defaultFile="assets/hudCoins.png",
-				onEvent = hudCoinsTouch,
-			}
-	hudCoins.x, hudCoins.y = rightMarg-85, topMarg+36
-	hudCoins:scale(0.8,0.8)
-
 	group:insert( iconPlay )
 	group:insert( soundBtn )
 	group:insert( tvCall )
 	group:insert( tvLaser )
-	group:insert( tvLie )
-	group:insert( hudCoins)
-	group:insert(coins)
-	group:insert(coinsText)
+	group:insert( tvLie ) 
 	desbloquea()
 	iconPlay:addEventListener("touch",iconPlayTouch)
+
+	local hud = require( "hud" )
+    group:insert( hudCoins)
+    group:insert( coins)
+    group:insert( coinsText)
+	showNumCoins(coinsText, numCoins, 1)
 
 end
 
@@ -297,7 +267,7 @@ display.remove( tvLie )
 display.remove(background )
 display.remove( sombra )
 display.remove( iconPlay )
-
+package.loaded["hud"] = nil
 end
 
 scene:addEventListener( "create", scene )

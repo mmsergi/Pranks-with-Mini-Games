@@ -154,34 +154,6 @@ if t.music==true then
 
 sceneGroup:insert(soundBtn)
 
-
-
---HUD galletas
---Monedas = display.newSprite( sceneGroup, MonedaSheet, MonedaSequence)
-Monedas = display.newImage(sceneGroup,"assets4/banana.png")
---Monedas:setSequence("inicial")
---Monedas:play()
-monedaScale=0.69
-Monedas:scale(monedaScale,monedaScale)
-Monedas.x=rightMarg-30
-Monedas.y=topMarg+30
-Monedas:scale(0.9,0.9)
-
-
-   local options = 
-{
-    parent = sceneGroup,
-    text = user.galletas,     
-    x = rightMarg-120,
-    y = topMarg+24,
-    width = 128,     --required for multi-line and alignment
-    font = "telo",   
-    fontSize = 41,
-    align = "right"  --new alignment parameter
-}
-
-local totalGalletas=display.newEmbossedText(options)
-totalGalletas:setFillColor(.424, .20, .008) 
 local function goHome()
        
    composer.removeScene( "EndlessH")
@@ -192,14 +164,14 @@ end
 
 local homeBtn = widget.newButton
         {
-            defaultFile="assets/home.png",
-            overFile="assets/home_2.png",
+            defaultFile="assets/back.png",
+            overFile="assets/back_2.png",
             onRelease = goHome,
             parent = group,
         }
 
-        homeBtn.x = display.contentWidth/2
-        homeBtn.y = bottomMarg-140
+        homeBtn.x = leftMarg+32
+        homeBtn.y = topMarg+32
         
         
         sceneGroup:insert( homeBtn )
@@ -225,55 +197,35 @@ if ( phase == "will" ) then
 retryNube=display.newImage(sceneGroup,"assets4/retryNube.png", display.contentCenterX, bottomMarg-33)
 retryNube:scale(1.38,1.38)
 
-retryNubeI=display.newImage(sceneGroup,"assets4/retryNube.png", leftMarg-40, display.contentCenterY-15)
-retryNubeI:scale(1.38,1.656)
+retryNubeD=display.newImage(sceneGroup,"assets4/retryNube.png", cx, cy-70)
+retryNubeD:scale(0.75,1.2)
 
-retryNubeD=display.newImage(sceneGroup,"assets4/retryNube.png", rightMarg+40, display.contentCenterY-15)
-retryNubeD:scale(1.38,1.656)
-
-local ActualScore = display.newText(sceneGroup,user.actualScore, display.contentCenterX, topMarg+155, "telo", 207)
+local ActualScore = display.newText(sceneGroup,user.actualScore, display.contentCenterX, topMarg+180, "telo", 207)
 ActualScore:setFillColor(.992, .31, .02)
 
-local actualgalletas = display.newEmbossedText(sceneGroup,"+"..user.actualgalletas, leftMarg+48, display.contentCenterY, "telo", 50)
-actualgalletas:setFillColor(.992, .31, .02)
+local HighScore = display.newEmbossedText(sceneGroup,user.highScore,cx+60, display.contentCenterY-75, "telo", 50)
+HighScore:setFillColor(1,0,0)
 
-local HighScore = display.newEmbossedText(sceneGroup,user.highScore,rightMarg-55, display.contentCenterY, "telo", 50)
-HighScore:setFillColor(.992, .31, .02)
-
-local best=display.newImage(sceneGroup,"assets4/best.png", rightMarg-62, display.contentCenterY-45)
+local best=display.newImage(sceneGroup,"assets4/best.png", cx-50, display.contentCenterY-75)
 best:scale(0.83,0.83)
 
-local cookies=display.newImage(sceneGroup,"assets4/cookies.png", leftMarg+90, display.contentCenterY-45)
-cookies:scale(0.81,0.81)
-
 function reducirnube()
-transition.scaleTo( retryNubeI, { xScale=0.95, yScale=0.95, time=2000 } )
-transition.moveTo( retryNubeI, {x=leftMarg-35,time=2000} )
 
-transition.moveTo( HighScore, {x=rightMarg-50, time=2000} )
-transition.moveTo( best, {x=rightMarg-57,time=2000} )
-
-transition.moveTo( actualgalletas, {x=leftMarg+53, time=2000} )
-transition.moveTo( cookies, {x=leftMarg+95, time=2000} )
+transition.moveTo( HighScore, {x=cx+70, time=2000} )
+transition.moveTo( best, {x=cx-40,time=2000} )
 
 transition.scaleTo( retryNubeD, { xScale=0.95, yScale=0.95, time=2000 } )
-transition.moveTo( retryNubeD, {x=rightMarg+45,time=2000} )
+transition.moveTo( retryNubeD, {x=cx+10,time=2000} )
 
 Nubetimer1=timer.performWithDelay( 2000, aumentarnube)
 end
 function aumentarnube()
 
-transition.scaleTo( retryNubeI, { xScale=1, yScale=1, time=2000 } )
-transition.moveTo( retryNubeI, {x=leftMarg-45, time=2000} )
-
-transition.moveTo( HighScore, {x=rightMarg-60, time=2000} )
-transition.moveTo( best, {x=rightMarg-67, time=2000} )
-
-transition.moveTo( actualgalletas, {x=leftMarg+43, time=2000} )
-transition.moveTo( cookies, {x=leftMarg+85, time=2000} )
+transition.moveTo( HighScore, {x=cx+50, time=2000} )
+transition.moveTo( best, {x=cx-60, time=2000} )
 
 transition.scaleTo( retryNubeD, { xScale=1, yScale=1, time=2000 } )
-transition.moveTo( retryNubeD, {x=rightMarg+35, time=2000} )
+transition.moveTo( retryNubeD, {x=cx-10, time=2000} )
 
 Nubetimer2=timer.performWithDelay( 2000, reducirnube)
 end
@@ -340,9 +292,11 @@ sceneGroup:insert(Retry)
 Retry.x = display.contentCenterX
 Retry.y = cy+50
 Retry:scale(1.38,1.38)      
-
-
-
+    local hud = require( "hud" )
+    sceneGroup:insert( hudCoins)
+    sceneGroup:insert( coins)
+    sceneGroup:insert( coinsText)
+showNumCoins(coinsText, numCoins, duration) 
 end
 end
 -- "scene:hide()"
@@ -366,6 +320,7 @@ function scene:destroy( event )
 
     display.remove( soundBtn )
     audio.stop( FondoMusica2Channel )
+    package.loaded["hud"] = nil
 end
 
 

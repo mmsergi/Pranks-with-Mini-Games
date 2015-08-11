@@ -21,7 +21,7 @@ local ads = require( "ads" )
 local AdBuddiz = require "plugin.adbuddiz"
 local gameNetwork = require( "gameNetwork" )
 local widget = require( "widget" )
-
+local t = loadTable( "settings.json" )
 json = require('json')
 
 display.setStatusBar( display.HiddenStatusBar )
@@ -105,13 +105,7 @@ local MonedaSequence = {
 local basketSheet = graphics.newImageSheet( "assets4/basket.png", {width = 54,height = 43,numFrames = 6 })
 local basketSequence = {
             { name = "frente", start=1, count=1, time=800,},
-            { name = "explosion", start=2, count=5, time=800},}       
---Flechas
-local flechaSheet = graphics.newImageSheet( "assets4/Arrows.png",{ width = 92, height = 70, numFrames = 2} )  
-local flechaSequence = {
-            { name = "reposo", start=1, count=1, time=800,},
-            { name = "presionado", start=2, count=1, time=800},}       
-
+            { name = "explosion", start=2, count=5, time=800},}         
 
 -- Stop character movement when no arrow is pushed
          function stopNoflechas (event)
@@ -170,7 +164,7 @@ der.isHitTestable=true
 
 pared = {}
         for i = 1, 2, 1 do
-        pared[i]=display.newRect(-45,display.contentHeight/2,100,display.contentHeight)
+        pared[i]=display.newRect(-45,display.contentHeight/2,165,display.contentHeight)
         pared[i].isVisible=false
         pared[i].name="pared" 
         sceneGroup:insert(pared[i])
@@ -194,7 +188,7 @@ PuertaA.name="PuertaA"
 physics.addBody( PuertaA, "static", {density=0, friction=0, bounce=0,filter={ categoryBits=32, maskBits=2 },isSensor=true,
 shape={14,-42, 42,-42,  42,62, 14,62} } )
 --Suelo
-suelo=display.newRect(display.contentCenterX,display.contentCenterY+163,display.contentWidth,100)
+suelo=display.newRect(display.contentCenterX,display.contentCenterY+168,display.contentWidth,100)
 suelo.name="suelo"
 physics.addBody( suelo, "static", {density=100, friction=1, bounce=0 ,filter={ categoryBits=8, maskBits=150 }, } )
 suelo.isVisible=false
@@ -306,11 +300,11 @@ FondoMusicaChannel= audio.play(FondoMusica2, {loops=(-1)})
         --if nubeFlag then
 retryNube=display.newImage(sceneGroup,"assets4/retryNube2.png", display.contentCenterX, topMarg-39)
 
+    
 
 
-if user.session>0 then
-    flechaTuto = display.newImage( sceneGroup, "assets4/flechaTuto.png", cx,cy)
-end
+
+
 
 --fondo
 fondo.x = display.contentCenterX
@@ -336,8 +330,34 @@ function funcionremoveMonedasTmr()--planteamos funcion
 -- SCENE:SHOW("did")
 	elseif ( phase == "did" ) then  
 
+    flechaTutoR = display.newImage( sceneGroup, "assets4/tap_R.png", rightMarg-150,bottomMarg-150)
+    flechaTutoL = display.newImage( sceneGroup, "assets4/tap_L.png", leftMarg+150,bottomMarg-150)
+    flechaIndicatoria = display.newImage( sceneGroup, "assets4/flecha.png", rightMarg-110,cy+60)
+
+        function moverFlechasTuto()
+            transition.moveTo( flechaTutoR, {x=rightMarg-120,time=300} )
+            transition.moveTo( flechaTutoL, {x=leftMarg+120,time=300} )
+            transition.moveTo( flechaIndicatoria, {x=rightMarg-120,time=300} )
+            
+            flechasTutoTmr1=timer.performWithDelay( 300, moverFlechasTuto2)
+        end
+        function moverFlechasTuto2()
+            transition.moveTo( flechaTutoR, {x=rightMarg-150,time=300} )
+            transition.moveTo( flechaTutoL, {x=leftMarg+150,time=300} )
+            transition.moveTo( flechaIndicatoria, {x=rightMarg-100,time=300} )
+            flechasTutoTmr2=timer.performWithDelay( 300, moverFlechasTuto)
+        end
+    moverFlechasTuto()
+flechaIndicatoria.isVisible=false
+
+if user.session==1 then
+    flechaIndicatoriaTmr=timer.performWithDelay(1500, function() flechaIndicatoria.isVisible=true end)
+elseif user.session>1 then
+    flechaIndicatoriaTmr=timer.performWithDelay(5000, function() flechaIndicatoria.isVisible=true end)
+end
 
 --Iniciamos con No Highscore, esta claro
+
 highScoreFlag=false
 --Personajes
 function crearPersonaje()
@@ -464,7 +484,9 @@ elseif (event.other.name) == "PuertaA" then
                     --    ads.show( "interstitial", { appId="ca-app-pub-3836849703819703/7092934470" } )
                   --  end
 
-
+                    timer.cancel(flechaIndicatoriaTmr)
+                    flechaIndicatoria.isVisible=false
+                    flechaIndicatoriaTmr=timer.performWithDelay(5000, function() flechaIndicatoria.isVisible=true end)
                     audio.play( door)
                     inicioFlag=true--se hace para llamar inicio solo una vez, aqui permitimos que se vuelva a llamar, en Inicio() lo cerramos 
                     matarInicio=false--desactivamos para que no se le pueda matar con la flama que hay para que se vaya de la puerta al Inicio
@@ -472,6 +494,7 @@ elseif (event.other.name) == "PuertaA" then
                     personaje:play()
                     personaje.isVisible=false 
                     PuertaA.isVisible=false  
+
 
                     if unPunto==false then
                     puntosPuerta()
@@ -494,9 +517,9 @@ crearPersonaje()--se llama para crear personaje al inicio de todo
 --Personaje sale de casa
 function salirCaseta()
     personaje.x=tonumber(personaje.x)
-    if (leftMarg+90>=personaje.x and personaje.x>= 65) then
+    if (leftMarg+124>=personaje.x and personaje.x>= 90) then
         PuertaM.isVisible=false
-        pared[1].x=0
+        pared[1].x=-10
         muchoRatoPuerta=false
         timer.cancel(timerMuchoRatoPuerta)
        
@@ -518,8 +541,10 @@ personaje.x=tonumber(personaje.x)
          motionx = -speed;
          personaje:setSequence("left")
          personaje:play()
-        display.remove( flechaTuto )
-        print("dddddddddddddddddddddddddddddddd")
+        display.remove( flechaTutoR )
+        display.remove( flechaTutoL )
+        
+        
          end
          
         -- When right arrow is touched, move character right
@@ -527,8 +552,9 @@ personaje.x=tonumber(personaje.x)
          motionx = speed;
          personaje:setSequence("right")
          personaje:play()
-        display.remove( flechaTuto )
-        print("dddddddddddddddddddddddddddddddd")
+        display.remove( flechaTutoR )
+        display.remove( flechaTutoL )
+        
          end
          
         -- Move character
@@ -581,7 +607,7 @@ flechaMargenX=80
 flechaCentrarAbajoY=(bottomMarg-(display.contentCenterY+120))/2+(display.contentCenterY+120)
 
 --Flecha Izquierda
-flechaL=display.newSprite(flechaSheet,flechaSequence)
+flechaL=display.newSprite(iceSheet,iceSequence)
 flechaL.x = leftMarg+flechaMargenX
 flechaL.y = flechaCentrarAbajoY
 flechaL:scale(flechaScale,flechaScale)
@@ -597,7 +623,7 @@ function flechaL:touch()
     end
 
 --Flecha Derecha
-flechaR=display.newSprite(flechaSheet,flechaSequence)
+flechaR=display.newSprite(iceSheet,iceSequence)
 flechaR.x = rightMarg-flechaMargenX
 flechaR.y = flechaCentrarAbajoY
 flechaR:scale(-flechaScale,flechaScale)
@@ -812,11 +838,11 @@ flamaTimer=timer.performWithDelay(flamaDif, spawnFlamaT,0)
 --Transición para que las flamas vayan a su lugar una vez creadas de la mano del Ice King
 function TR()
     if TRi0 then --Solo se llama cuando el personaje esta mucho rato en la puerta
-        transition.to( flamas, {x=leftMarg+35+extraIpad-ei2,y=topMarg+160, time=200-margenDif, onComplete=spriteFlamaTransition})
+        transition.to( flamas, {x=leftMarg+10+extraIpad-ei2,y=topMarg+160, time=200-margenDif, onComplete=spriteFlamaTransition})
         flamas:setLinearVelocity( 0, 0)
             TRi0=false --sirve para parar de enviar flamas a la puerta una vez sale el personaje de ella
             elseif TRi1 then
-        transition.to( flamas, {x=leftMarg+85+extraIpad-ei2,y=topMarg+60, time=350-margenDif, onComplete=spriteFlamaTransition})
+        transition.to( flamas, {x=leftMarg+75+extraIpad-ei2,y=topMarg+60, time=350-margenDif, onComplete=spriteFlamaTransition})
         TRi1=false   
          elseif TRd1 then
         transition.to( flamas, {x=leftMarg+350+extraIpad+ei2,y=topMarg+60, time=350-margenDif, onComplete=spriteFlamaTransition})
@@ -943,8 +969,8 @@ elseif bRandom==4 then
 
 --Spawn Monedas
 local function spawnMoneda(params)
---Monedas = display.newSprite( MonedaSheet, MonedaSequence)
-Monedas = display.newImage(sceneGroup,"assets4/banana.png")
+Monedas = display.newSprite( coinsSheet, coinsSequence )
+Monedas:setSequence( "estatica" )
 Monedas.objTable = params.objTable
 Monedas.index = #Monedas.objTable + 1
 Monedas.myName = "Moneda: " .. Monedas.index
@@ -958,7 +984,7 @@ Monedas.objTable[Monedas.index] = Monedas
             Monedas.x= monedaPosition()
             Monedas.y=display.contentCenterY+85
             
-            monedaScale=0.621
+            monedaScale=0.8
             Monedas:scale(monedaScale,monedaScale)
             Monedas.value=5
             Monedas.name="moneda"
@@ -968,7 +994,7 @@ Monedas.objTable[Monedas.index] = Monedas
             
             
             timer.performWithDelay( 1, function()physics.addBody( Monedas,{ density=0, friction=0, bounce=0.1, 
-                radius=26,filter={ categoryBits=16, maskBits=10 }} )  end)
+                radius=21,filter={ categoryBits=16, maskBits=10 }} )  end)
 
             removeMonedasTmr=timer.performWithDelay( 4000, function() display.remove( Monedas ) timer.cancel(removeMonedasTmr) 
                 removeMonedasTmrVivo=false end)--desactivamos tambien el flag del timer
@@ -1147,12 +1173,15 @@ end
 function sumaactualgalletas()
     user.actualgalletas = user.actualgalletas + 1
     user.galletas = user.galletas + 1
+
     -- guarda datos
     saveValue('user.txt', json.encode(user))
     -- recarga datos
     user = json.decode(loadValue('user.txt'))
     -- actualiza marcador
     --galletas.text = user.galletas
+    t.coins=t.coins+1
+    saveTable(t, "settings.json")
 end
 
 
@@ -1236,6 +1265,7 @@ function Inicio()
 display.remove( Monedas )
 display.remove( basket )
 funcionremoveMonedasTmr()
+moverFlechasTuto()
 
 timer.performWithDelay(1000, function() PuertaA.isVisible=true end)
 timerMuchoRatoPuerta=timer.performWithDelay(6000, function() muchoRatoPuerta=true matarInicio=true end)
@@ -1309,8 +1339,12 @@ display.remove( flamas )
 display.remove( Monedas )
 display.remove( basket )
 display.remove( flamaTable )
+timer.cancel( flechasTutoTmr1 )
+timer.cancel( flechasTutoTmr2 )
 print("DESTROYED")
 timer.cancel( flamaTimer )
+display.remove( flechaIndicatoria )
+timer.cancel(flechaIndicatoriaTmr)
 Runtime:removeEventListener("touch", stopNoflechas )
 pauseFlagFlamas=false--se pone para decir que no hay más flamas pq se ha acabado el juego
 

@@ -69,14 +69,13 @@ function scene:create( event )
 
 	local homeBtn = widget.newButton
 	{
-	    height = 50,
-	    width = 50,
-	    defaultFile="assets/home.png",
+	    defaultFile="assets/back.png",
+	    overFile="assets/back_2.png",
 	    onRelease = goHome
 	}
 
-	homeBtn.x = display.contentWidth/2
-	homeBtn.y = display.contentHeight - 50
+	homeBtn.x = leftMarg+50
+	homeBtn.y = bottomMarg-50
 
 	local lastscore = display.newText(group, "LAST SCORE: " .. event.params.lastscore, 0, 0, "muro", 32 )
 	lastscore:setFillColor( 1,1,1 )
@@ -93,7 +92,7 @@ function scene:create( event )
 	cointext.x=display.contentWidth - 40
 	cointext.y=20
 
-	if t.lastscore == t.highscore then
+	if event.params.lastscore == t.highscore then
 		highscore:setFillColor( 1,0,0 )
 	end
 
