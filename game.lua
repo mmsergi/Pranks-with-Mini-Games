@@ -8,7 +8,7 @@ local time = 500
 local meters = 0
 local ncoin = 0
 local group
-
+coinSound= audio.loadSound( "assets/coin.ogg")
 local groupObj = {}
 
 function move()
@@ -80,6 +80,7 @@ end
 function onCollision( event )
 	if (event.object1.id=="copter" and event.object2.id=="coin" and event.object2.alpha==1) then
 		event.object2.alpha=0
+		audio.play(coinSound)
 		ncoin = ncoin + 1
 		ncoins.text = ncoin.." C"
 	end
@@ -140,7 +141,9 @@ function attack()
 end
 
 function coin()
-	coin = display.newSprite( sheetc, sequenceDataCoin )
+	coin = display.newSprite( coinsSheet, coinsSequence )
+	coin:setSequence( "estatica" )
+	coin:scale(0.8,0.8)
 	physics.addBody( coin, "dynamic", {density=0.00000001})
 	coin.x = 480
 	coin.y = 20 + math.random(280)

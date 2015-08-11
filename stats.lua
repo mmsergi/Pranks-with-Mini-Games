@@ -25,16 +25,6 @@ function scene:create( event )
 	cup.x, cup.y = display.contentWidth/2, 150
 	cup.height, cup.width = 100, 100
 
-	local backBtn = widget.newButton{
-	    width = 80,
-	    height = 80,
-	    defaultFile = "assets2/back.png",
-	    overFile = "assets2/back_on.png",
-	    onRelease = backButtonListener
-	}
-	backBtn.x = 50
-	backBtn.y = display.contentHeight - 40
-
 	local playBtn = widget.newButton{
 	    width = 150,
 	    height = 150,
@@ -45,35 +35,119 @@ function scene:create( event )
 	playBtn.x = display.contentWidth/2 
 	playBtn.y = 400
 
-	local lastscore = display.newText(group, "Last Score "..event.params.lastscore.." m", display.contentWidth/2, 220, native.systemFontBold, 32)
+	local lastscore = display.newText(group, "Score "..event.params.lastscore.." m", display.contentWidth/2, 220, native.systemFontBold, 32)
 	lastscore:setFillColor( 0, 0, 0 )
 
 	local highscore = display.newText(group, "High Score "..t.highscoreCopter.." m", display.contentWidth/2, 260, native.systemFontBold, 32)
 	highscore:setFillColor( 0, 0, 0 )
 
-	local ncoins = display.newText(group, "+ "..event.params.currentCoins.." coins", display.contentWidth/2, 500, native.systemFontBold, 32)
-	ncoins:setFillColor( 0, 0, 0 )
-
-	local totalcoins = display.newText(group, t.coins.." C", display.contentWidth - 75, 25, native.systemFontBold, 28)
-	totalcoins:setFillColor( 0, 0, 0 )
 
 	adBtn = widget.newButton{
 			defaultFile="assets2/ad.png",
 			onEvent = adBtnlistener
 			}
-			adBtn.x, adBtn.y = 320, 670	
+			adBtn.x, adBtn.y = cx, cy+175	
 
-	group:insert(backBtn)
+	
 	group:insert(playBtn)
 	group:insert(adBtn)
+	 local hud = require( "hud" )
+    group:insert( hudCoins)
+    group:insert( coins)
+    group:insert( coinsText)
+    showNumCoins(coinsText, numCoins, duration) 
+
+    function soundBtnlistener(event)
+    local phase = event.phase 
+    
+    if "ended" == phase then   
+
+      display.remove(soundBtn) 
+      soundBtn = nil
+      
+      if t.music == true then
+        t.music = false
+        audio.setVolume(0)
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_off.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+      else
+        t.music = true
+        audio.setVolume(1)
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_on.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+      end
+      
+    saveTable(t, "settings.json")
+    soundBtn.anchorX , soundBtn.anchorY = 1, 1 
+    soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 25
+
+    end
+end
+
+if t.music==true then
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_on.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+    else 
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_off.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+    end
+
+     
+    soundBtn.anchorX , soundBtn.anchorY = 1, 1 
+    soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 25
+
+
+group:insert(soundBtn)
+
+local function goHome()
+       
+   composer.removeScene( "EndlessH")
+   composer.removeScene( "Retry")
+       composer.gotoScene( "menu2" )
+      
+end
+
+local homeBtn = widget.newButton
+        {
+            defaultFile="assets/back.png",
+            overFile="assets/back_2.png",
+            onRelease = goHome,
+            parent = group,
+        }
+
+        homeBtn.x = leftMarg+50
+        homeBtn.y = bottomMarg-50
+        
+        
+        group:insert( homeBtn )
 end
 
 function scene:show( event )
     local group = self.view	
-    tapSound = audio.loadStream("assets2/tap.wav")
-    composer.removeScene( "game" )
-    composer.removeScene( "menu" ) 
     
+    tapSound = audio.loadStream("assets2/tap.wav")
+    
+    composer.removeScene( "game" )
+     
+  
+  
+
 end
 
 function scene:hide( event )
@@ -83,7 +157,7 @@ end
 
 function scene:destroy( event )
     local group = self.view
-
+package.loaded["hud"] = nil
 end
 
 scene:addEventListener( "create", scene )
