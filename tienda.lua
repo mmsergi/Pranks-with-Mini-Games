@@ -22,10 +22,25 @@ function vungleAdListener( event )
   end
 end
 
+local postOptions = {
+    service = "facebook",
+    message = "Check out this photo!",
+    listener = eventListener,
+    image = {
+        { filename = "assets/fondoMenu.png", baseDir = system.ResourceDirectory },
+        { filename = "assets/btnDef.png", baseDir = system.ResourceDirectory }
+    },
+    url = "http://coronalabs.com"
+}
+
 ads.init( "vungle", vungleID, vungleAdListener) -- Vungle
 
 function playVideoAd()
 	ads.show( "incentivized" )
+end
+
+function postFB()
+	native.showPopup( "social", options )
 end
 
 function scene:create( event )
@@ -36,15 +51,25 @@ function scene:create( event )
 	totalcoins = display.newText(group, t.coins.." C", display.contentWidth - 75, 25, native.systemFontBold, 28)
 	totalcoins:setFillColor( 0, 0, 0 )
 
-	playBtn = widget.newButton{
+	videoBtn = widget.newButton{
 	    width = 300,
 	    height = 150,
 	    defaultFile = "assets/btnDef.png",
 	    overFile = "assets/btnRel.png",
 	    onRelease = playVideoAd
 	}
-	playBtn.x = display.contentWidth/2 
-	playBtn.y = 400
+	videoBtn.x = display.contentWidth/2 
+	videoBtn.y = 400
+
+	postBtn = widget.newButton{
+	    width = 300,
+	    height = 150,
+	    defaultFile = "assets/btnDef.png",
+	    overFile = "assets/btnRel.png",
+	    onRelease = postFB
+	}
+	postBtn.x = display.contentWidth/2 
+	postBtn.y = 600
 
 end
 
