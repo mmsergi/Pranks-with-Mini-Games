@@ -53,6 +53,14 @@ end
 function scene:create( event )
 	local group = self.view
 
+	mayShowAd()
+
+	checkLocks(t)
+
+	if ((t.unlocked-initalUnlocked) > 0) then
+   		composer.showOverlay( "popup", {effect="zoomOutIn", isModal = true})
+	end
+
 	local background = display.newImage(group, "assets1/sky2.png", cx, cy )
 
 	local bobt = display.newImage(group, "assets1/cat.png" )
@@ -113,12 +121,11 @@ function scene:create( event )
 
 	local gamesBtn = widget.newButton{
 		defaultFile="assets1/games.png",
-		onRelease = showGameAd
+		onRelease = showMoreGamesAd
 	}
 	gamesBtn:scale(0.6,0.6)
 	gamesBtn.x = display.contentWidth/2
 	gamesBtn.y = display.contentHeight/2 + 200
-
 
 	group:insert(retryBtn)
 	group:insert(homeBtn)
@@ -139,15 +146,14 @@ function scene:show( event )
 	if ( phase == "will" ) then
 		audio.play(losem)
 	
-elseif ( phase == "did" ) then  
+	elseif ( phase == "did" ) then  
 
-local hud = require( "hud" )
-    group:insert( hudCoins)
-    group:insert( coins)
-    group:insert( coinsText)
-    showNumCoins(coinsText, numCoins, duration)
-
-end
+	local hud = require( "hud" )
+	    group:insert( hudCoins)
+	    group:insert( coins)
+	    group:insert( coinsText)
+	    showNumCoins(coinsText, numCoins, duration)
+	end
 
 end
 

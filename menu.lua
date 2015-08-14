@@ -165,6 +165,13 @@ end
 function scene:create( event )
 	group = self.view
 
+	checkLocks(t)
+
+	if (math.random()> .6 and firstAd) then
+		AdBuddiz.showAd()
+		firstAd = false
+	end
+
 	if t.music==false then
 		audio.setVolume(0)
 	end

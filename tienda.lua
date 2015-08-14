@@ -16,8 +16,8 @@ function vungleAdListener( event )
   end
   if ( event.type == "adView" ) then
     t.coins = t.coins + 10
-    coinsText.text = t.coins
     saveTable(t, "settings.json")
+    coinsText.text = t.coins
   end
   if ( event.type == "adEnd" ) then
     -- The ad experience has been closed- this
@@ -26,6 +26,7 @@ function vungleAdListener( event )
 end
 
 local function playVideoAd()
+	analytics.logEvent( "VideoAdClick" )
 	ads.show( "incentivized" )
 end
 
@@ -36,7 +37,16 @@ end
 
 
 local function installAd()
-  system.openURL( "https://play.google.com/store/apps/details?id=com.masah.adventuresinside" )
+	analytics.logEvent( "InstallAdClick" )
+  	system.openURL( "https://play.google.com/store/apps/details?id=com.masah.adventuresinside" )
+  	t.coins = t.coins + 10
+    saveTable(t, "settings.json")
+    coinsText.text = t.coins
+end
+
+local function freeGame()
+    analytics.logEvent( "ShopFreeGameClick" )
+    AdBuddiz.showAd()
 end
 
 function scene:create( event )
@@ -67,15 +77,15 @@ function scene:create( event )
 	gameBtn = widget.newButton{
 
 	    defaultFile = "assets/freegame.png",
-	    onRelease = showMoreGamesAd
+	    onRelease = freeGame
 	}
 	gameBtn.x = display.contentWidth/2 
 	gameBtn.y = 550
 
 	backBtn = widget.newButton
 	{
-	    defaultFile="assets/back.png",
-	    overFile="assets/back_2.png",
+	    defaultFile="assets/home.png",
+	    overFile="assets/home_2.png",
 	    onRelease = goBack
 	}
 

@@ -14,6 +14,8 @@ local gameend = false
 
 local t = loadTable( "settings.json" )
 
+initalUnlocked = t.unlocked
+
 local sound = audio.loadSound("assets1/game.mp3")
 local coinSound = audio.loadSound("assets/coin.ogg")
 
@@ -124,7 +126,7 @@ local function move()
 			end
 			saveTable(t, "settings.json")
 
-			local transitionOptions = { effect = "crossFade", time = 300, params = { currentCoins = ncoin, lastscore = seconds} }
+			local transitionOptions = { effect = "crossFade", time = 300, params = { currentCoins = ncoin, lastscore = seconds } }
 
 			composer.gotoScene( "scorelose", transitionOptions)
 			composer.removeScene( "gamein" )

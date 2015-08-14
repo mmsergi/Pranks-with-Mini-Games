@@ -48,16 +48,6 @@ function soundBtnlistener(event)
     end
 end
 
-local function onPlayBtnRelease()
-	composer.gotoScene( "gamein")
-	analytics.logEvent( "GameSession" )
-end
-
-local function onSimulatorBtnRelease()
-	composer.gotoScene( "simulator")
-	analytics.logEvent( "SimulatorSession" )
-end
-
 local function goHome()
 	composer.gotoScene( "menu" )
 	composer.removeScene( "menu2" )
@@ -65,6 +55,8 @@ end
 
 function scene:create( event )
 	group = self.view
+
+	mayShowAd()
 
 	if t.music==false then
 		audio.setVolume(0)
@@ -96,7 +88,7 @@ function scene:create( event )
 
     function btn2:tap()
         btn2:scale(0.75,0.75)
-        analytics.logEvent( "ToASession" )
+        analytics.logEvent( "DoorsSession" )
         composer.gotoScene( "EndlessH" )
     end
     
@@ -118,7 +110,7 @@ function scene:create( event )
 
     function btn4:tap()
         btn4:scale(0.75,0.75)
-        analytics.logEvent( "MinionSession" )
+        analytics.logEvent( "CoconutSession" )
         composer.gotoScene( "juegoTOA" )
     end
     
@@ -156,7 +148,7 @@ function scene:create( event )
 		homeBtn.x = 60
 		homeBtn.y = bottomMarg-60
 
-		group:insert( homeBtn )
+	group:insert( homeBtn )
 	group:insert( soundBtn )
 
 end

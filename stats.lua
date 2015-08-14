@@ -19,6 +19,8 @@ end
 function scene:create( event )
 	local group = self.view	
 
+    mayShowAd()
+
 	local background = display.newImage(group, "assets2/bckg.png", cx, cy)
 
 	local cup = display.newImage(group, "assets2/cup.png")
@@ -43,15 +45,15 @@ function scene:create( event )
 
 
 	adBtn = widget.newButton{
-			defaultFile="assets2/ad.png",
-			onEvent = adBtnlistener
-			}
-			adBtn.x, adBtn.y = cx, cy+175	
+		defaultFile="assets2/ad.png",
+		onEvent = showMoreGamesAd
+	}
+	adBtn.x, adBtn.y = cx, cy+175	
 
 	
 	group:insert(playBtn)
 	group:insert(adBtn)
-	 local hud = require( "hud" )
+	local hud = require( "hud" )
     group:insert( hudCoins)
     group:insert( coins)
     group:insert( coinsText)
@@ -88,7 +90,7 @@ function scene:create( event )
     saveTable(t, "settings.json")
     soundBtn.anchorX , soundBtn.anchorY = 1, 1 
     soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 25
-group:insert(soundBtn)
+    group:insert(soundBtn)
     end
 end
 
@@ -144,10 +146,6 @@ function scene:show( event )
     tapSound = audio.loadStream("assets2/tap.wav")
     
     composer.removeScene( "game" )
-     
-  
-  
-
 end
 
 function scene:hide( event )
@@ -157,7 +155,7 @@ end
 
 function scene:destroy( event )
     local group = self.view
-package.loaded["hud"] = nil
+    package.loaded["hud"] = nil
 end
 
 scene:addEventListener( "create", scene )

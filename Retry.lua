@@ -26,6 +26,8 @@ function scene:create( event )
 
     local sceneGroup = self.view
 
+    mayShowAd()
+
 FondoMusica2= audio.loadSound( "assets4/rithm.ogg")
 
 fondoRetry=display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY, display.actualContentWidth, 800 )
@@ -76,7 +78,7 @@ moregames.y=cy+195
 moregames:scale(1,1)
 
 function moregames:tap()
-AdBuddiz.showAd() 
+showMoreGamesAd()
 end
 moregames:addEventListener("tap",moregames)
 

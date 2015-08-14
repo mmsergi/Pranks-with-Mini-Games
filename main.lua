@@ -8,6 +8,13 @@ analytics = require "analytics"
 AdBuddiz = require "plugin.adbuddiz"
 translations = require "translations"
 
+-- values to unlock jokes
+unlock1 = 15
+unlock2 = 50
+unlock3 = 100
+
+firstAd = true
+
 interstitial= "ca-app-pub-1709584335667681/5715056650"
 
 ads.init( "admob", interstitial ) --Admob
@@ -48,15 +55,13 @@ end
 
 function showMoreGamesAd()
     analytics.logEvent( "MoreGamesClick" )
-    if (AdBuddiz.isReadyToShowAd()) then
-        AdBuddiz.showAd()
-    else
-        ads.show( "interstitial", {appId=interstitial} )
-    end
+    AdBuddiz.showAd()
 end
 
-function showAd()
+function mayShowAd()
+  if math.random() > .8 then
     ads.show( "interstitial", {appId=interstitial} )
+  end
 end
 
 -- Save specified value to specified encrypted file
@@ -108,7 +113,6 @@ if not user then
     playerName=""
   }end
 
-
 function saveTable(t, filename)
     local path = system.pathForFile( filename, system.DocumentsDirectory)
     local file = io.open(path, "w")
@@ -136,6 +140,17 @@ function loadTable(filename)
     return nil
 end
 
+function checkLocks(ta)
+  if ta.coins>(unlock1-1) then
+    ta.unlocked=1
+  elseif ta.coins>(unlock2-1) then
+    ta.unlocked=2
+  elseif ta.coins>(unlock3-1) then
+    ta.unlocked=3
+  end
+  saveTable(ta, "settings.json")
+end
+
 local t = loadTable( "settings.json" )
 	
 	if t == nil then 
@@ -147,7 +162,6 @@ local t = loadTable( "settings.json" )
         settings.music = true
 	    saveTable(settings, "settings.json")
 	end
-
 
 local function splashView()
     splash:removeSelf( )
