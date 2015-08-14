@@ -34,33 +34,43 @@ local function goBack()
 	composer.removeScene( "tienda" )
 end
 
+
+local function installAd()
+  system.openURL( "https://play.google.com/store/apps/details?id=com.masah.adventuresinside" )
+end
+
 function scene:create( event )
 	group = self.view
 
 	ads.init( "vungle", "com.seja.liedetector", vungleAdListener) -- Vungle
 	ads:setCurrentProvider("vungle")
 	
-	background = display.newImage( group, "assets/fondoMenu.png", cx, cy )
+	background = display.newImage( group, "assets/shopbckg.png", cx, cy )
+	background.alpha = 0.9
 
 	videoBtn = widget.newButton{
-	    width = 300,
-	    height = 150,
-	    defaultFile = "assets/btnDef.png",
-	    overFile = "assets/btnRel.png",
+
+	    defaultFile = "assets/videoBtn.png",
 	    onRelease = playVideoAd
 	}
 	videoBtn.x = display.contentWidth/2 
-	videoBtn.y = 200
+	videoBtn.y = 250
 
-	postBtn = widget.newButton{
-	    width = 300,
-	    height = 150,
-	    defaultFile = "assets/btnDef.png",
-	    overFile = "assets/btnRel.png",
-	    onRelease = postFB
+	installBtn = widget.newButton{
+
+	    defaultFile = "assets/installBtn.png",
+	    onRelease = installAd
 	}
-	postBtn.x = display.contentWidth/2 
-	postBtn.y = 400
+	installBtn.x = display.contentWidth/2 
+	installBtn.y = 400
+
+	gameBtn = widget.newButton{
+
+	    defaultFile = "assets/freegame.png",
+	    onRelease = showMoreGamesAd
+	}
+	gameBtn.x = display.contentWidth/2 
+	gameBtn.y = 550
 
 	backBtn = widget.newButton
 	{
@@ -79,7 +89,8 @@ function scene:create( event )
 	showNumCoins(coinsText, numCoins, 1)
 
 	group:insert(videoBtn)
-	group:insert(postBtn)
+	group:insert(installBtn)
+	group:insert(gameBtn)
 	group:insert(backBtn)
 
 end
