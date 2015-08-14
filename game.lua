@@ -82,13 +82,13 @@ function onCollision( event )
 		event.object2.alpha=0
 		audio.play(coinSound)
 		ncoin = ncoin + 1
-		ncoins.text = ncoin.." C"
+		ncoins.text = ncoin
 	end
 
 	if (event.object1.id=="coin" and event.object2.id=="copter") then
 		event.object1.alpha=0
 		ncoin = ncoin + 1
-		ncoins.text = ncoin.." C"
+		ncoins.text = ncoin
 	end
 end
 
@@ -222,15 +222,29 @@ function scene:create( event )
 	tutorial.x=display.contentWidth/2 
 	tutorial.y=display.contentHeight - display.contentHeight/3
 
+	marco2=display.newRect( group, cx, topMarg+60, 260, 60 )
+	marco=display.newRect( group, cx, topMarg+60, 250, 50 )
+	marco2:setFillColor( 0 )
+	marco.alpha=0.2
+	marco2.alpha=0.2
+
+
+
+
 	tim=display.newText(group, "0 m", 0, 0, native.systemFontBold, 30 )
 	tim:setFillColor( 0,0,0 )
 	tim.x=display.contentWidth/2 - 40
 	tim.y=60
 
-	ncoins=display.newText(group, "0 C", 0, 0, native.systemFontBold, 30 )
+	ncoins=display.newText(group, "0", 0, 0, native.systemFontBold, 30 )
 	ncoins:setFillColor( 0,0,0 )
 	ncoins.x=display.contentWidth/2 + 40
 	ncoins.y=60
+
+	coinHud = display.newSprite( coinsSheet, coinsSequence )
+	coinHud:scale(0.8,0.8)
+	group:insert(coinHud)
+	coinHud.x, coinHud.y = cx+85,topMarg+60
 
 	sky = display.newImage(group, "assets2/sky.png")
 

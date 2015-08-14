@@ -88,7 +88,7 @@ function scene:create( event )
     saveTable(t, "settings.json")
     soundBtn.anchorX , soundBtn.anchorY = 1, 1 
     soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 25
-
+group:insert(soundBtn)
     end
 end
 

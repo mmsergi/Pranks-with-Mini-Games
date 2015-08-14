@@ -135,7 +135,7 @@ local function move()
 end
 
 local function inc ()
-	text.alpha=0
+	
 	ccoin()
 	if vx > 0 then
 		vx = vx+2
@@ -163,8 +163,8 @@ function scene:create( event )
 	background.x=display.contentWidth/2
 	background.y=display.contentHeight/2
  	
-	marco=display.newRect( group, cx, 25, display.contentWidth, 50 )
-	lineaMarco=display.newRect( group, cx, 50, display.contentWidth, 5 )
+	marco=display.newRect( group, cx, topMarg+25, display.contentWidth, 50 )
+	lineaMarco=display.newRect( group, cx, topMarg+50, display.contentWidth, 5 )
 	lineaMarco:setFillColor( 0 )
 
 	point = display.newImage(group, "assets1/point.png" )
@@ -183,7 +183,7 @@ function scene:create( event )
 	tim=display.newText(group, "SCORE 0", 0, 0, "muro", 35 )
 	tim:setFillColor( black )
 	tim.x=display.contentWidth/2
-	tim.y=topMarg+18
+	tim.y=topMarg+16
 
 	text = display.newText(group, "DRAG LASER TO AVOID THE CAT!", 0, 0, "muro", 35)
 	text:setFillColor( black )
@@ -198,12 +198,12 @@ function scene:create( event )
 
 	cointext = display.newText(group, "0", 0, 0, "muro", 35)
 	cointext:setFillColor( black )
-	cointext.x, cointext.y=rightMarg-80,topMarg+18
+	cointext.x, cointext.y=rightMarg-80,topMarg+16
 
 	coinHud = display.newSprite( coinsSheet, coinsSequence )
 	coinHud:scale(0.8,0.8)
 	group:insert(coinHud)
-	coinHud.x, coinHud.y = rightMarg-35,topMarg+22
+	coinHud.x, coinHud.y = rightMarg-35,topMarg+20
 
 end
 

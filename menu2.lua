@@ -103,7 +103,10 @@ function scene:create( event )
     btn2:addEventListener("tap",btn2)
 
     local btn3 = display.newImage( group, "assets2/copicon.png", leftMarg+150, cy+120)
-	--btn3:scale(0.75,0.75)
+
+
+	local btn4 = display.newImage( group, "assets/iconoCat.png", rightMarg-150, cy+120)
+	btn4:scale(0.5,0.5)
 
     function btn3:tap()
         btn3:scale(0.75,0.75)
@@ -112,6 +115,14 @@ function scene:create( event )
     end
     
     btn3:addEventListener("tap",btn3)
+
+    function btn4:tap()
+        btn4:scale(0.75,0.75)
+        analytics.logEvent( "MinionSession" )
+        composer.gotoScene( "juegoTOA" )
+    end
+    
+    btn4:addEventListener("tap",btn4)
 
 	if t.music==true then
 		soundBtn = widget.newButton{
