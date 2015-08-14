@@ -99,6 +99,7 @@ if not user then
     session=0,
     musicOn=true,
     highScore=0,
+    highScoreMinion=0,
     actualgalletas=0,
     flamaPosition=1,
     actualScore=0,
@@ -150,7 +151,7 @@ local t = loadTable( "settings.json" )
 
 local function splashView()
     splash:removeSelf( )
-    composer.gotoScene( "menu" )
+    composer.gotoScene( "juegoTOA" )
 end
 
 timer.performWithDelay(1, splashView)

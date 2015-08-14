@@ -43,15 +43,13 @@ end
   
 --Moregames
 
-moregames=display.newSprite(sceneGroup,moregamesSheet,moregamesSequence)
-moregames:play()
+moregames=display.newImage( sceneGroup,"assets3/moregames.png", cx, cy+180)
 
-moregames.x= display.contentCenterX
-moregames.y=display.contentCenterY+100
+
 moregames:scale(0.8,0.8)
 
 function moregames:tap()
-
+ showMoreGamesAd()
 end
 moregames:addEventListener("tap",moregames)
 
@@ -88,21 +86,26 @@ function scene:show( event )
 
 if ( phase == "will" ) then 
 
-local ActualScore = display.newText(sceneGroup,user.actualScore, display.contentCenterX-79, display.contentCenterY-30, "telo", 36)
+local ActualScore = display.newText(sceneGroup,user.actualScore, display.contentCenterX-110, display.contentCenterY-30, "telo", 50)
 ActualScore:setFillColor(.365, .247, .051)
 
 
 
-local HighScore = display.newEmbossedText(sceneGroup,user.highScore,display.contentCenterX+79, display.contentCenterY-30, "telo", 36)
+local HighScore = display.newEmbossedText(sceneGroup,user.highScoreMinion,display.contentCenterX+110, display.contentCenterY-30, "telo",50)
  HighScore:setFillColor(.365, .247, .051)
 
-
+    
+    local hud = require( "hud" )
+    sceneGroup:insert( hudCoins)
+    sceneGroup:insert( coins)
+    sceneGroup:insert( coinsText)
+    showNumCoins(coinsText, numCoins, duration) 
 
 
 
     local function handleRetryEvent( event )
 
-        if ( "ended" == event.phase )and (minusButtonPressed == false)  then
+        if ( "ended" == event.phase ) then
                     
                     composer.removeScene("juegoTOA",true)
                     
@@ -112,11 +115,10 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScore,display.cont
                     local options = {
                         
                         time = 800,}
-                        composer.hideOverlay( "Retry" )
+                        composer.hideOverlay( "Retry_Minion" )
                         composer.gotoScene( "juegoTOA",options)
                         
                     
-                    minusButtonPressed = true
                      audio.play( CheersAudio )
                      nubeFlag=true
                       --transition.to( retryNube, {alpha=0,y=-60,time=100 })
@@ -144,8 +146,8 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScore,display.cont
     }
 
 sceneGroup:insert(Retry)
- Retry.x = display.contentCenterX
-    Retry.y = display.contentCenterY+15
+Retry.x = display.contentCenterX
+Retry.y = display.contentCenterY+50
 Retry:scale(1,1)     
 
 Retry:setEnabled( false )
@@ -159,6 +161,89 @@ Retry:setEnabled( true )
 audio.rewind( FondoMusicaChannel2 )
 audio.resume(FondoMusicaChannel2)
 
+
+local function goHome()
+       
+   composer.removeScene( "juegoTOA")
+   composer.removeScene( "Retry_Minion")
+       composer.gotoScene( "menu2" )
+      
+end
+
+local homeBtn = widget.newButton
+        {
+            defaultFile="assets/back.png",
+            overFile="assets/back_2.png",
+            onRelease = goHome,
+            parent = group,
+        }
+
+        homeBtn.x = leftMarg+50
+        homeBtn.y = bottomMarg-50
+        
+        
+        sceneGroup:insert( homeBtn )
+
+function soundBtnlistener(event)
+    local phase = event.phase 
+    
+    if "ended" == phase then   
+
+      display.remove(soundBtn) 
+      soundBtn = nil
+      
+      if t.music == true then
+        t.music = false
+        audio.setVolume(0)
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_off.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+      else
+        t.music = true
+        audio.setVolume(1)
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_on.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+      end
+      
+    saveTable(t, "settings.json")
+    soundBtn.anchorX , soundBtn.anchorY = 1, 1 
+    soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 25
+
+    end
+end
+
+if t.music==true then
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_on.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+    else 
+        soundBtn = widget.newButton{
+            defaultFile="assets/sound_off.png",
+            height = 50,
+            width = 50,
+            onEvent = soundBtnlistener
+        }
+    end
+
+     
+    soundBtn.anchorX , soundBtn.anchorY = 1, 1 
+    soundBtn.x , soundBtn.y = display.contentWidth - 25, display.contentHeight - 25
+
+
+sceneGroup:insert(soundBtn)
+
+
+
 end
 end
 -- "scene:hide()"
@@ -171,7 +256,7 @@ function scene:hide( event )
       
     elseif ( phase == "did" ) then
       
-      
+
     end
 end
 
@@ -180,8 +265,8 @@ end
 function scene:destroy( event )
 
     local sceneGroup = self.view
-
-    
+display.remove( soundBtn )
+    package.loaded["hud"] = nil
 end
 
 

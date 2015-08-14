@@ -440,11 +440,13 @@ local function onCollision2(self, event )
                     if por2 then
                         display.remove(por2)
                     end
+                    display.remove(cointext)
+                    display.remove( (coinHud) )
                     personaje:toFront( )
                   function guardaPuntos()
 --Guardar puntuación
-if user.actualScore>user.highScore then
-    user.highScore=user.actualScore
+if user.actualScore>user.highScoreMinion then
+    user.highScoreMinion=user.actualScore
     highScoreFlag=true
     user.session=user.session+1
 -- guarda datos
