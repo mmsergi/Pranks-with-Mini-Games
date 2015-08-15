@@ -54,12 +54,10 @@ function scene:create( event )
 	local group = self.view
 
 	mayShowAd()
-
+	
 	checkLocks(t)
 
-	if ((t.unlocked-initalUnlocked) > 0) then
-   		composer.showOverlay( "popup", {effect="zoomOutIn", isModal = true})
-	end
+	
 
 	local background = display.newImage(group, "assets1/sky2.png", cx, cy )
 

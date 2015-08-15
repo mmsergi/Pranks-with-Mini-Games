@@ -141,13 +141,22 @@ function loadTable(filename)
 end
 
 function checkLocks(ta)
-  if ta.coins>(unlock1-1) then
+  initalUnlocked = ta.unlocked
+  if ta.coins>=(unlock1) then
     ta.unlocked=1
-  elseif ta.coins>(unlock2-1) then
+  end
+
+  if ta.coins>=(unlock2) then
     ta.unlocked=2
-  elseif ta.coins>(unlock3-1) then
+  end
+
+  if ta.coins>=(unlock3) then
     ta.unlocked=3
   end
+  if ((ta.unlocked-initalUnlocked) > 0) then
+      composer.showOverlay( "popup", {effect="zoomOutIn", isModal = true})
+  end
+
   saveTable(ta, "settings.json")
 end
 
@@ -165,7 +174,7 @@ local t = loadTable( "settings.json" )
 
 local function splashView()
     splash:removeSelf( )
-    composer.gotoScene( "juegoTOA" )
+    composer.gotoScene( "menu" )
 end
 
 timer.performWithDelay(1, splashView)

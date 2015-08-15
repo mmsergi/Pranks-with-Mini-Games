@@ -145,11 +145,12 @@ function scene:create( event )
 		    width = 70,
 		}
 
-		homeBtn.x = 60
-		homeBtn.y = bottomMarg-60
+		homeBtn.x = 50
+		homeBtn.y = bottomMarg-50
 
 	group:insert( homeBtn )
 	group:insert( soundBtn )
+
 
 end
 
@@ -173,6 +174,7 @@ end
 function scene:destroy( event )
 	group = self.view
 display.remove( soundBtn )
+
 end
 
 scene:addEventListener( "create", scene )

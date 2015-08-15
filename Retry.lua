@@ -26,7 +26,7 @@ function scene:create( event )
 
     local sceneGroup = self.view
 
-    mayShowAd()
+    
 
 FondoMusica2= audio.loadSound( "assets4/rithm.ogg")
 
@@ -218,7 +218,8 @@ local homeBtn = widget.newButton
 
 
      elseif ( phase == "did" ) then  
-
+    mayShowAd()
+    checkLocks(t)
 FondoMusica2Channel= audio.play(FondoMusica2, {loops=(-1)})
 
 

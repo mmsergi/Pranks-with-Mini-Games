@@ -20,7 +20,7 @@ function scene:create( event )
 	local group = self.view	
 
     mayShowAd()
-
+    checkLocks(t)
 	local background = display.newImage(group, "assets2/bckg.png", cx, cy)
 
 	local cup = display.newImage(group, "assets2/cup.png")

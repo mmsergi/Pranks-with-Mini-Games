@@ -235,8 +235,9 @@ local homeBtn = widget.newButton
 		    parent = group,
 		}
 
-		homeBtn.x = 60
-		homeBtn.y = display.contentHeight - 60
+		
+		homeBtn.x = 50
+		homeBtn.y = bottomMarg-50
 		
 		group:insert( soundBtn )
 		group:insert( homeBtn )

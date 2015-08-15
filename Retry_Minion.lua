@@ -28,6 +28,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
 
+MusicaRetry= audio.loadSound( "assets3/retryMinionMusic.ogg")
 
  fondo = display.newImage(sceneGroup,"assets3/Overlay1.png")
    fondo.x=display.contentCenterX
@@ -46,7 +47,7 @@ end
 moregames=display.newImage( sceneGroup,"assets3/moregames.png", cx, cy+180)
 
 
-moregames:scale(0.8,0.8)
+moregames:scale(0.65,0.65)
 
 function moregames:tap()
  showMoreGamesAd()
@@ -75,7 +76,8 @@ totalGalletas:setFillColor(.424, .20, .008)
 totalGalletas.isVisible=false
 
 
-
+ mayShowAd()
+    checkLocks(t)
 end
 
 -- "scene:show()"
@@ -85,6 +87,7 @@ function scene:show( event )
     local phase = event.phase
 
 if ( phase == "will" ) then 
+MusicaRetryChannel= audio.play(MusicaRetry, {loops=(-1)})
 
 local ActualScore = display.newText(sceneGroup,user.actualScore, display.contentCenterX-110, display.contentCenterY-30, "telo", 50)
 ActualScore:setFillColor(.365, .247, .051)
@@ -106,16 +109,16 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScoreMinion,displa
     local function handleRetryEvent( event )
 
         if ( "ended" == event.phase ) then
-                    
-                    composer.removeScene("juegoTOA",true)
-                    
-                    audio.pause(FondoMusicaChannel2)
+                     audio.stop(MusicaRetryChannel)
+                    audio.pause(MusicaRetryChannel)
+                    composer.removeScene("juegoTOA")
+                   
                    audio.rewind(FondoMusicaChannel)
                    -- composer.removeScene("Retry")
                     local options = {
                         
                         time = 800,}
-                        composer.hideOverlay( "Retry_Minion" )
+                        composer.removeScene( "Retry_Minion" )
                         composer.gotoScene( "juegoTOA",options)
                         
                     
@@ -148,7 +151,7 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScoreMinion,displa
 sceneGroup:insert(Retry)
 Retry.x = display.contentCenterX
 Retry.y = display.contentCenterY+50
-Retry:scale(1,1)     
+Retry:scale(1.2,1.2)     
 
 Retry:setEnabled( false )
 
@@ -160,7 +163,7 @@ Retry:setEnabled( false )
 Retry:setEnabled( true )
 audio.rewind( FondoMusicaChannel2 )
 audio.resume(FondoMusicaChannel2)
-
+   
 
 local function goHome()
        
@@ -253,7 +256,10 @@ function scene:hide( event )
     local phase = event.phase
 
     if ( phase == "will" ) then
-      
+      audio.stop(MusicaRetryChannel)
+    audio.pause(MusicaRetryChannel)
+    display.remove( soundBtn )
+    package.loaded["hud"] = nil
     elseif ( phase == "did" ) then
       
 
@@ -265,7 +271,9 @@ end
 function scene:destroy( event )
 
     local sceneGroup = self.view
-display.remove( soundBtn )
+   audio.stop(MusicaRetryChannel)
+    audio.pause(MusicaRetryChannel)
+    display.remove( soundBtn )
     package.loaded["hud"] = nil
 end
 

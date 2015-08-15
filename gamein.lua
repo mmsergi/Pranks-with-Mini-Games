@@ -14,7 +14,7 @@ local gameend = false
 
 local t = loadTable( "settings.json" )
 
-initalUnlocked = t.unlocked
+
 
 local sound = audio.loadSound("assets1/game.mp3")
 local coinSound = audio.loadSound("assets/coin.ogg")

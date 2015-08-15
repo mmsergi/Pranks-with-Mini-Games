@@ -56,12 +56,13 @@ physics.start( )
 physics.setGravity( 0, 7 )  
 
 --Sonidos        
-FondoMusica2= audio.loadSound( "assets3/Theme8.ogg")
-
-Fail= audio.loadSound( "assets3/GameFail.ogg")
-Bite= audio.loadSound( "assets3/basket.ogg")
+FondoMusica2= audio.loadSound( "assets3/theme.ogg")
+coin= audio.loadSound( "assets/coin.ogg")
+coin= audio.loadSound( "assets/coin.ogg")
+Fail= audio.loadSound( "assets4/GameFail.ogg")
+Bite= audio.loadSound( "assets4/Bite.ogg")
 fondo = display.newImage(sceneGroup,"assets3/endless1.png",display.contentCenterX,display.contentCenterY)
-logro= audio.loadSound( "assets3/Cheers.ogg")
+logro= audio.loadSound( "assets4/Cheers.ogg")
 
 highScoreFlag=false
 Dificultad=700
@@ -186,7 +187,7 @@ function scene:show( event )
 FondoMusicaChannel= audio.play(FondoMusica2, {loops=(-1)})
 
 por2=display.newImage( sceneGroup,"assets3/x2.png",cx+10,cy+70 )
-por2.isVisible=false
+por2.alpha=0
 
 local function spawnFlama(params)
 if Dificultad<=500 then
@@ -194,17 +195,18 @@ if Dificultad<=500 then
 end
 
 if por2Flag then
-
-                        por2.isVisible=true  
+    print("entra")
+                        por2Flag=false
+                        por2.alpha=1 
                     audio.play( logro)
-                    tmr03=timer.performWithDelay(5000, function () transition.blink( por2, { time=1000 } )end)
-                    tmr04=timer.performWithDelay(7000, function () timer.cancel( tmr03 ) timer.cancel( tmr04 ) display.remove( por2 )
-                        platanoFlag=false nomasplatano=false end)
-                    por2Flag=false   
+                    tmr03=timer.performWithDelay(5000, function () transBlink=transition.blink( por2, { time=1000 } )end)
+                    tmr04=timer.performWithDelay(7000, function () timer.cancel( tmr03 )  por2.alpha=0
+                        transition.cancel( transBlink ) print("finito") platanoFlag=false nomasplatano=false timer.cancel( tmr04 ) end)
+                       
                     flamas:toFront( )
 end
 
-if randomFlama>=Dificultad then 
+if randomFlama>= Dificultad then 
     flamas=display.newSprite( cocoSheet,cocoSequence  )
 
             physics.addBody( flamas, { density=0, friction=6, bounce=0, 
@@ -333,13 +335,13 @@ end
                           platanoFlag=true  
                           nomasplatano=true
                           por2Flag=true
+                        end
 
-
-                end
+                
 
 elseif (event.other.name) == "personaje" and event.target.name=="coin" and failFlag==true then
                         tmr03=timer.performWithDelay(10, function () table.remove(event.target); display.remove(event.target);event.target=nil end)
-                        audio.play( Bite)
+                        audio.play( coin)
                         print("moneda")
                         t.coins=t.coins+1
                         saveTable(t, "settings.json")
@@ -457,7 +459,7 @@ end
 end
 guardaPuntos()
 
-                    timer.performWithDelay( 1500, function () composer.showOverlay( "Retry_Minion" )end)
+                    timer.performWithDelay( 1500, function () composer.gotoScene( "Retry_Minion" )end)
                      timer.performWithDelay( 500, function () timer.cancel( flamaTimer ) end )
                     
                        
@@ -527,7 +529,9 @@ timer.cancel(tmr02)
 end
 if tmr01 then
 timer.cancel(tmr01)
-end    
+end 
+timer.cancel( flechasTutoTmr1 )
+timer.cancel( flechasTutoTmr2 )   
 end
 -- -------------------------------------------------------------------------------
 
