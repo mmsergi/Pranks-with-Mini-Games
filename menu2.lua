@@ -4,13 +4,6 @@ local t = loadTable( "settings.json" )
 
 local group
 
-function moverBarra1()
-		tr1 = transition.moveTo( barraLuz1, {y=topMarg+120, time=1000, onComplete=moverbarraLuz1} )
-end
-
- function moverbarraLuz1()
-		tr2 = transition.moveTo( barraLuz1, {y=topMarg+75, time=1000, onComplete=moverBarra1})
-end
 
 function soundBtnlistener(event)
     local phase = event.phase 
@@ -65,43 +58,122 @@ function scene:create( event )
 	local intro = audio.loadSound("assets/intro.ogg")
 	audio.play( intro )
 	
-	local background = display.newImage( group, "assets/fondoMenu.png", cx, cy )
-	barraLuz1 = display.newImage( group, "assets/barraLuz.png", cx, topMarg+75 )
-	local titulo = display.newText( group, translations["Juegos"][language], cx, topMarg+100, "BebasNeue", 80 )
-
-	moverBarra1()
+	local background = display.newImage( group, "assets/background2.png", cx, cy )
 	
+	local titulo = display.newText( group, translations["Juegos"][language], cx, topMarg+80, "BebasNeue", 80 )
+    titulo:setFillColor( 0 )
+    titulo.alpha=0.6
+    local titulo2 = display.newText( group, translations["Juegos"][language], cx-5, topMarg+75, "BebasNeue", 80 )
+    titulo2:setFillColor( 1 )
+   
+   --Tablas para randomizar la posición de los iconos
+    local positionX = { leftMarg+125, rightMarg-125,leftMarg+125, rightMarg-125}
+    local positionY = { cy-150,cy-150,cy+140,cy+140}
 
-	local btn1 = display.newImage( group, "assets/iconoCat.png", leftMarg+150, cy-120)
-	btn1:scale(0.75,0.75)
+    local chosePosition = {1, 2, 3, 4}
 
+function RandomizeOnce()
+    
+    i = math.random( #chosePosition )
+    num1 = chosePosition[i]
+    table.remove(chosePosition,i)
+    j = math.random( #chosePosition )
+    num2 = chosePosition[j]
+    table.remove(chosePosition,j)
+
+    k = math.random( #chosePosition )
+    num3 = chosePosition[k]
+    table.remove(chosePosition,k)
+
+    q = math.random( #chosePosition )
+    num4 = chosePosition[q]
+    table.remove(chosePosition,q)
+   
+    if t.RandomizeOnceDone==false then
+        t.num1= num1
+        t.num2= num2
+        t.num3= num3
+        t.num4= num4
+        t.RandomizeOnceDone=true
+    saveTable(t, "settings.json")
+end
+end
+RandomizeOnce()
+
+function initialScoreText()
+    if t.highscoreLaser == 1 then 
+    display.remove( hsText1 )
+    display.remove( hs1)
+    hsText1 = display.newText( group, "Play",positionX[t.num1],positionY[t.num1]+125,"BebasNeue",50 )
+    hsText1:setFillColor(1,0,0)
+
+    end
+    if t.highscoreCopter == 0 then 
+    display.remove( hsText2 )
+    display.remove( hs2)
+    hsText2 = display.newText( group, "Play",positionX[t.num1],positionY[t.num1]+125,"BebasNeue",50 )
+    hsText2:setFillColor(1,0,0)
+    end
+    if user.highScore == 0 then 
+        hs2.text="--"
+    end
+    if user.highScoreMinion == 0 then 
+        hs4.text="--"
+    end
+end
+
+    local rect1 = display.newImage( group, "assets/rect.png",positionX[t.num1],positionY[t.num1]+120)
+    hsText1 = display.newText( group, "High Score",positionX[t.num1],positionY[t.num1]+105,"LobsterTwo-Regular",30 )
+	hsText1:setFillColor( 0 )
+    hs1 = display.newText( group, t.highscoreLaser,positionX[t.num1],positionY[t.num1]+140,"LobsterTwo-Regular",40 )
+    hs1:setFillColor( 0 )
+    local btn1 = display.newImage( group, "assets/iconoCat.png",positionX[t.num1],positionY[t.num1])
+
+    local rect2 = display.newImage( group, "assets/rect.png",positionX[t.num2],positionY[t.num2]+120)
+    local hsText2 = display.newText( group, "High Score",positionX[t.num2],positionY[t.num2]+105,"LobsterTwo-Regular",30 )
+    hsText2:setFillColor( 0 )
+    hs2 = display.newText( group, user.highScore,positionX[t.num2],positionY[t.num2]+140,"LobsterTwo-Regular",40 )
+    hs2:setFillColor( 0 )
+    local btn2 = display.newImage( group, "assets/iconDoors.png", positionX[t.num2],positionY[t.num2] )
+
+    local rect3 = display.newImage( group, "assets/rect.png",positionX[t.num3],positionY[t.num3]+120)
+    local hsText3 = display.newText( group, "High Score",positionX[t.num3],positionY[t.num3]+105,"LobsterTwo-Regular",30 )
+    hsText3:setFillColor( 0 )
+    hs3 = display.newText( group, t.highscoreCopter,positionX[t.num3],positionY[t.num3]+140,"LobsterTwo-Regular",40 )
+    hs3:setFillColor( 0 )
+	local btn3 = display.newImage( group, "assets/iconCopter.png", positionX[t.num3],positionY[t.num3])
+
+    local rect4 = display.newImage( group, "assets/rect.png",positionX[t.num4],positionY[t.num4]+120)
+    local hsText4 = display.newText( group, "High Score",positionX[t.num4],positionY[t.num4]+105,"LobsterTwo-Regular",30 )
+    hsText4:setFillColor( 0 )
+    hs4 = display.newText( group, user.highScoreMinion,positionX[t.num4],positionY[t.num4]+140,"LobsterTwo-Regular",40 )
+    hs4:setFillColor( 0 )
+    local btn4 = display.newImage( group, "assets/iconCocos.png", positionX[t.num4],positionY[t.num4] )
+
+
+    initialScoreText()
     function btn1:tap()
-        btn1:scale(0.75,0.75)
+
         analytics.logEvent( "LaserCatSession" )
         composer.gotoScene( "gamein" )
     end
     
     btn1:addEventListener("tap",btn1)
 
-    local btn2 = display.newImage( group, "assets/iconoCat.png", rightMarg-150, cy-120)
-	btn2:scale(0.75,0.75)
+    
+	
 
     function btn2:tap()
-        btn2:scale(0.75,0.75)
         analytics.logEvent( "DoorsSession" )
         composer.gotoScene( "EndlessH" )
     end
     
     btn2:addEventListener("tap",btn2)
 
-    local btn3 = display.newImage( group, "assets2/copicon.png", leftMarg+150, cy+120)
-
-
-	local btn4 = display.newImage( group, "assets/iconoCat.png", rightMarg-150, cy+120)
-	btn4:scale(0.5,0.5)
+    
+	
 
     function btn3:tap()
-        btn3:scale(0.75,0.75)
         analytics.logEvent( "CopterSession" )
         composer.gotoScene( "game" )
     end
@@ -109,7 +181,6 @@ function scene:create( event )
     btn3:addEventListener("tap",btn3)
 
     function btn4:tap()
-        btn4:scale(0.75,0.75)
         analytics.logEvent( "CoconutSession" )
         composer.gotoScene( "juegoTOA" )
     end

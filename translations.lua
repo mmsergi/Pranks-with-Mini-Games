@@ -149,13 +149,13 @@ translations =
 
 	["Juegos"] = 
 	{
-		["ingles"] = "Games",
-		["espanol"] = "Juegos",
-		["portugues"] = "Jogos",
-		["ruso"] = "Игры",
-		["frances"] = "Jeux",
-		["aleman"] = "Spiele",
-		["italiano"] = "Giochi",
+		["ingles"] = "Mini games",
+		["espanol"] = "Mini juegos",
+		["portugues"] = "Mini jogos",
+		["ruso"] = "Мини-игры",
+		["frances"] = "Mini jeux",
+		["aleman"] = "Mini-Spiele",
+		["italiano"] = "Mini-giochi",
 	},
 
 	["Fake Call"] = 

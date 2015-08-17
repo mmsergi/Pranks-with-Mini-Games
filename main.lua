@@ -164,11 +164,16 @@ local t = loadTable( "settings.json" )
 	
 	if t == nil then 
 	    local settings = {}
-	    settings.highscoreLaser = 0
+	      settings.highscoreLaser = 0
         settings.highscoreCopter = 0
         settings.coins = 0
         settings.unlocked = 0
         settings.music = true
+        settings.RandomizeOnceDone = false
+        settings.num1 = 1
+        settings.num2 = 2
+        settings.num3 = 3
+        settings.num4 = 4
 	    saveTable(settings, "settings.json")
 	end
 
