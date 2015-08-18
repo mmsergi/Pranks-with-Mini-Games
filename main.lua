@@ -39,19 +39,7 @@ coinsSequence = {
   { name = "estatica", start=1, count=1, time=8500,},
   { name = "dinamica", start=1, count=10, time=2500,},} 
 
-function coinsSpriteListener( event )
-  if coinsAnimationFlag==false then
-    coins:setSequence( "dinamica" )  
-    coins:play()
-    coinsAnimationFlag=true
-    tmrCoins=timer.performWithDelay( 2500, coinsSpriteListener )
-  elseif coinsAnimationFlag==true then
-    coins:setSequence( "estatica" )  
-    coins:play()
-    coinsAnimationFlag=false
-  end
-  return true
-end
+
 
 function showMoreGamesAd()
     local currScene = composer.getSceneName( "current" )
@@ -163,7 +151,7 @@ function checkLocks(ta)
   end
   if ((ta.unlocked-initalUnlocked) > 0) then
       analytics.logEvent( "unlocked", { number=ta.unlocked } )
-      composer.showOverlay( "popup", {effect="zoomOutIn", isModal = true})
+      composer.showOverlay( "unlockedPopup", {effect="zoomOutIn", isModal = true})
   end
 
   saveTable(ta, "settings.json")

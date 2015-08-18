@@ -9,14 +9,39 @@ local optionsCoinsText = {
     width= 100,
     align= "center"
 }
+coinsAnimationFlag = false
+function coinsSpriteListener( event )
+  if coinsAnimationFlag==false then
+    coins:setSequence( "dinamica" )  
+    coins:play()
+    coinsAnimationFlag=true
+    tmrCoins1=timer.performWithDelay( 2500, coinsSpriteListener )
+        if tmrCoins2 then
+            timer.cancel(tmrCoins2)
+        end
+  elseif coinsAnimationFlag==true then
+     if tmrCoins1 then
+            timer.cancel(tmrCoins1)
+        end
+    coins:setSequence( "estatica" )  
+    coins:play()
+    coinsAnimationFlag=false
+    tmrCoins2=timer.performWithDelay( 10000, coinsSpriteListener )
+  end
+  return true
+end
+
 local function hudCoinsTouch(event)
     if ( event.phase == "ended") then
-        local currScene = composer.getSceneName( "current" )
-            composer.removeScene( currScene )
-            composer.gotoScene( "tienda" )
+        if composer.getSceneName("current")~="tienda" then
+
+            local currScene = composer.getSceneName( "current" )
+                composer.removeScene( currScene )
+                composer.gotoScene( "tienda" )
         end
-        return true
     end
+    return true
+end
      hudCoins = widget.newButton{
                 defaultFile="assets/hudCoins.png",
                 onEvent = hudCoinsTouch,

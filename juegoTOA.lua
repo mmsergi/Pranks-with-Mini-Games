@@ -349,7 +349,7 @@ elseif (event.other.name) == "personaje" and event.target.name=="coin" and failF
                         tmr03=timer.performWithDelay(10, function () table.remove(event.target); display.remove(event.target);event.target=nil end)
                         audio.play( coin)
                         print("moneda")
-                        t.coins=t.coins+1
+                        t.coins=t.coins+50
                         saveTable(t, "settings.json")
                         cointext.text=t.coins-initialCoins
 
