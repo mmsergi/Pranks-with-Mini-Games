@@ -229,7 +229,7 @@ FondoMusica2Channel= audio.play(FondoMusica2, {loops=(-1)})
                     
                    
                     composer.removeScene("EndlessH")
-                    +op(FondoMusica2Channel)
+                    audio.stop(FondoMusica2Channel)
                    audio.rewind(FondoMusicaChannel)
                     composer.removeScene("Retry")
                     local options = {
@@ -299,6 +299,7 @@ function scene:destroy( event )
     display.remove( soundBtn )
     audio.stop( FondoMusica2Channel )
     package.loaded["hud"] = nil
+    
 end
 
 

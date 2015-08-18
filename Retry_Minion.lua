@@ -5,12 +5,6 @@ local background
 local Gameover
 local notas
 
---Moneda            
-local MonedaSheet = graphics.newImageSheet( "assets3/Moneda.png", { width=38, height=41, numFrames=13} )    
-local MonedaSequence = {
-            { name = "inicial", start=1, count=4, time=1600, },
-            { name = "comida", start=5, count=4, time=400, },
-            { name = "desaparece", start=9, count=5, time=500, }} 
 
 local moregamesSheet = graphics.newImageSheet( "assets4/moregames.png", { width=206, height=91, numFrames=2} )    
 local moregamesSequence = {
@@ -158,6 +152,8 @@ Retry:setEnabled( false )
      elseif ( phase == "did" ) then  
 Retry:setEnabled( true )
 
+   MusicaRetry= audio.loadSound( "assets3/retryMinionMusic.ogg")
+MusicaRetryChannel= audio.play(MusicaRetry, {loops=(-1)})
 
 local function goHome()
        
@@ -266,7 +262,8 @@ function scene:destroy( event )
     local sceneGroup = self.view
   
     
-
+    audio.stop(MusicaRetryChannel)
+    audio.dispose( MusicaRetry )
     MusicaRetry = nil 
     display.remove( soundBtn )
     package.loaded["hud"] = nil

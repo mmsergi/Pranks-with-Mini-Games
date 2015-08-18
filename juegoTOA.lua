@@ -423,7 +423,7 @@ sceneGroup:insert(flamasGroup)
     coinHud.x, coinHud.y = rightMarg-50,bottomMarg-50
 
 local function onCollision2(self, event )
-                if (event.other.name) == "coco" and capaFlag==true then
+                if (event.other.name) == "coco" and capaFlag==true and failFlag==true then
 
 
 
@@ -437,11 +437,13 @@ local function onCollision2(self, event )
                     
                     audio.stop(FondoMusicaChannel)
 
-                    if failFlag then
+                    
                     audio.play(Fail)
                     failFlag=false
-                    print("locoo")
-                end
+                     audio.stop(Fail)
+                    audio.dispose( Fail )
+                    Fail = nil 
+                
                     --acciones personaje
                     timer.performWithDelay(250,function() personaje:setSequence( "muerto" );
                     personaje:play(); physics.removeBody( personaje );    end)
