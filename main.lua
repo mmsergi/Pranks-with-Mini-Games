@@ -15,14 +15,14 @@ unlock3 = 100
 
 firstAd = true
 
-interstitial= "ca-app-pub-1709584335667681/5715056650"
+interstitial = "ca-app-pub-1709584335667681/5715056650"
 
 ads.init( "admob", interstitial ) --Admob
 
 AdBuddiz.setAndroidPublisherKey( "260ddaa0-671b-4d8f-bf0c-769cb0b6ad9e" ) --Adbuddiz
 AdBuddiz.cacheAds()  
 
-analytics.init( "" ) --Flurry
+analytics.init( "9YJ6DSJRH96YY6Z7GN53" ) --Flurry
 
 cx, cy = display.contentCenterX, display.contentCenterY
 _W, _H = display.contentWidth, display.contentHeight 
@@ -54,6 +54,8 @@ function coinsSpriteListener( event )
 end
 
 function showMoreGamesAd()
+    local currScene = composer.getSceneName( "current" )
+    composer.removeScene( currScene )
     analytics.logEvent( "MoreGamesClick" )
     composer.gotoScene( "menu2" )
 end
@@ -154,6 +156,7 @@ function checkLocks(ta)
     ta.unlocked=3
   end
   if ((ta.unlocked-initalUnlocked) > 0) then
+      analytics.logEvent( "unlocked", { number=ta.unlocked } )
       composer.showOverlay( "popup", {effect="zoomOutIn", isModal = true})
   end
 
@@ -175,6 +178,7 @@ local t = loadTable( "settings.json" )
         settings.num3 = 3
         settings.num4 = 4
         settings.facebook = true
+        settings.install = true
 	    saveTable(settings, "settings.json")
 	end
 

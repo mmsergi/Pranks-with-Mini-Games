@@ -18,6 +18,7 @@ function vungleAdListener( event )
     t.coins = t.coins + 10
     saveTable(t, "settings.json")
     coinsText.text = t.coins
+    checkLocks(t)
   end
   if ( event.type == "adEnd" ) then
     -- The ad experience has been closed- this
@@ -31,21 +32,20 @@ local function playVideoAd()
 end
 
 local function goBack()
+	composer.removeScene( "menu" )
 	composer.gotoScene( "menu" )
 	composer.removeScene( "tienda" )
 end
 
 local function installAd()
 	analytics.logEvent( "InstallAdClick" )
-	if math.random()>.5 then
-  		system.openURL( "https://play.google.com/store/apps/details?id=com.masah.adventuresinside" )
-  	else
-  		system.openURL( "https://play.google.com/store/apps/details?id=com.wavepps.frozenbubbles" )
-  	end
-
+	system.openURL( "https://play.google.com/store/apps/details?id=com.masah.adventuresinside" )
   	t.coins = t.coins + 30
+  	t.install = false
     saveTable(t, "settings.json")
     coinsText.text = t.coins
+    installBtn:removeSelf( )
+    checkLocks(t)
 end
 
 local function freeGame()
@@ -60,11 +60,14 @@ local function likeFb()
 	t.facebook = false
     saveTable(t, "settings.json")
     coinsText.text = t.coins
+    checkLocks(t)
 	likeBtn:removeSelf( )
 end
 
 function scene:create( event )
 	group = self.view
+
+	checkLocks(t)
 
 	ads.init( "vungle", "com.seja.liedetector", vungleAdListener) -- Vungle
 	ads:setCurrentProvider("vungle")
@@ -80,13 +83,19 @@ function scene:create( event )
 	videoBtn.x = display.contentWidth/2 
 	videoBtn.y = 250
 
-	installBtn = widget.newButton{
+	if t.install then
 
-	    defaultFile = "assets/installBtn.png",
-	    onRelease = installAd
-	}
-	installBtn.x = display.contentWidth/2 
-	installBtn.y = 400
+		installBtn = widget.newButton{
+
+		    defaultFile = "assets/installBtn.png",
+		    onRelease = installAd
+		}
+		installBtn.x = display.contentWidth/2 
+		installBtn.y = 500
+
+		group:insert(installBtn)
+
+	end
 
 	gameBtn = widget.newButton{
 
@@ -94,7 +103,7 @@ function scene:create( event )
 	    onRelease = freeGame
 	}
 	gameBtn.x = display.contentWidth/2 
-	gameBtn.y = 550
+	gameBtn.y = 360
 
 	if t.facebook then
 
@@ -126,7 +135,7 @@ function scene:create( event )
 	showNumCoins(coinsText, numCoins, 1)
 
 	group:insert(videoBtn)
-	group:insert(installBtn)
+	
 	group:insert(gameBtn)
 	
 	group:insert(backBtn)
