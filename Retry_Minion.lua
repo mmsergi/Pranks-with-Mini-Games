@@ -33,8 +33,8 @@ MusicaRetry= audio.loadSound( "assets3/retryMinionMusic.ogg")
  fondo = display.newImage(sceneGroup,"assets3/Overlay1.png")
    fondo.x=display.contentCenterX
 fondo.y=display.contentCenterY
-if highScoreFlag  then --si la flag situada en guardaPuntos() de Endless.lua esta activada ponemos new highscore
-     new=display.newImage( sceneGroup,"assets3/NewHighscore.png", display.contentCenterX+44, display.contentCenterY-93 )
+if highScoreFlag==false  then --si la flag situada en guardaPuntos() de Endless.lua esta activada ponemos new highscore
+     new=display.newImage( sceneGroup,"assets3/NewHighscore.png", display.contentCenterX+55, display.contentCenterY-110 )
         new:rotate(-35)
 
         print("highscore")
@@ -110,7 +110,6 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScoreMinion,displa
 
         if ( "ended" == event.phase ) then
                      audio.stop(MusicaRetryChannel)
-                    audio.pause(MusicaRetryChannel)
                     composer.removeScene("juegoTOA")
                    
                    audio.rewind(FondoMusicaChannel)
@@ -119,7 +118,7 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScoreMinion,displa
                         
                         time = 800,}
                         composer.removeScene( "Retry_Minion" )
-                        composer.gotoScene( "juegoTOA",options)
+                        composer.gotoScene( "juegoTOA")
                         
                     
                      audio.play( CheersAudio )
@@ -161,8 +160,7 @@ Retry:setEnabled( false )
 
      elseif ( phase == "did" ) then  
 Retry:setEnabled( true )
-audio.rewind( FondoMusicaChannel2 )
-audio.resume(FondoMusicaChannel2)
+
    
 
 local function goHome()
@@ -256,8 +254,7 @@ function scene:hide( event )
     local phase = event.phase
 
     if ( phase == "will" ) then
-      audio.stop(MusicaRetryChannel)
-    audio.pause(MusicaRetryChannel)
+      
     display.remove( soundBtn )
     package.loaded["hud"] = nil
     elseif ( phase == "did" ) then
@@ -271,8 +268,9 @@ end
 function scene:destroy( event )
 
     local sceneGroup = self.view
-   audio.stop(MusicaRetryChannel)
-    audio.pause(MusicaRetryChannel)
+  
+    
+     audio.stop(MusicaRetryChannel)
     display.remove( soundBtn )
     package.loaded["hud"] = nil
 end
