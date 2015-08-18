@@ -200,8 +200,7 @@ function scene:create( event )
 	iconPlay.x, iconPlay.y = cx, cy-140
 	iconPlay:play()
 
-	local intro = audio.loadSound("assets/intro.ogg")
-	audio.play( intro )
+
 	
 
 	if t.music==true then
@@ -258,7 +257,7 @@ end
 function scene:hide( event )
 	group = self.view
 	
-	audio.pause(intro)
+
 end
 
 function scene:destroy( event )

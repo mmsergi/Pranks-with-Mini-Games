@@ -55,8 +55,6 @@ function scene:create( event )
 		audio.setVolume(0)
 	end
 
-	local intro = audio.loadSound("assets/intro.ogg")
-	audio.play( intro )
 	
 	local background = display.newImage( group, "assets/background2.png", cx, cy )
 	
@@ -234,7 +232,6 @@ end
 function scene:hide( event )
 	group = self.view
 	
-	audio.pause(intro)
 
 	composer.removeScene( "menu2" )
 

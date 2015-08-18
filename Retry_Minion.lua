@@ -28,12 +28,12 @@ function scene:create( event )
     local sceneGroup = self.view
 
 
-MusicaRetry= audio.loadSound( "assets3/retryMinionMusic.ogg")
+
 
  fondo = display.newImage(sceneGroup,"assets3/Overlay1.png")
    fondo.x=display.contentCenterX
 fondo.y=display.contentCenterY
-if highScoreFlag==false  then --si la flag situada en guardaPuntos() de Endless.lua esta activada ponemos new highscore
+if highScoreFlag  then --si la flag situada en guardaPuntos() de Endless.lua esta activada ponemos new highscore
      new=display.newImage( sceneGroup,"assets3/NewHighscore.png", display.contentCenterX+55, display.contentCenterY-110 )
         new:rotate(-35)
 
@@ -87,7 +87,7 @@ function scene:show( event )
     local phase = event.phase
 
 if ( phase == "will" ) then 
-MusicaRetryChannel= audio.play(MusicaRetry, {loops=(-1)})
+
 
 local ActualScore = display.newText(sceneGroup,user.actualScore, display.contentCenterX-110, display.contentCenterY-30, "telo", 50)
 ActualScore:setFillColor(.365, .247, .051)
@@ -109,14 +109,12 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScoreMinion,displa
     local function handleRetryEvent( event )
 
         if ( "ended" == event.phase ) then
-                     audio.stop(MusicaRetryChannel)
+                     
                     composer.removeScene("juegoTOA")
                    
                    audio.rewind(FondoMusicaChannel)
-                   -- composer.removeScene("Retry")
-                    local options = {
-                        
-                        time = 800,}
+                   
+                    
                         composer.removeScene( "Retry_Minion" )
                         composer.gotoScene( "juegoTOA")
                         
@@ -160,7 +158,6 @@ Retry:setEnabled( false )
      elseif ( phase == "did" ) then  
 Retry:setEnabled( true )
 
-   
 
 local function goHome()
        
@@ -269,8 +266,7 @@ function scene:destroy( event )
     local sceneGroup = self.view
   
     
-    audio.stop(MusicaRetryChannel)
-    audio.dispose( MusicaRetry )
+
     MusicaRetry = nil 
     display.remove( soundBtn )
     package.loaded["hud"] = nil

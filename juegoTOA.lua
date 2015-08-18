@@ -189,7 +189,7 @@ function scene:show( event )
    local failFlag=true
 FondoMusicaChannel= audio.play(FondoMusica2, {loops=(-1)})
 
-por2=display.newImage( sceneGroup,"assets3/x2.png",cx+10,cy+70 )
+por2=display.newImage( sceneGroup,"assets3/x2.png",cx+7,cy+70 )
 por2.alpha=0
 
 
