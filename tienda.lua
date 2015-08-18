@@ -122,7 +122,9 @@ function scene:create( event )
 	{
 	    defaultFile="assets/home.png",
 	    overFile="assets/home_2.png",
-	    onRelease = goBack
+	    onRelease = goBack,
+	    height = 70,
+		width = 70,
 	}
 
 	backBtn.x = leftMarg+50

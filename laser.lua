@@ -67,9 +67,8 @@ local function changeColor(event)
 	grip:removeSelf( )
 	grip = nil
 
-	laser = display.newImage("assets1/" .. event.target.id .. ".png")
+	laser = display.newImage(group, "assets1/" .. event.target.id .. ".png")
 	laser.x, laser.y = display.contentWidth/2, display.contentHeight/2
-	group:insert(laser)
 
 	grip = widget.newButton
 	{
@@ -91,6 +90,10 @@ local function retorn()
 end
 
 local function shake( event )
+	if shakeimg.alpha==1 then
+		shakeimg.alpha=0
+	end
+
 	if laser.alfa==1 then
 
 	    if event.isShake == true then
@@ -229,6 +232,9 @@ function scene:create( event )
 	group:insert(bluebtn)
 	group:insert(purplebtn)
 	group:insert(yellowbtn)
+
+	shakeimg = display.newImage( group, "assets/shake.png" )
+	shakeimg.x , shakeimg.y = cx, cy - 100
 
 end
 
