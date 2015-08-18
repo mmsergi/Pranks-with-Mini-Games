@@ -64,6 +64,8 @@ Bite= audio.loadSound( "assets4/Bite.ogg")
 fondo = display.newImage(sceneGroup,"assets3/endless1.png",display.contentCenterX,display.contentCenterY)
 logro= audio.loadSound( "assets4/Cheers.ogg")
 
+
+
 highScoreFlag=false
 Dificultad=700
 if user.session==0 then
@@ -93,6 +95,7 @@ pared = {}
         physics.addBody( pared[i], "static", {density=100, friction=1, bounce=0 ,filter={ categoryBits=1, maskBits=2 }, } )
         end
         pared[1].x=rightMarg+35
+
 --Suelo
 suelo=display.newRect(display.contentCenterX,display.contentCenterY+370,display.contentWidth,100)
 suelo.name="suelo"
@@ -189,6 +192,7 @@ FondoMusicaChannel= audio.play(FondoMusica2, {loops=(-1)})
 por2=display.newImage( sceneGroup,"assets3/x2.png",cx+10,cy+70 )
 por2.alpha=0
 
+
 local function spawnFlama(params)
 if Dificultad<=500 then
     Dificultad=500
@@ -202,7 +206,7 @@ if por2Flag then
                     tmr03=timer.performWithDelay(5000, function () transBlink=transition.blink( por2, { time=1000 } )end)
                     tmr04=timer.performWithDelay(7000, function () timer.cancel( tmr03 )  por2.alpha=0
                         transition.cancel( transBlink ) print("finito") platanoFlag=false nomasplatano=false timer.cancel( tmr04 ) end)
-                       
+                     
                     flamas:toFront( )
 end
 
@@ -298,6 +302,8 @@ end
                                 Unpuntos.x=personaje.x
                                 Unpuntos.y=personaje.y-60
                                 Unpuntos:scale(2,2)
+                                  display.remove( flechaTutoR )
+
                                     transition.to( Unpuntos, { time=1500, alpha=0, x=personaje.x, y=personaje.y-90,onComplete= function() display.remove( Unpuntos )end } )
                                     sceneGroup:insert(Unpuntos)
                                 else
@@ -374,7 +380,7 @@ elseif (event.other.name) == "personaje" and event.target.name=="coco" and capaF
                     flamas.collision = onCollision
                     flamas:addEventListener("collision", flamas)
 
-                    
+
 
 
     return flamas
@@ -418,6 +424,10 @@ sceneGroup:insert(flamasGroup)
 
 local function onCollision2(self, event )
                 if (event.other.name) == "coco" and capaFlag==true then
+
+
+
+
 
                     
                     izq:removeEventListener("touch",izq)
@@ -515,8 +525,23 @@ end
 function scene:destroy( event )
 
     local sceneGroup = self.view
+       display.remove( flechaTutoL )
+        display.remove( fondo )
+display.remove( actualScore )
+display.remove( pared )
+display.remove( suelo )
 display.remove( personaje )
+display.remove( izq )
+display.remove( der )
+display.remove( por2 )
 display.remove( flamas )
+display.remove( Unpuntos )
+display.remove( capa2 )
+display.remove( palmeraI )
+display.remove( palmeraD )
+display.remove( palmeraM )
+display.remove( coinHud )
+display.remove( cointext )
 timer.cancel( flamaTimer )
 if tmr04 then
 timer.cancel(tmr04)

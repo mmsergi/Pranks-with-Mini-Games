@@ -121,9 +121,8 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScoreMinion,displa
                         composer.gotoScene( "juegoTOA")
                         
                     
-                     audio.play( CheersAudio )
-                     nubeFlag=true
-                      --transition.to( retryNube, {alpha=0,y=-60,time=100 })
+                    
+        
         end
 
     end
@@ -270,9 +269,12 @@ function scene:destroy( event )
     local sceneGroup = self.view
   
     
-     audio.stop(MusicaRetryChannel)
+    audio.stop(MusicaRetryChannel)
+    audio.dispose( MusicaRetry )
+    MusicaRetry = nil 
     display.remove( soundBtn )
     package.loaded["hud"] = nil
+
 end
 
 
