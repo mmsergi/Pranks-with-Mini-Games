@@ -177,6 +177,7 @@ function scene:create( event )
 	end
 
 	local background = display.newImage( group, "assets/background.png", cx, cy )
+
 	local sombra = display.newImage( group, "assets/sombra.png", cx, bottomMarg-40)
 	tvCall = display.newSprite( tvCallSheet, tvCallSequence )
 	tvLaser = display.newSprite( tvLaserSheet, tvLaserSequence )
@@ -232,6 +233,20 @@ function scene:create( event )
     group:insert( coins)
     group:insert( coinsText)
 	showNumCoins(coinsText, numCoins, 1)
+
+	if t.coins < 20 then
+		tuto = display.newImage( group, "assets/tuto_opt.png", cx + 80, cy + 200 )
+		tuto.xScale, tuto.yScale = 0.1, 0.1
+		transi = transition.to( tuto, { time=300, xScale=1, yScale=1, transition=easing.inQuad , onComplete=trans1} )
+		function tutof(event)
+			if event.phase == "ended" then
+				print("entrando")
+				tuto:removeSelf( )
+			end
+			return true
+		end
+		tuto:addEventListener( "touch", tutof )
+	end
 
 end
 

@@ -55,7 +55,7 @@ end
 
 function showMoreGamesAd()
     analytics.logEvent( "MoreGamesClick" )
-    AdBuddiz.showAd()
+    composer.gotoScene( "menu2" )
 end
 
 function mayShowAd()
@@ -164,7 +164,7 @@ local t = loadTable( "settings.json" )
 	
 	if t == nil then 
 	    local settings = {}
-	      settings.highscoreLaser = 0
+	    settings.highscoreLaser = 0
         settings.highscoreCopter = 0
         settings.coins = 0
         settings.unlocked = 0

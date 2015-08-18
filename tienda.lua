@@ -49,6 +49,11 @@ local function freeGame()
     AdBuddiz.showAd()
 end
 
+local function likeFb()
+	system.openURL( "https://www.facebook.com/sejaapps" )
+	likeBtn:removeSelf( )
+end
+
 function scene:create( event )
 	group = self.view
 
@@ -82,6 +87,14 @@ function scene:create( event )
 	gameBtn.x = display.contentWidth/2 
 	gameBtn.y = 550
 
+	likeBtn = widget.newButton{
+
+	    defaultFile = "assets/like.png",
+	    onRelease = likeFb
+	}
+	likeBtn.x = display.contentWidth/2 + 90
+	likeBtn.y = 750
+
 	backBtn = widget.newButton
 	{
 	    defaultFile="assets/home.png",
@@ -101,6 +114,7 @@ function scene:create( event )
 	group:insert(videoBtn)
 	group:insert(installBtn)
 	group:insert(gameBtn)
+	group:insert(likeBtn)
 	group:insert(backBtn)
 
 end
