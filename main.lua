@@ -180,7 +180,7 @@ local t = loadTable( "settings.json" )
 
 local function splashView()
     splash:removeSelf( )
-    composer.gotoScene( "menu2" )
+    composer.gotoScene( "menu" )
 end
 
 timer.performWithDelay(1, splashView)
