@@ -4,12 +4,7 @@ local t = loadTable( "settings.json" )
 local background
 local Gameover
 local notas
---Moneda            
-local MonedaSheet = graphics.newImageSheet( "assets4/Moneda.png", { width=38, height=41, numFrames=13} )    
-local MonedaSequence = {
-            { name = "inicial", start=1, count=4, time=1600, },
-            { name = "comida", start=5, count=4, time=400, },
-            { name = "desaparece", start=9, count=5, time=500, }} 
+
 
 local moregamesSheet = graphics.newImageSheet( "assets4/moregames.png", { width=206, height=91, numFrames=2} )    
 local moregamesSequence = {

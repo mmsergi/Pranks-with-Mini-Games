@@ -4,7 +4,7 @@ local t = loadTable( "settings.json" )
 
 local on = audio.loadSound("assets1/on.wav")
 local off = audio.loadSound("assets1/off.wav")
-local swing1 = audio.loadSound("assets1/swing1.wav")
+local swing1 = audio.loadSound("assets1/swing.wav")
 local swing2 = audio.loadSound("assets1/swing2.wav")
 local hit = audio.loadSound("assets1/hit.wav")
 

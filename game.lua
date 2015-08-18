@@ -281,7 +281,6 @@ end
 
 function scene:destroy( event )
         group = self.view
-        audio.stop(copterSound)
 end
 
 scene:addEventListener( "create", scene )

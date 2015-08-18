@@ -4,6 +4,8 @@ local scene = composer.newScene()
 function scene:create( event )
 	group = self.view
 
+	mayShowAd()
+
 	bckg = display.newRect( group, cx, cy, 480, 800 )
 	bckg:setFillColor( 122,122,122,0.15 )
 

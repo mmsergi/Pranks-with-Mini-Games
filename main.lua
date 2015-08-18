@@ -65,8 +65,10 @@ function showMoreGamesAd()
 end
 
 function mayShowAd()
+  print("admob ad 20%")
   if math.random() > .8 then
     ads.show( "interstitial", {appId=interstitial} )
+    print("ad shown")
   end
 end
 
@@ -199,14 +201,7 @@ options = {
    numFrames = 2
 }
 
-optionsc = {
-   width = 20,
-   height = 20,
-   numFrames = 3
-}
-
 sheet = graphics.newImageSheet( "assets2/sprite.png", options )
-sheetc = graphics.newImageSheet( "assets2/coin_opt.png", optionsc )
 
 sequenceData =
 {
@@ -214,13 +209,4 @@ sequenceData =
     start=1,
     count=2,
     time=200,
-}
-
-sequenceDataCoin =
-{
-    name="rotate",
-    start=1,
-    count=3,
-    time=500,
-    loopDirection="bounce",
 }

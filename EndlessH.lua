@@ -76,12 +76,6 @@ local function mySpriteListener( event )
         end
          return true
         end
---Frostball
-local frostballSheet = graphics.newImageSheet( "assets4/frostBall.png", {width = 69, height = 69, numFrames = 5 })
-local frostballSequence = {
-            { name = "inicial", start=1, count=2, time=800},
-            { name = "medio", start=3, count=2, time=800},
-            { name = "desaparece", start=3, count=4, time=800,},}
 
 --Ice king
 local iceSheet = graphics.newImageSheet( "assets4/MaloGru.png", {width = 62, height = 84, numFrames = 3 })
@@ -89,12 +83,7 @@ local iceSequence = {
             { name = "right", start=1, count=1, time=600},
             { name = "frente", start=2, count=1, time=600,},
             { name = "left", start=3, count=1, time=600,}, }
---Moneda            
-local MonedaSheet = graphics.newImageSheet( "assets4/Moneda.png", { width=38, height=41, numFrames=13} )    
-local MonedaSequence = {
-            { name = "inicial", start=1, count=4, time=800, },
-            { name = "comida", start=5, count=4, time=400, },
-            { name = "desaparece", start=9, count=5, time=500, }} 
+
 
 local basketSheet = graphics.newImageSheet( "assets4/basket.png", {width = 54,height = 43,numFrames = 6 })
 local basketSequence = {
@@ -130,7 +119,7 @@ FondoMusica2= audio.loadSound( "assets4/Theme8.ogg")
 
 Fail= audio.loadSound( "assets4/GameFail.ogg")
 Bite= audio.loadSound( "assets/coin.ogg")
-CheersAudio= audio.loadSound( "assets4/assets4/Cheers.ogg")
+CheersAudio= audio.loadSound( "assets4/Cheers.ogg")
 snowball= audio.loadSound( "assets4/snowball.ogg")
 BasketAudio= audio.loadSound( "assets4/basket.ogg")
 door= audio.loadSound( "assets4/door.ogg")

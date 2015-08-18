@@ -239,7 +239,7 @@ end
 
 function scene:destroy( event )
 	group = self.view
-	audio.stop(sound)
+
 end
 
 

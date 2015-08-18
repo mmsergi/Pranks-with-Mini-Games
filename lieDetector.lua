@@ -2,8 +2,6 @@ local scene = composer.newScene()
 
 local t = loadTable( "settings.json" )
 
-local sound = audio.loadSound("assets/on.ogg")
-
 local group
 local fingerprintCancelado = false
 local scanFinished=false

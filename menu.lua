@@ -167,7 +167,7 @@ function scene:create( event )
 
 	checkLocks(t)
 
-	if (math.random()> .6 and firstAd) then
+	if (math.random()> .5 and firstAd) then
 		AdBuddiz.showAd()
 		firstAd = false
 	end
