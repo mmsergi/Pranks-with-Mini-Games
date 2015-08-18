@@ -15,7 +15,7 @@ function vungleAdListener( event )
     -- Ad has finished caching and is ready to play
   end
   if ( event.type == "adView" ) then
-    t.coins = t.coins + 10
+    t.coins = t.coins + 15
     saveTable(t, "settings.json")
     coinsText.text = t.coins
     checkLocks(t)

@@ -239,7 +239,6 @@ function scene:create( event )
 		transi = transition.to( tuto, { time=300, xScale=1, yScale=1, transition=easing.inQuad , onComplete=trans1} )
 		function tutof(event)
 			if event.phase == "ended" then
-				print("entrando")
 				tuto:removeSelf( )
 			end
 			return true
