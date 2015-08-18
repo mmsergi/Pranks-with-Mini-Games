@@ -35,11 +35,15 @@ local function goBack()
 	composer.removeScene( "tienda" )
 end
 
-
 local function installAd()
 	analytics.logEvent( "InstallAdClick" )
-  	system.openURL( "https://play.google.com/store/apps/details?id=com.masah.adventuresinside" )
-  	t.coins = t.coins + 10
+	if math.random()>.5 then
+  		system.openURL( "https://play.google.com/store/apps/details?id=com.masah.adventuresinside" )
+  	else
+  		system.openURL( "https://play.google.com/store/apps/details?id=com.wavepps.frozenbubbles" )
+  	end
+
+  	t.coins = t.coins + 30
     saveTable(t, "settings.json")
     coinsText.text = t.coins
 end
@@ -50,7 +54,12 @@ local function freeGame()
 end
 
 local function likeFb()
+	analytics.logEvent( "likeFacebookClick" )
 	system.openURL( "https://www.facebook.com/sejaapps" )
+	t.coins = t.coins + 5
+	t.facebook = false
+    saveTable(t, "settings.json")
+    coinsText.text = t.coins
 	likeBtn:removeSelf( )
 end
 
@@ -87,13 +96,18 @@ function scene:create( event )
 	gameBtn.x = display.contentWidth/2 
 	gameBtn.y = 550
 
-	likeBtn = widget.newButton{
+	if t.facebook then
 
-	    defaultFile = "assets/like.png",
-	    onRelease = likeFb
-	}
-	likeBtn.x = display.contentWidth/2 + 90
-	likeBtn.y = 750
+		likeBtn = widget.newButton{
+
+		    defaultFile = "assets/like.png",
+		    onRelease = likeFb
+		}
+		likeBtn.x = display.contentWidth/2 + 100
+		likeBtn.y = 730
+
+		group:insert(likeBtn)
+	end
 
 	backBtn = widget.newButton
 	{
@@ -114,7 +128,7 @@ function scene:create( event )
 	group:insert(videoBtn)
 	group:insert(installBtn)
 	group:insert(gameBtn)
-	group:insert(likeBtn)
+	
 	group:insert(backBtn)
 
 end
@@ -139,6 +153,5 @@ scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
-
 
 return scene

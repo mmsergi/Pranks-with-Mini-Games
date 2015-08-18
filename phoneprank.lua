@@ -18,7 +18,7 @@ end
 function scene:create( event )
 	group = self.view
 
-
+	mayShowAd()
 
 	bckg = display.newRect( group, cx, cy + 128, 480, 800 )
 	bckg:setFillColor( 122,122,122,0.15 )

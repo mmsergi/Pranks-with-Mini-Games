@@ -14,8 +14,6 @@ local gameend = false
 
 local t = loadTable( "settings.json" )
 
-
-
 local sound = audio.loadSound("assets1/game.mp3")
 local coinSound = audio.loadSound("assets/coin.ogg")
 
@@ -241,6 +239,7 @@ end
 
 function scene:destroy( event )
 	group = self.view
+	audio.stop(sound)
 end
 
 

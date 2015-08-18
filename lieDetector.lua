@@ -122,14 +122,13 @@ end
 end
 
 local function retorn()
-	
 	composer.gotoScene( "menu" )
-
 end
 
 function scene:create( event )
 	group = self.view
-	composer.removeScene( "gamein" )
+
+	mayShowAd()
 
 	barra = display.newImage( group, "assets/barra.png", cx-85, cy-62 )
 	background = display.newImage( group, "assets/fondoSim.png", cx, cy )

@@ -110,7 +110,7 @@ end
 function scene:create( event )
 		group = self.view
 
-		composer.removeScene( "gamein" )
+		mayShowAd()
 
 		background = display.newImage(group, "assets1/sky2.png", cx, cy )
 

@@ -57,8 +57,6 @@ function scene:create( event )
 	
 	checkLocks(t)
 
-	
-
 	local background = display.newImage(group, "assets1/sky2.png", cx, cy )
 
 	local bobt = display.newImage(group, "assets1/cat.png" )

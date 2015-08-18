@@ -267,13 +267,10 @@ function scene:show( event )
     if ( phase == "will" ) then
         -- Called when the scene is still off screen (but is about to come on screen).
     elseif ( phase == "did" ) then
-        ads.hide()	
 
         Runtime:addEventListener("tap", starting)
 
 		composer.removeScene( "stats" )
-		composer.removeScene( "menu" )
-		composer.removeScene( "storec" )
     end
 
 end
@@ -284,7 +281,7 @@ end
 
 function scene:destroy( event )
         group = self.view
-
+        audio.stop(copterSound)
 end
 
 scene:addEventListener( "create", scene )

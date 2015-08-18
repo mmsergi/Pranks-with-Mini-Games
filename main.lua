@@ -174,6 +174,7 @@ local t = loadTable( "settings.json" )
         settings.num2 = 2
         settings.num3 = 3
         settings.num4 = 4
+        settings.facebook = true
 	    saveTable(settings, "settings.json")
 	end
 
