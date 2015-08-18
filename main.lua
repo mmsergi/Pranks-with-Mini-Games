@@ -56,6 +56,10 @@ end
 function showMoreGamesAd()
     local currScene = composer.getSceneName( "current" )
     composer.removeScene( currScene )
+    composer.removeScene( "juegoTOA")
+    composer.removeScene( "EndlessH")
+    composer.removeScene( "game")
+    composer.removeScene( "gamein")
     analytics.logEvent( "MoreGamesClick" )
     composer.gotoScene( "menu2" )
 end
