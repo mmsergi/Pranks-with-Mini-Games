@@ -68,7 +68,7 @@ function scene:create( event )
    
    --Tablas para randomizar la posición de los iconos
     local positionX = { leftMarg+125, rightMarg-125,leftMarg+125, rightMarg-125}
-    local positionY = { cy-150,cy-150,cy+140,cy+140}
+    local positionY = { cy-170,cy-170,cy+120,cy+120}
 
     local chosePosition = {1, 2, 3, 4}
 
@@ -101,57 +101,61 @@ end
 RandomizeOnce()
 
 function initialScoreText()
-    if t.highscoreLaser == 1 then 
-    display.remove( hsText1 )
-    display.remove( hs1)
-    hsText1 = display.newText( group, "Play",positionX[t.num1],positionY[t.num1]+125,"BebasNeue",50 )
-    hsText1:setFillColor(1,0,0)
+    
+    if t.highscoreLaser == 0 then 
+        local hsText1 = display.newText( group, "Play",positionX[t.num1],positionY[t.num1]+130,"BebasNeue",50 )
+        hsText1:setFillColor(1,0,0)
+    else
+        local hsText1 = display.newText( group, "High Score",positionX[t.num1],positionY[t.num1]+105,"LobsterTwo-Regular",30 )
+        hsText1:setFillColor( 0 )
+        local hs1 = display.newText( group, t.highscoreLaser,positionX[t.num1],positionY[t.num1]+140,"LobsterTwo-Regular",40 )
+        hs1:setFillColor( 0 )
+    end
 
-    end
-    if t.highscoreCopter == 0 then 
-    display.remove( hsText2 )
-    display.remove( hs2)
-    hsText2 = display.newText( group, "Play",positionX[t.num1],positionY[t.num1]+125,"BebasNeue",50 )
-    hsText2:setFillColor(1,0,0)
-    end
     if user.highScore == 0 then 
-        hs2.text="--"
+        local hsText2 = display.newText( group, "Play",positionX[t.num2],positionY[t.num2]+130,"BebasNeue",50 )
+        hsText2:setFillColor(1,0,0)
+    else 
+        local hsText2 = display.newText( group, "High Score",positionX[t.num2],positionY[t.num2]+105,"LobsterTwo-Regular",30 )
+        hsText2:setFillColor( 0 )
+        local hs2 = display.newText( group, user.highScore,positionX[t.num2],positionY[t.num2]+140,"LobsterTwo-Regular",40 )
+        hs2:setFillColor( 0 )
     end
+
+    if t.highscoreCopter == 0 then 
+        local hsText3 = display.newText( group, "Play",positionX[t.num3],positionY[t.num3]+130,"BebasNeue",50 )
+        hsText3:setFillColor(1,0,0)
+    else
+        local hsText3 = display.newText( group, "High Score",positionX[t.num3],positionY[t.num3]+105,"LobsterTwo-Regular",30 )
+        hsText3:setFillColor( 0 )
+        local hs3 = display.newText( group, t.highscoreCopter,positionX[t.num3],positionY[t.num3]+140,"LobsterTwo-Regular",40 )
+        hs3:setFillColor( 0 )
+    end
+
     if user.highScoreMinion == 0 then 
-        hs4.text="--"
+        local hsText4 = display.newText( group, "Play",positionX[t.num4],positionY[t.num4]+130,"BebasNeue",50 )
+        hsText4:setFillColor(1,0,0)
+     else
+        local hsText4 = display.newText( group, "High Score",positionX[t.num4],positionY[t.num4]+105,"LobsterTwo-Regular",30 )
+        hsText4:setFillColor( 0 )
+        local hs4 = display.newText( group, user.highScoreMinion,positionX[t.num4],positionY[t.num4]+140,"LobsterTwo-Regular",40 )
+        hs4:setFillColor( 0 )
     end
 end
 
-    local rect1 = display.newImage( group, "assets/rect.png",positionX[t.num1],positionY[t.num1]+120)
-    hsText1 = display.newText( group, "High Score",positionX[t.num1],positionY[t.num1]+105,"LobsterTwo-Regular",30 )
-	hsText1:setFillColor( 0 )
-    hs1 = display.newText( group, t.highscoreLaser,positionX[t.num1],positionY[t.num1]+140,"LobsterTwo-Regular",40 )
-    hs1:setFillColor( 0 )
+    
+    local rect1 = display.newImage( group, "assets/Rect.png",positionX[t.num1],positionY[t.num1]+120)
+    local rect2 = display.newImage( group, "assets/Rect.png",positionX[t.num2],positionY[t.num2]+120)
+    local rect3 = display.newImage( group, "assets/Rect.png",positionX[t.num3],positionY[t.num3]+120)
+    local rect4 = display.newImage( group, "assets/Rect.png",positionX[t.num4],positionY[t.num4]+120)
+
     local btn1 = display.newImage( group, "assets/iconoCat.png",positionX[t.num1],positionY[t.num1])
-
-    local rect2 = display.newImage( group, "assets/rect.png",positionX[t.num2],positionY[t.num2]+120)
-    local hsText2 = display.newText( group, "High Score",positionX[t.num2],positionY[t.num2]+105,"LobsterTwo-Regular",30 )
-    hsText2:setFillColor( 0 )
-    hs2 = display.newText( group, user.highScore,positionX[t.num2],positionY[t.num2]+140,"LobsterTwo-Regular",40 )
-    hs2:setFillColor( 0 )
     local btn2 = display.newImage( group, "assets/iconDoors.png", positionX[t.num2],positionY[t.num2] )
-
-    local rect3 = display.newImage( group, "assets/rect.png",positionX[t.num3],positionY[t.num3]+120)
-    local hsText3 = display.newText( group, "High Score",positionX[t.num3],positionY[t.num3]+105,"LobsterTwo-Regular",30 )
-    hsText3:setFillColor( 0 )
-    hs3 = display.newText( group, t.highscoreCopter,positionX[t.num3],positionY[t.num3]+140,"LobsterTwo-Regular",40 )
-    hs3:setFillColor( 0 )
 	local btn3 = display.newImage( group, "assets/iconCopter.png", positionX[t.num3],positionY[t.num3])
-
-    local rect4 = display.newImage( group, "assets/rect.png",positionX[t.num4],positionY[t.num4]+120)
-    local hsText4 = display.newText( group, "High Score",positionX[t.num4],positionY[t.num4]+105,"LobsterTwo-Regular",30 )
-    hsText4:setFillColor( 0 )
-    hs4 = display.newText( group, user.highScoreMinion,positionX[t.num4],positionY[t.num4]+140,"LobsterTwo-Regular",40 )
-    hs4:setFillColor( 0 )
     local btn4 = display.newImage( group, "assets/iconCocos.png", positionX[t.num4],positionY[t.num4] )
-
-
     initialScoreText()
+
+
     function btn1:tap()
 
         analytics.logEvent( "LaserCatSession" )
