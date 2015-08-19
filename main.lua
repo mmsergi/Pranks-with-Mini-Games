@@ -1,3 +1,21 @@
+--PUSH NOTIFICATIONS
+
+-- This function gets called when the user opens a notification or one is received when the app is open and active.
+-- Change the code below to fit your app's needs.
+function DidReceiveRemoteNotification(message, additionalData, isActive)
+    if (additionalData.coins) then
+      native.showAlert( "Congratulations!", "You've received "..additionalData.coins.." coins", { "OK" } )
+      local t = loadTable( "settings.json" )
+      t.coins = t.coins + additionalData.coins
+      saveTable(t, "settings.json")
+    end
+end
+
+local OneSignal = require("plugin.OneSignal")
+-- Uncomment SetLogLevel to debug issues.
+-- OneSignal.SetLogLevel(4, 4)
+OneSignal.Init("448fb2a0-466f-11e5-9bef-63a623365162", "561514406398", DidReceiveRemoteNotification)
+
 display.setStatusBar( display.HiddenStatusBar )
 
 composer = require "composer"

@@ -48,6 +48,10 @@ function soundBtnlistener(event)
 end
 
 local function onPointer()
+	touchimg.alpha = 0
+
+	shakeimg = display.newImage( group, "assets/shake.png" )
+	shakeimg.x , shakeimg.y = cx + 135, cy 
 	if laser.alfa==0 then
 		audio.play( on )
 		laser.alfa=1
@@ -80,7 +84,6 @@ local function changeColor(event)
 
 	transition.to( laser, { time=200, y=display.contentHeight/2, transition=easing.outQuad} )
 
-
 end
 
 local function retorn()
@@ -90,13 +93,13 @@ local function retorn()
 end
 
 local function shake( event )
-	if shakeimg.alpha==1 then
-		shakeimg.alpha=0
-	end
 
 	if laser.alfa==1 then
 
 	    if event.isShake == true then
+    		if shakeimg.alpha==1 then
+				shakeimg.alpha=0
+			end
 	    	rand = math.random(0, 10)
 	    	if (rand>6) then
 	    		audio.play( swing1 )
@@ -233,8 +236,9 @@ function scene:create( event )
 	group:insert(purplebtn)
 	group:insert(yellowbtn)
 
-	shakeimg = display.newImage( group, "assets/shake.png" )
-	shakeimg.x , shakeimg.y = cx, cy - 100
+	touchimg = display.newImage( group, "assets/touch.png" )
+	touchimg.x , touchimg.y = cx + 70, cy + 320
+	touchimg.rotation = -45
 
 end
 

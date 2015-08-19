@@ -146,7 +146,7 @@ function coin()
 	coin:scale(0.8,0.8)
 	physics.addBody( coin, "dynamic", {density=0.00000001})
 	coin.x = 480
-	coin.y = 20 + math.random(280)
+	coin.y = 100 + math.random(600)
 	coin:setLinearVelocity( -velocity, 0 )
 	coin.gravityScale=0
 	coin.id = "coin"
@@ -177,7 +177,7 @@ function starting()
 
 	timer1 = timer.performWithDelay(10, tempo, 0)
 	timer2 = timer.performWithDelay( time, attack, 0)
-	timer3 = timer.performWithDelay(8000, inc , 0)
+	timer3 = timer.performWithDelay(10000, inc , 0)
 	timer4 = timer.performWithDelay( 4250, coin, 0)
 
 	if t.music == true  then
