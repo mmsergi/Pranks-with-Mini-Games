@@ -179,12 +179,8 @@ function checkLocks(ta)
   if ta.coins>=(unlock3) then
     ta.unlocked=3
   end
-<<<<<<< HEAD
 
   if ((ta.unlocked-initalUnlocked) > 0 and ta.unlocked~=1) then
-=======
-  if ((ta.unlocked-initalUnlocked) > 0 and ta.unlocked~=1)then
->>>>>>> origin/master
       analytics.logEvent( "unlocked", { number=ta.unlocked } )
       composer.showOverlay( "unlockedPopup", {effect="zoomOutIn", isModal = true})
   end
