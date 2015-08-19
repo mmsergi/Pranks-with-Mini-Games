@@ -33,8 +33,8 @@ end
 
 local function goBack()
 	composer.removeScene( "menu" )
-	composer.gotoScene( "menu" )
 	composer.removeScene( "tienda" )
+	composer.gotoScene( "menu" )
 end
 
 local function installAd()

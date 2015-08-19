@@ -27,7 +27,7 @@ AdBuddiz = require "plugin.adbuddiz"
 translations = require "translations"
 
 -- values to unlock jokes
-unlock1 = 15
+unlock1 = 0
 unlock2 = 50
 unlock3 = 100
 
@@ -49,7 +49,7 @@ interstitial = "ca-app-pub-1709584335667681/5715056650"
 
 ads.init( "admob", interstitial ) --Admob
 
-AdBuddiz.setAndroidPublisherKey( "260ddaa0-671b-4d8f-bf0c-769cb0b6ad9e" ) --Adbuddiz
+AdBuddiz.setAndroidPublisherKey( "c736441f-6336-4189-ab00-a01fdc839f41" ) --Adbuddiz
 AdBuddiz.cacheAds()  
 
 analytics.init( "9YJ6DSJRH96YY6Z7GN53" ) --Flurry
@@ -179,7 +179,8 @@ function checkLocks(ta)
   if ta.coins>=(unlock3) then
     ta.unlocked=3
   end
-  if ((ta.unlocked-initalUnlocked) > 0) then
+
+  if ((ta.unlocked-initalUnlocked) > 0 and ta.unlocked~=1) then
       analytics.logEvent( "unlocked", { number=ta.unlocked } )
       composer.showOverlay( "unlockedPopup", {effect="zoomOutIn", isModal = true})
   end
