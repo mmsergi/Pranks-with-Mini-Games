@@ -91,6 +91,7 @@ function scene:create( event )
     home.height=70
 
 	function home:tap()
+		composer.removeScene( "menuphone" )
 		composer.gotoScene( "menu" )
 	end
 

@@ -113,6 +113,7 @@ end
 end
 
 local function retorn()
+	composer.removeScene( "lieDetector" )
 	composer.gotoScene( "menu" )
 end
 
@@ -175,7 +176,7 @@ function fingerprint:touch(event)
 		scanText.text = translations["Escaneo abortado"][language]
 		barraLuzDissapear()
 		moverBarra()
-		audio.stop(bipChannel)
+		--audio.stop(bipChannel)
 		timer.cancel( tmrVibration )
 		if scanFinished==true then
 			scanText.text = ""

@@ -50,8 +50,11 @@ end
 local function onPointer()
 	touchimg.alpha = 0
 
-	shakeimg = display.newImage( group, "assets/shake.png" )
-	shakeimg.x , shakeimg.y = cx + 135, cy 
+	if shakeimg == nil then
+		shakeimg = display.newImage( group, "assets/shake.png" )
+		shakeimg.x , shakeimg.y = cx + 135, cy 
+	end
+
 	if laser.alfa==0 then
 		audio.play( on )
 		laser.alfa=1
@@ -97,9 +100,7 @@ local function shake( event )
 	if laser.alfa==1 then
 
 	    if event.isShake == true then
-    		if shakeimg.alpha==1 then
-				shakeimg.alpha=0
-			end
+			shakeimg.alpha=0
 	    	rand = math.random(0, 10)
 	    	if (rand>6) then
 	    		audio.play( swing1 )
@@ -117,6 +118,12 @@ function scene:create( event )
 		group = self.view
 
 		mayShowAd()
+
+		if t.music==false then
+			audio.setVolume(0)
+		else
+			audio.setVolume(1)
+		end
 
 		background = display.newImage(group, "assets1/sky2.png", cx, cy )
 
@@ -245,13 +252,6 @@ end
 function scene:show( event )
 	group = self.view
 
-	if ( event.phase == "will" ) then
-	
-		if t.music==false then
-			audio.setVolume(0)
-		end
-
-	end
 end
 
 
