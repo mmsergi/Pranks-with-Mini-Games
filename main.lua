@@ -79,7 +79,13 @@ function showMoreGamesAd()
     composer.removeScene( "game")
     composer.removeScene( "gamein")
     analytics.logEvent( "MoreGamesClick" )
-    composer.gotoScene( "menu2" )
+   
+    destroyHUD()
+    composer.removeScene( "stats")
+    composer.removeScene( "Retry")
+    composer.removeScene( "Retry_Minion")
+    composer.removeScene( "scorelose" )
+     composer.gotoScene( "menu2" )
 end
 
 function mayShowAd()

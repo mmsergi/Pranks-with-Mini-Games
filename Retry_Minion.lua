@@ -110,6 +110,7 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScoreMinion,displa
                    
                     
                         composer.removeScene( "Retry_Minion" )
+                        destroyHUD()
                         composer.gotoScene( "juegoTOA")
                         
                     
@@ -161,6 +162,7 @@ local function goHome()
        
    composer.removeScene( "juegoTOA")
    composer.removeScene( "Retry_Minion")
+   destroyHUD()
        composer.gotoScene( "menu2" )
       
 end

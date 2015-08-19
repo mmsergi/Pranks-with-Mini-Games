@@ -189,7 +189,7 @@ local function goHome()
    composer.removeScene( "EndlessH")
    composer.removeScene( "Retry")
        composer.gotoScene( "menu2" )
-      
+      destroyHUD()
 end
 
 local homeBtn = widget.newButton
@@ -223,7 +223,7 @@ FondoMusica2Channel= audio.play(FondoMusica2, {loops=(-1)})
 
         if ( "ended" == event.phase )and (minusButtonPressed == false)  then
                     
-                   
+                   destroyHUD()
                     composer.removeScene("EndlessH")
                     audio.stop(FondoMusica2Channel)
                    audio.rewind(FondoMusicaChannel)

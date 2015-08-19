@@ -217,7 +217,7 @@ function scene:create( event )
 	sun.width, sun.height = 150, 150
 	sun.alpha = 0.95
 
-	tutorial=display.newText(group, "TOUCH SCREEN TO FLY", 0, 0, native.systemFontBold, 30 )
+	tutorial=display.newText(group, translations["Touch the screen to fly"][language], 0, 0, native.systemFontBold, 30 )
 	tutorial:setFillColor( 0,0,0 )
 	tutorial.x=display.contentWidth/2 
 	tutorial.y=display.contentHeight - display.contentHeight/3

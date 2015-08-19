@@ -13,6 +13,9 @@ function playButtonListener()
 	if t.music == true  then
 		audio.play( tapSound)
 	end
+    destroyHUD()
+    composer.removeScene( "game")
+    composer.removeScene( "stats")
 	composer.gotoScene( "game", "flip", 200 )
 end
 
@@ -53,11 +56,6 @@ function scene:create( event )
 	
 	group:insert(playBtn)
 	group:insert(adBtn)
-	local hud = require( "hud" )
-    group:insert( hudCoins)
-    group:insert( coins)
-    group:insert( coinsText)
-    showNumCoins(coinsText, numCoins, duration) 
 
     function soundBtnlistener(event)
     local phase = event.phase 
@@ -119,9 +117,10 @@ group:insert(soundBtn)
 
 local function goHome()
        
-   composer.removeScene( "EndlessH")
-   composer.removeScene( "Retry")
-       composer.gotoScene( "menu2" )
+   composer.removeScene( "game")
+   composer.removeScene( "stats")
+   destroyHUD()
+    composer.gotoScene( "menu2" )
       
 end
 
@@ -138,6 +137,11 @@ local homeBtn = widget.newButton
         
         
         group:insert( homeBtn )
+            local hud = require( "hud" )
+    group:insert( hudCoins)
+    group:insert( coins)
+    group:insert( coinsText)
+    showNumCoins(coinsText, numCoins, duration) 
 end
 
 function scene:show( event )

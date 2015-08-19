@@ -210,6 +210,27 @@ translations =
 		["aleman"] = "Erhalten Sie einen Anruf von:",
 		["italiano"] = "Riceve una chiamata da:",
 	},
+
+	["Touch the screen to fly"] = 
+	{
+		["ingles"] = "Touch the screen to fly",
+		["espanol"] = "Toque la pantalla para volar",
+		["portugues"] = "Toque no ecrã para voar",
+		["ruso"] = "чтобы разблокировать",
+		["frances"] = "Touchez l'écran pour voler",
+		["aleman"] = "Berühren Sie den Bildschirm fliegen",
+		["italiano"] = "Toccare lo schermo per volare",
+	},
+	["Drag the laser spot"] = 
+	{
+		["ingles"] = "Drag the laser spot",
+		["espanol"] = "Arrastre el punto láser",
+		["portugues"] = "Arraste o ponto do laser",
+		["ruso"] = "чтобы разблокировать",
+		["frances"] = "Faites glisser le faisceau laser",
+		["aleman"] = "Ziehen Sie von der Laser-spot",
+		["italiano"] = "Trascinare il punto di laser",
+	},
 }
  
 return translations

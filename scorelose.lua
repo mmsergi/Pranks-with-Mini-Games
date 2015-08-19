@@ -41,13 +41,18 @@ end
 
 local function retorn()
 	analytics.logEvent( "RetryGameSession" )
-	composer.gotoScene( "gamein" )
 	composer.removeScene( "scorelose" )
+	composer.removeScene( "gamein" )
+	destroyHUD()
+	composer.gotoScene( "gamein" )
+	
 end
 
 local function goHome()
-	composer.gotoScene( "menu2" )
+	destroyHUD()
 	composer.removeScene( "scorelose" )
+	composer.gotoScene( "menu2" )
+	
 end
 
 function scene:create( event )
