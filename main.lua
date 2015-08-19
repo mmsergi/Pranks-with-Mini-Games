@@ -27,7 +27,7 @@ AdBuddiz = require "plugin.adbuddiz"
 translations = require "translations"
 
 -- values to unlock jokes
-unlock1 = 15
+unlock1 = 0
 unlock2 = 50
 unlock3 = 100
 
@@ -179,7 +179,7 @@ function checkLocks(ta)
   if ta.coins>=(unlock3) then
     ta.unlocked=3
   end
-  if ((ta.unlocked-initalUnlocked) > 0) then
+  if ((ta.unlocked-initalUnlocked) > 0 and ta.unlocked~=1)then
       analytics.logEvent( "unlocked", { number=ta.unlocked } )
       composer.showOverlay( "unlockedPopup", {effect="zoomOutIn", isModal = true})
   end
