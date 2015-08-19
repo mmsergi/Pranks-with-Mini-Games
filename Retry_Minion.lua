@@ -153,7 +153,9 @@ Retry:setEnabled( false )
 Retry:setEnabled( true )
 
    MusicaRetry= audio.loadSound( "assets3/retryMinionMusic.ogg")
+   if unlockedFlag==false then
 MusicaRetryChannel= audio.play(MusicaRetry, {loops=(-1)})
+    end
 
 local function goHome()
        
@@ -266,7 +268,7 @@ function scene:destroy( event )
     audio.dispose( MusicaRetry )
     MusicaRetry = nil 
     display.remove( soundBtn )
-    package.loaded["hud"] = nil
+    destroyHUD()
 
 end
 

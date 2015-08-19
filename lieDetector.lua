@@ -29,14 +29,7 @@ local function goHome()
 	composer.gotoScene( "menu" )
 	
 end
-function publi()
-	pRandom = math.random( 100 )
-	if pRandom >= 70 then
-		ads.show( "interstitial", { x=display.screenOriginX, y=display.screenOriginY, appId=interstitialretry} )
-		print("PUBLI")
-	else
-	end
-end
+
 
  function soundBtnlistener(event)
     local phase = event.phase 
@@ -105,7 +98,7 @@ end
 	scanFinished = true
 	dRandom = math.random(100)
 	timer.cancel( tmrVibration )
-	publi()
+	
 	if dRandom >= 51 then
 		print ("Verdad")
 		luzText.text = translations["Verdad"][language]
@@ -142,7 +135,7 @@ function scene:create( event )
 	luz.x, luz.y = cx, cy-200
 	luzText = display.newText(group, "", cx, cy-200, native.systemFontBold, 50)
 local options = {
-	text = "",
+	text = translations["Press on the fingerprint"][language],
 	parent = group,
 	x = cx,
 	y = cy-200,
@@ -251,14 +244,14 @@ function scene:show( event )
 
 	composer.removeScene( "gamein" )
 
-	ads.show( "banner", { x=0, y=topMarg, appId=bannersimulator} )
+	
 end
 
 
 function scene:hide( event )
 	group = self.view
 
-	ads.hide()
+	
 	composer.removeScene( "menu" )
 end
 

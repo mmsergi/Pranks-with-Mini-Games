@@ -157,7 +157,7 @@ end
 function scene:destroy( event )
 	group = self.view
 	ads:setCurrentProvider("admob")
-	package.loaded["hud"] = nil
+	destroyHUD()
 end
 
 scene:addEventListener( "create", scene )

@@ -36,8 +36,13 @@ local function hudCoinsTouch(event)
         if composer.getSceneName("current")~="tienda" then
 
             local currScene = composer.getSceneName( "current" )
+            composer.removeScene( "juegoTOA")
+            composer.removeScene( "EndlessH")
+            composer.removeScene( "game")
+            composer.removeScene( "gamein")
                 composer.removeScene( currScene )
                 composer.gotoScene( "tienda" )
+
         end
     end
     return true

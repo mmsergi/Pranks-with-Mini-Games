@@ -120,8 +120,6 @@ FondoMusica2= audio.loadSound( "assets4/Theme8.ogg")
 Fail= audio.loadSound( "assets4/GameFail.ogg")
 Bite= audio.loadSound( "assets/coin.ogg")
 CheersAudio= audio.loadSound( "assets4/Cheers.ogg")
-snowball= audio.loadSound( "assets4/snowball.ogg")
-BasketAudio= audio.loadSound( "assets4/basket.ogg")
 door= audio.loadSound( "assets4/door.ogg")
 
 --Background
@@ -789,7 +787,7 @@ end
                     timer.performWithDelay(400, function () table.remove(event.target); display.remove(event.target);event.target=nil end)
                     
                     timer.performWithDelay(10, function () physics.removeBody(event.target) end)
-                    audio.play( snowball)
+                    
 
                 end
                     end
@@ -1101,7 +1099,7 @@ if (event.other.name) == "personaje" then
                 basket:setSequence( "explosion" )
                 basket:play()
                 
-                --audio.play( BasketAudio )
+                audio.play( CheersAudio )
                 
                 timer.performWithDelay(800, function()event.target.isVisible=false end)
                 elseif ( event.phase == "ended" ) then

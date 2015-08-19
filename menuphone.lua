@@ -10,7 +10,7 @@ function scene:create( event )
 	bckg:setFillColor( 122,122,122,0.15 )
 
 
-	name = display.newText( group, "RECEIVE CALL FROM", cx, cy/8,  native.systemFont, 32 )
+	name = display.newText( group, translations["Receive a call from:"][language], cx, cy/8,  native.systemFont, 32 )
 	--number = display.newText( group, "+1 005172232045", cx/2 + 50, cy/8 + 40,  native.systemFont, 32 )
 
 	--aura = display.newImage(group, "aura.png", cx, cy/2 + 200 )

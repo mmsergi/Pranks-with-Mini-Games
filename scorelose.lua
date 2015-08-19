@@ -57,6 +57,8 @@ function scene:create( event )
 	
 	checkLocks(t)
 
+
+
 	local background = display.newImage(group, "assets1/sky2.png", cx, cy )
 
 	local bobt = display.newImage(group, "assets1/cat.png" )
@@ -149,6 +151,8 @@ function scene:show( event )
 	    group:insert( coins)
 	    group:insert( coinsText)
 	    showNumCoins(coinsText, numCoins, duration)
+
+	    
 	end
 
 end
@@ -160,7 +164,7 @@ end
 
 function scene:destroy( event )
 	group = self.view
-	package.loaded["hud"] = nil
+	destroyHUD()
 end
 
 scene:addEventListener( "create", scene )

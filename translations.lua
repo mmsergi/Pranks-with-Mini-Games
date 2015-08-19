@@ -190,6 +190,26 @@ translations =
 		["aleman"] = "zum Entsperren",
 		["italiano"] = "per sbloccare",
 	},
+	["Press on the fingerprint"] = 
+	{
+		["ingles"] = "Press on the fingerprint",
+		["espanol"] = "Pulsa sobre la huella digital",
+		["portugues"] = "Prima da impressão digital",
+		["ruso"] = "чтобы разблокировать",
+		["frances"] = "Appuyez sur l'empreinte digitale",
+		["aleman"] = "Drücken Sie auf den Fingerabdruck",
+		["italiano"] = "Premere sull'impronta digitale",
+	},
+	["Receive a call from:"] = 
+	{
+		["ingles"] = "Receive a call from:",
+		["espanol"] = "Recibir llamada de:",
+		["portugues"] = "Receber uma chamada de:",
+		["ruso"] = "чтобы разблокировать",
+		["frances"] = "Recevoir un appel de:",
+		["aleman"] = "Erhalten Sie einen Anruf von:",
+		["italiano"] = "Riceve una chiamata da:",
+	},
 }
  
 return translations

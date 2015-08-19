@@ -32,6 +32,18 @@ unlock2 = 50
 unlock3 = 100
 
 firstAd = true
+unlockedFlag=false
+
+function destroyHUD()
+  if tmrCoins1 then
+    timer.cancel(tmrCoins1)
+  end
+
+  if tmrCoins2 then
+    timer.cancel(tmrCoins2)
+  end   
+  package.loaded["hud"] = nil 
+end  
 
 interstitial = "ca-app-pub-1709584335667681/5715056650"
 

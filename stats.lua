@@ -155,7 +155,7 @@ end
 
 function scene:destroy( event )
     local group = self.view
-    package.loaded["hud"] = nil
+    destroyHUD()
 end
 
 scene:addEventListener( "create", scene )

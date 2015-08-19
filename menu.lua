@@ -268,7 +268,7 @@ function scene:destroy( event )
 	display.remove(background )
 	display.remove( sombra )
 	display.remove( iconPlay )
-	package.loaded["hud"] = nil
+	destroyHUD()
 end
 
 scene:addEventListener( "create", scene )

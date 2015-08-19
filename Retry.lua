@@ -215,8 +215,9 @@ local homeBtn = widget.newButton
      elseif ( phase == "did" ) then  
     mayShowAd()
     checkLocks(t)
+    if unlockedFlag==false then
 FondoMusica2Channel= audio.play(FondoMusica2, {loops=(-1)})
-
+    end
 
     local function handleRetryEvent( event )
 
@@ -261,6 +262,7 @@ FondoMusica2Channel= audio.play(FondoMusica2, {loops=(-1)})
         onEvent = handleRetryEvent
     }
 
+
 sceneGroup:insert(Retry)
 Retry.x = display.contentCenterX
 Retry.y = cy+80
@@ -293,7 +295,7 @@ function scene:destroy( event )
 
     display.remove( soundBtn )
     audio.stop( FondoMusica2Channel )
-    package.loaded["hud"] = nil
+    destroyHUD()
     
 end
 
