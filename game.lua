@@ -81,7 +81,7 @@ function onCollision( event )
 	if (event.object1.id=="copter" and event.object2.id=="coin" and event.object2.alpha==1) then
 		event.object2.alpha=0
 		audio.play(coinSound)
-		ncoin = ncoin + 30
+		ncoin = ncoin + 1
 		ncoins.text = ncoin
 	end
 

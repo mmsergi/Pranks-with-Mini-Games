@@ -249,13 +249,14 @@ local function onKeyEvent( event )
     if (currentScene == "menu2") then
       composer.removeScene( currentScene )
       composer.gotoScene( "menu" )
+      return true
     elseif (currentScene == "lieDetector" or currentScene == "laser" or currentScene == "menuphone") then 
       composer.removeScene( currentScene )
       composer.gotoScene( "menu" )
+      return true
     elseif (currentScene == "stats" or currentScene == "scorelose" or currentScene == "Retry" or currentScene == "Retry_Minion") then 
       composer.removeScene( currentScene )
       composer.gotoScene( "menu2" )
-    else
       return true
     end
 
