@@ -16,6 +16,8 @@ local OneSignal = require("plugin.OneSignal")
 -- OneSignal.SetLogLevel(4, 4)
 OneSignal.Init("448fb2a0-466f-11e5-9bef-63a623365162", "561514406398", DidReceiveRemoteNotification)
 
+----------------------------------------------------------------------------------------------------------------------
+
 display.setStatusBar( display.HiddenStatusBar )
 
 composer = require "composer"
@@ -235,3 +237,34 @@ sequenceData =
     count=2,
     time=200,
 }
+
+-- Called when a key event has been received
+local function onKeyEvent( event )
+
+  if ( event.keyName == "back" ) then
+
+    local currentScene = composer.getSceneName("current")
+    print(currentScene)
+
+    if (currentScene == "lieDetector" or currentScene == "laser" or currentScene == "menuphone") then 
+      composer.removeScene( currentScene )
+      composer.gotoScene( "menu" )
+    elseif (currentScene == "stats" or currentScene == "scorelose" or currentScene == "Retry" or currentScene == "Retry_Minion") then 
+      composer.removeScene( currentScene )
+      composer.gotoScene( "menu2" )
+    elseif (currentScene == "menu2") then
+      composer.removeScene( currentScene )
+      composer.gotoScene( "menu" )
+    else
+      return true
+    end
+
+  end
+
+  -- IMPORTANT! Return false to indicate that this app is NOT overriding the received key
+  -- This lets the operating system execute its default handling of the key
+  return false
+end
+
+-- Add the key event listener
+Runtime:addEventListener( "key", onKeyEvent )

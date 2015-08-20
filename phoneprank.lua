@@ -12,7 +12,6 @@ function trans2()
 	transi2 = transition.to( aura, { time=500, xScale=2, yScale=2, transition=easing.inQuad , onComplete=trans1} )
 end
 
-
 function scene:create( event )
 	group = self.view
 
@@ -38,7 +37,6 @@ function scene:create( event )
 
 	bluebar = display.newImage(group, "phoneprankassets/bluebar.png", cx, cy/3 + 20 )
 
-
 	trans1()
 
 	accept = display.newImage(group, "phoneprankassets/accept.png", cx - cx/2, cy + 300 )
@@ -55,7 +53,6 @@ function scene:create( event )
 	end
 	accept:addEventListener( "tap", accept )
 
-
 	decline = display.newImage(group, "phoneprankassets/decline.png", cx + cx/2, cy + 300 )
 	function decline:tap()
 		audio.stop(channel)
@@ -67,7 +64,6 @@ function scene:create( event )
 	end
 	decline:addEventListener( "tap", decline )
 
-
 	audio.setVolume(1)
 	channel = audio.play( ring, {loops=-1})
 
@@ -77,20 +73,19 @@ function scene:show( event )
 	group = self.view
 end
 
-
 function scene:hide( event )
 	group = self.view
 end
 
-
 function scene:destroy( event )
 	group = self.view
+
+	audio.stop(channel)
 end
 
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
-
 
 return scene

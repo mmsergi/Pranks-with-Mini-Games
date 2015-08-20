@@ -49,7 +49,7 @@ function scene:create( event )
 
 	adBtn = widget.newButton{
 		defaultFile="assets3/moregames.png",
-		onEvent = showMoreGamesAd
+		onRelease = showMoreGamesAd
 	}
 	adBtn.x, adBtn.y = cx, cy+175	
     adBtn:scale(0.65,0.65)
