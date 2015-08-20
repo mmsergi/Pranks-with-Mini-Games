@@ -224,7 +224,7 @@ translations =
 	["Drag the laser spot"] = 
 	{
 		["ingles"] = "Drag the laser spot",
-		["espanol"] = "Arrastre el punto láser",
+		["espanol"] = "Arrastra el punto láser",
 		["portugues"] = "Arraste o ponto do laser",
 		["ruso"] = "чтобы разблокировать",
 		["frances"] = "Faites glisser le faisceau laser",

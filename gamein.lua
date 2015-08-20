@@ -185,7 +185,7 @@ function scene:create( event )
 	tim.x=display.contentWidth/2
 	tim.y=topMarg+16
 
-	text = display.newText(group, "Drag the laser spot ", 0, 0, "muro", 35)
+	text = display.newText(group, translations["Drag the laser spot"][language], 0, 0, "muro", 35)
 	text:setFillColor( black )
 	text.x=display.contentWidth/2
 	text.y=cy+100
