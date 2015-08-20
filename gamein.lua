@@ -190,6 +190,21 @@ function scene:create( event )
 	text.x=display.contentWidth/2
 	text.y=cy+100
 
+	coin = display.newSprite( coinsSheet, coinsSequence )
+	group:insert(coin)
+	coin:scale(0.8,0.8)
+	coin:setSequence( "estatica" )
+	coin.alpha=0
+
+	cointext = display.newText(group, "0", 0, 0, "muro", 35)
+	cointext:setFillColor( black )
+	cointext.x, cointext.y=rightMarg-80,topMarg+16
+
+	coinHud = display.newSprite( coinsSheet, coinsSequence )
+	coinHud:scale(0.8,0.8)
+	group:insert(coinHud)
+	coinHud.x, coinHud.y = rightMarg-35,topMarg+20
+
 end
 
 function scene:show( event )
