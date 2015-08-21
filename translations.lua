@@ -214,7 +214,7 @@ translations =
 	["Touch the screen to fly"] = 
 	{
 		["ingles"] = "Touch the screen to fly",
-		["espanol"] = "Toque la pantalla para volar",
+		["espanol"] = "Toca la pantalla para volar",
 		["portugues"] = "Toque no ecrã para voar",
 		["ruso"] = "чтобы разблокировать",
 		["frances"] = "Touchez l'écran pour voler",

@@ -44,7 +44,8 @@ local function installAd()
   	t.install = false
     saveTable(t, "settings.json")
     coinsText.text = t.coins
-    installBtn:removeSelf( )
+    installBtn:setEnabled( false )
+    timer.performWithDelay( 1500,function () installBtn:removeSelf( ) end)
     checkLocks(t)
 end
 
@@ -62,6 +63,8 @@ local function likeFb()
     coinsText.text = t.coins
     checkLocks(t)
 	likeBtn:removeSelf( )
+	likeBtn:setEnabled( false )
+    timer.performWithDelay( 1500,function () likeBtn:removeSelf( ) end)
 end
 
 function scene:create( event )
