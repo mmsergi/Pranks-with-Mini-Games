@@ -47,7 +47,7 @@ function destroyHUD()
   package.loaded["hud"] = nil 
 end  
 
-interstitial = "ca-app-pub-1709584335667681/5715056650"
+interstitial = "ca-app-pub-3836849703819703/2927691270"
 
 ads.init( "admob", interstitial ) --Admob
 

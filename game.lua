@@ -8,7 +8,7 @@ local time = 500
 local meters = 0
 local ncoin = 0
 local group
-coinSound= audio.loadSound( "assets/coin.ogg")
+local coinSound = audio.loadSound( "assets/coin.ogg")
 local groupObj = {}
 
 function move()
@@ -95,8 +95,9 @@ end
 function inc()
 	velocity = velocity + 10
 	height = height + 1
-	if time ~= 400 then
-		time = time - 80
+	if time > 300 then
+		print("more obstacles")
+		time = time - 92
 		timer.pause(timer2)
 		timer2 = timer.performWithDelay( time, attack, 0)
 		print(time)
@@ -228,9 +229,6 @@ function scene:create( event )
 	marco.alpha=0.2
 	marco2.alpha=0.2
 
-
-
-
 	tim=display.newText(group, "0 m", 0, 0, native.systemFontBold, 30 )
 	tim:setFillColor( 0,0,0 )
 	tim.x=display.contentWidth/2 - 40
@@ -281,6 +279,7 @@ end
 
 function scene:destroy( event )
         group = self.view
+        composer.removeScene( "game" )
 end
 
 scene:addEventListener( "create", scene )
