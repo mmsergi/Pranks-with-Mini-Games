@@ -162,14 +162,18 @@ function desbloquea()
 	end
 end
 
+function showFirstAd()
+	ads.show( "interstitial", {appId=interstitial} )
+	print("entra en el primer anuncio")
+end
+
 function scene:create( event )
 	group = self.view
 
 	checkLocks(t)
 
-	if (math.random()> .5 and firstAd) then
-		AdBuddiz.showAd()
-		firstAd = false
+	if (firstAd==true) then
+		timer.performWithDelay(2000, showFirstAd)
 	end
 
 	if t.music==false then

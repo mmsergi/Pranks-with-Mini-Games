@@ -4,37 +4,17 @@ local scene = composer.newScene()
 
 local t = loadTable( "settings.json" )
 
-function vungleAdListener( event )
-  if ( event.type == "adStart" and event.isError ) then
-    -- Ad has not finished caching and will not play
-  end
-  if ( event.type == "adStart" and not event.isError ) then
-    -- Ad will play
-  end
-  if ( event.type == "cachedAdAvailable" ) then
-    -- Ad has finished caching and is ready to play
-  end
-  if ( event.type == "adView" ) then
-    t.coins = t.coins + 15
-    saveTable(t, "settings.json")
-    coinsText.text = t.coins
-    checkLocks(t)
-  end
-  if ( event.type == "adEnd" ) then
-    -- The ad experience has been closed- this
-    -- is a good place to resume your app
-  end
-end
-
-local function playVideoAd()
-	analytics.logEvent( "VideoAdClick" )
-	ads.show( "incentivized" )
-end
-
 local function goBack()
 	composer.removeScene( "menu" )
 	composer.removeScene( "tienda" )
 	composer.gotoScene( "menu" )
+end
+
+local function goMinigames()
+	composer.removeScene( "menu2" )
+	composer.removeScene( "tienda" )
+	analytics.logEvent( "MiniGamesFromShop" )
+	composer.gotoScene( "menu2" )
 end
 
 local function installAd()
@@ -72,19 +52,18 @@ function scene:create( event )
 
 	checkLocks(t)
 
-	ads.init( "vungle", "com.seja.liedetector", vungleAdListener) -- Vungle
-	ads:setCurrentProvider("vungle")
-	
 	background = display.newImage( group, "assets/shopbckg.png", cx, cy )
 	background.alpha = 0.9
 
-	videoBtn = widget.newButton{
+	miniBtn = widget.newButton{
 
-	    defaultFile = "assets/videoBtn.png",
-	    onRelease = playVideoAd
+	    defaultFile = "assets/minis.png",
+	    onRelease = goMinigames,
+
 	}
-	videoBtn.x = display.contentWidth/2 
-	videoBtn.y = 250
+	miniBtn.width, miniBtn.height = 282, 96
+	miniBtn.x = display.contentWidth/2 
+	miniBtn.y = 250
 
 	if t.install then
 
@@ -134,12 +113,13 @@ function scene:create( event )
 	backBtn.y = bottomMarg-50
 
 	local hud = require( "hud" )
+
     group:insert(hudCoins)
     group:insert(coins)
     group:insert(coinsText)
 	showNumCoins(coinsText, numCoins, 1)
 
-	group:insert(videoBtn)
+	group:insert(miniBtn)
 	
 	group:insert(gameBtn)
 	

@@ -108,7 +108,8 @@ local HighScore = display.newEmbossedText(sceneGroup,user.highScoreMinion,displa
                    
                    audio.rewind(FondoMusicaChannel)
                    
-                    
+                        analytics.logEvent( "RetryGameSession" , { game="CoconutSession" } )
+
                         composer.removeScene( "Retry_Minion" )
                         destroyHUD()
                         composer.gotoScene( "juegoTOA")

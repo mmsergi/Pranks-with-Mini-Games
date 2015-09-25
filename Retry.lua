@@ -231,7 +231,7 @@ FondoMusica2Channel= audio.play(FondoMusica2, {loops=(-1)})
                     local options = {
                         effect = "slideUp",
                         time = 800,}
-
+                        analytics.logEvent( "RetryGameSession" , { game="DoorsSession" } )
                         composer.gotoScene( "EndlessH",options)
                         
                     

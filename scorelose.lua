@@ -40,7 +40,7 @@ function soundBtnlistener(event)
 end
 
 local function retorn()
-	analytics.logEvent( "RetryGameSession" )
+	analytics.logEvent( "RetryGameSession" , { game="LaserCatSession" } )
 	composer.removeScene( "scorelose" )
 	composer.removeScene( "gamein" )
 	destroyHUD()

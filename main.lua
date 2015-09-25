@@ -47,9 +47,16 @@ function destroyHUD()
   package.loaded["hud"] = nil 
 end  
 
+local function adListener(event)
+  if (event.phase == "shown") then
+    firstAd = false
+    print("firstAd mostrado y cerrado")
+  end
+end
+
 interstitial = "ca-app-pub-3836849703819703/2927691270"
 
-ads.init( "admob", interstitial ) --Admob
+ads.init( "admob", interstitial, adListener) --Admob
 
 AdBuddiz.setAndroidPublisherKey( "c736441f-6336-4189-ab00-a01fdc839f41" ) --Adbuddiz
 AdBuddiz.cacheAds()  
@@ -71,8 +78,6 @@ coinsSequence = {
   { name = "estatica", start=1, count=1, time=8500,},
   { name = "dinamica", start=1, count=10, time=2500,},} 
 
-
-
 function showMoreGamesAd()
     local currScene = composer.getSceneName( "current" )
     composer.removeScene( currScene )
@@ -92,7 +97,7 @@ end
 
 function mayShowAd()
   print("admob ad 20%")
-  if math.random() > .8 then
+  if math.random() > .8 and firstAd == false then
     ads.show( "interstitial", {appId=interstitial} )
     print("ad shown")
   end

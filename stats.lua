@@ -16,6 +16,8 @@ function playButtonListener()
     destroyHUD()
     composer.removeScene( "game")
     composer.removeScene( "stats")
+    analytics.logEvent( "RetryGameSession" , { game="CopterSession" } )
+
 	composer.gotoScene( "game", "flip", 200 )
 end
 
