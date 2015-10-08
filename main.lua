@@ -48,13 +48,13 @@ function destroyHUD()
 end  
 
 local function adListener(event)
-  if (event.phase == "shown") then
+  if (event.phase == "shown" and firstAd==true) then
     firstAd = false
     print("firstAd mostrado y cerrado")
   end
 end
 
-interstitial = "ca-app-pub-3836849703819703/2927691270"
+interstitial = "ca-app-pub-1709584335667681/2756526250"
 
 ads.init( "admob", interstitial, adListener) --Admob
 

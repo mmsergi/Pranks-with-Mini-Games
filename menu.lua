@@ -162,9 +162,10 @@ function desbloquea()
 	end
 end
 
-function showFirstAd()
+local function showFirstAd()
 	ads.show( "interstitial", {appId=interstitial} )
 	print("entra en el primer anuncio")
+	firstAd = false
 end
 
 function scene:create( event )
@@ -173,7 +174,7 @@ function scene:create( event )
 	checkLocks(t)
 
 	if (firstAd==true) then
-		timer.performWithDelay(2000, showFirstAd)
+		timer.performWithDelay(4000, showFirstAd)
 	end
 
 	if t.music==false then
