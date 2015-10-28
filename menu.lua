@@ -205,9 +205,6 @@ function scene:create( event )
 	iconPlay.x, iconPlay.y = cx, cy-140
 	iconPlay:play()
 
-
-	
-
 	if t.music==true then
 		soundBtn = widget.newButton{
 			defaultFile="assets/sound_on.png",
